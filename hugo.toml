@@ -6,8 +6,8 @@ theme = "ryder"
 [params]
   description = "Official site for Verdèzul — Los Angeles-based band. Music, tour dates, merch."
   analytics_provider = "posthog"
-  showDarkToggle = true
-  logo_png = "/images/logo-white-trans.png"
+  showDarkToggle = false
+  logo_png = "/images/logo-header.png"
   headerType = "-verdezul"
   footerType = "-verdezul"
   menuType = "-verdezul"

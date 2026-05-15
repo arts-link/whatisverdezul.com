@@ -1,11 +1,15 @@
 <footer class="vz-footer">
-  <div class="vz-footer__inner">
 
-    {{/* Email collector — compact footer form */}}
-    <div class="vz-footer__email">
-      <p class="vz-section-label">Stay in the loop</p>
-      <form class="vz-email-form" id="footer-email-form"
-            x-data="{ email: '', status: '' }"
+  <div class="vz-footer__main">
+    <div class="vz-footer__identity">
+      <span class="vz-footer__wordmark">Verdèzul</span>
+      <span class="vz-footer__location">Los Angeles, CA</span>
+    </div>
+
+    <div class="vz-footer__signup"
+         x-data="{ email: '', status: '' }">
+      <span class="vz-footer__signup-label">Stay in the loop</span>
+      <form class="vz-footer__form"
             @submit.prevent="
               status = 'loading';
               fetch('/api/subscribe', {
@@ -21,61 +25,63 @@
                :disabled="status === 'loading' || status === 'success'">
         <button type="submit" :disabled="status === 'loading' || status === 'success'">
           <span x-show="status !== 'loading' && status !== 'success'">Join</span>
-          <span x-show="status === 'loading'">...</span>
-          <span x-show="status === 'success'">✓</span>
+          <span x-show="status === 'loading'" style="display:none">…</span>
+          <span x-show="status === 'success'" style="display:none">✓</span>
         </button>
-        <p x-show="status === 'success'" class="vz-form-msg">You're on the list.</p>
-        <p x-show="status === 'exists'" class="vz-form-msg">Already subscribed.</p>
-        <p x-show="status === 'error'" class="vz-form-msg vz-form-msg--error">Something went wrong. Try again.</p>
       </form>
+      <p x-show="status === 'success'" class="vz-footer__form-msg" style="display:none">You're on the list.</p>
+      <p x-show="status === 'exists'" class="vz-footer__form-msg" style="display:none">Already subscribed.</p>
+      <p x-show="status === 'error'" class="vz-footer__form-msg vz-footer__form-msg--error" style="display:none">Something went wrong. Try again.</p>
     </div>
-
-    {{/* Social icons — inline SVG, no FA library dependency */}}
-    {{ $social := .Site.Data.social }}
-    {{ if $social }}
-    <div class="vz-social-icons">
-      {{ if $social.instagram }}
-      <a href="{{ $social.instagram }}" target="_blank" rel="noopener" aria-label="Instagram" @click="posthog.capture('social_follow_click', { platform: 'instagram' })">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-      </a>
-      {{ end }}
-      {{ if $social.tiktok }}
-      <a href="{{ $social.tiktok }}" target="_blank" rel="noopener" aria-label="TikTok" @click="posthog.capture('social_follow_click', { platform: 'tiktok' })">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.75a8.17 8.17 0 0 0 4.78 1.52V6.82a4.85 4.85 0 0 1-1.01-.13z"/></svg>
-      </a>
-      {{ end }}
-      {{ if $social.youtube }}
-      <a href="{{ $social.youtube }}" target="_blank" rel="noopener" aria-label="YouTube" @click="posthog.capture('social_follow_click', { platform: 'youtube' })">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-      </a>
-      {{ end }}
-      {{ if $social.spotify }}
-      <a href="{{ $social.spotify }}" target="_blank" rel="noopener" aria-label="Spotify" @click="posthog.capture('social_follow_click', { platform: 'spotify' })">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
-      </a>
-      {{ end }}
-      {{ if $social.apple_music }}
-      <a href="{{ $social.apple_music }}" target="_blank" rel="noopener" aria-label="Apple Music" @click="posthog.capture('social_follow_click', { platform: 'apple_music' })">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.994 6.124a9.23 9.23 0 0 0-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 0 0-1.877-.726 10.496 10.496 0 0 0-1.564-.15c-.05-.003-.098-.013-.147-.013H5.986c-.017 0-.035.01-.053.013-.48.033-.96.087-1.43.2-.923.23-1.74.697-2.388 1.376C1.39 2.45.916 3.36.69 4.376a11.66 11.66 0 0 0-.18 2.063c-.007.292-.013 19.14-.013 19.14h.002c.056 1.193.232 2.31.72 3.34C1.84 30.1 2.83 30.887 4.07 31.33c.815.293 1.67.45 2.54.476.15.005.3.01.448.01h14.032c.2 0 .4-.008.597-.022.82-.054 1.62-.22 2.37-.58 1.19-.567 2.032-1.44 2.52-2.676.29-.742.43-1.517.458-2.31.006-.15.01-.3.01-.45V6.58c0-.152-.012-.304-.051-.456zm-6.8 14.974l-.003.003c-.17.165-.37.286-.59.362a2.14 2.14 0 0 1-.743.113 2.13 2.13 0 0 1-.782-.142 1.99 1.99 0 0 1-.74-.56 2.04 2.04 0 0 1-.44-.86 3.48 3.48 0 0 1-.07-.84V9.2l-6.02 1.674v8.944l-.002.006c-.02.34-.085.674-.222.99a2.11 2.11 0 0 1-1.372 1.194 2.96 2.96 0 0 1-.788.1 2.49 2.49 0 0 1-.875-.153 2.07 2.07 0 0 1-1.28-1.55 3.3 3.3 0 0 1-.054-.728c.012-.45.107-.883.332-1.27a2.18 2.18 0 0 1 1.32-.998c.31-.088.627-.124.948-.12.2.004.398.04.595.09V6.59l8.657-2.407v10.795c0 .02-.006.04-.006.06v.016c-.02.327-.082.648-.214.95a2.12 2.12 0 0 1-1.37 1.195 2.99 2.99 0 0 1-.79.1z"/></svg>
-      </a>
-      {{ end }}
-      {{ if $social.tidal }}
-      <a href="{{ $social.tidal }}" target="_blank" rel="noopener" aria-label="Tidal" @click="posthog.capture('social_follow_click', { platform: 'tidal' })">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.012 3.992L8.008 7.996 4.004 3.992 0 7.996l4.004 4.004 4.004-4.004 4.004 4.004 4.004-4.004L20.02 12l4.004-4.004-4.004-4.004-4.004 4.004zM8.008 16.004L12.012 12l4.004 4.004-4.004 4.004z"/></svg>
-      </a>
-      {{ end }}
-      {{ if $social.youtube_music }}
-      <a href="{{ $social.youtube_music }}" target="_blank" rel="noopener" aria-label="YouTube Music" @click="posthog.capture('social_follow_click', { platform: 'youtube_music' })">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm0 19.104c-3.924 0-7.104-3.18-7.104-7.104S8.076 4.896 12 4.896s7.104 3.18 7.104 7.104-3.18 7.104-7.104 7.104zm0-13.332c-3.432 0-6.228 2.796-6.228 6.228S8.568 18.228 12 18.228s6.228-2.796 6.228-6.228S15.432 5.772 12 5.772zM9.684 15.54V8.46L15.816 12l-6.132 3.54z"/></svg>
-      </a>
-      {{ end }}
-    </div>
-    {{ end }}
-
-    <div class="vz-footer__bottom">
-      <span>© {{ now.Year }} Verdèzul</span>
-      <a href="mailto:{{ .Site.Data.band.email }}">{{ .Site.Data.band.email }}</a>
-    </div>
-
   </div>
+
+  <div class="vz-footer__bar">
+    <div class="vz-footer__bar-inner">
+      <span class="vz-footer__copy">© {{ now.Year }} Verdèzul</span>
+
+      {{ $social := .Site.Data.social }}
+      {{ if $social }}
+      <div class="vz-footer__socials">
+        {{ if $social.instagram }}
+        <a href="{{ $social.instagram }}" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        {{ end }}
+        {{ if $social.tiktok }}
+        <a href="{{ $social.tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.75a8.17 8.17 0 0 0 4.78 1.52V6.82a4.85 4.85 0 0 1-1.01-.13z"/></svg>
+        </a>
+        {{ end }}
+        {{ if $social.youtube }}
+        <a href="{{ $social.youtube }}" target="_blank" rel="noopener" aria-label="YouTube">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+        {{ end }}
+        {{ if $social.spotify }}
+        <a href="{{ $social.spotify }}" target="_blank" rel="noopener" aria-label="Spotify">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+        </a>
+        {{ end }}
+        {{ if $social.apple_music }}
+        <a href="{{ $social.apple_music }}" target="_blank" rel="noopener" aria-label="Apple Music">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.994 6.124a9.23 9.23 0 0 0-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 0 0-1.877-.726 10.496 10.496 0 0 0-1.564-.15c-.05-.003-.098-.013-.147-.013H5.986c-.017 0-.035.01-.053.013-.48.033-.96.087-1.43.2-.923.23-1.74.697-2.388 1.376C1.39 2.45.916 3.36.69 4.376a11.66 11.66 0 0 0-.18 2.063c-.007.292-.013 19.14-.013 19.14h.002c.056 1.193.232 2.31.72 3.34C1.84 30.1 2.83 30.887 4.07 31.33c.815.293 1.67.45 2.54.476.15.005.3.01.448.01h14.032c.2 0 .4-.008.597-.022.82-.054 1.62-.22 2.37-.58 1.19-.567 2.032-1.44 2.52-2.676.29-.742.43-1.517.458-2.31.006-.15.01-.3.01-.45V6.58c0-.152-.012-.304-.051-.456zm-6.8 14.974l-.003.003c-.17.165-.37.286-.59.362a2.14 2.14 0 0 1-.743.113 2.13 2.13 0 0 1-.782-.142 1.99 1.99 0 0 1-.74-.56 2.04 2.04 0 0 1-.44-.86 3.48 3.48 0 0 1-.07-.84V9.2l-6.02 1.674v8.944l-.002.006c-.02.34-.085.674-.222.99a2.11 2.11 0 0 1-1.372 1.194 2.96 2.96 0 0 1-.788.1 2.49 2.49 0 0 1-.875-.153 2.07 2.07 0 0 1-1.28-1.55 3.3 3.3 0 0 1-.054-.728c.012-.45.107-.883.332-1.27a2.18 2.18 0 0 1 1.32-.998c.31-.088.627-.124.948-.12.2.004.398.04.595.09V6.59l8.657-2.407v10.795c0 .02-.006.04-.006.06v.016c-.02.327-.082.648-.214.95a2.12 2.12 0 0 1-1.37 1.195 2.99 2.99 0 0 1-.79.1z"/></svg>
+        </a>
+        {{ end }}
+        {{ if $social.tidal }}
+        <a href="{{ $social.tidal }}" target="_blank" rel="noopener" aria-label="Tidal">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.012 3.992L8.008 7.996 4.004 3.992 0 7.996l4.004 4.004 4.004-4.004 4.004 4.004 4.004-4.004L20.02 12l4.004-4.004-4.004-4.004-4.004 4.004zM8.008 16.004L12.012 12l4.004 4.004-4.004 4.004z"/></svg>
+        </a>
+        {{ end }}
+        {{ if $social.youtube_music }}
+        <a href="{{ $social.youtube_music }}" target="_blank" rel="noopener" aria-label="YouTube Music">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm0 19.104c-3.924 0-7.104-3.18-7.104-7.104S8.076 4.896 12 4.896s7.104 3.18 7.104 7.104-3.18 7.104-7.104 7.104zm0-13.332c-3.432 0-6.228 2.796-6.228 6.228S8.568 18.228 12 18.228s6.228-2.796 6.228-6.228S15.432 5.772 12 5.772zM9.684 15.54V8.46L15.816 12l-6.132 3.54z"/></svg>
+        </a>
+        {{ end }}
+      </div>
+      {{ end }}
+
+      <a href="mailto:{{ .Site.Data.band.email }}" class="vz-footer__contact">{{ .Site.Data.band.email }}</a>
+    </div>
+  </div>
+
 </footer>
