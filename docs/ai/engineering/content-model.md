@@ -38,7 +38,9 @@ All client-editable content lives here. Hugo templates access via `.Site.Data.<f
   "tiktok": "https://www.tiktok.com/@bluepill.greenpill",
   "youtube": "https://www.youtube.com/@Verdezul",
   "spotify": "https://open.spotify.com/artist/1zf7vVM2XaoaTD3hXWR1If",
-  "apple_music": ""
+  "apple_music": "https://music.apple.com/us/artist/verd%C3%A8zul/1692039373",
+  "tidal": "https://tidal.com/artist/40000977",
+  "youtube_music": "https://music.youtube.com/@Verdezul"
 }
 ```
 

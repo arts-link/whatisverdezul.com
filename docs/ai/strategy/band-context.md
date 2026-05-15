@@ -40,6 +40,9 @@ Referencing any band detail — name spelling, contact info, social links, brand
 | TikTok | @bluepill.greenpill — https://www.tiktok.com/@bluepill.greenpill |
 | YouTube | @Verdezul — https://www.youtube.com/@Verdezul |
 | Spotify | https://open.spotify.com/artist/1zf7vVM2XaoaTD3hXWR1If |
+| Apple Music | https://music.apple.com/us/artist/verd%C3%A8zul/1692039373 |
+| Tidal | https://tidal.com/artist/40000977 |
+| YouTube Music | https://music.youtube.com/@Verdezul |
 
 ---
 

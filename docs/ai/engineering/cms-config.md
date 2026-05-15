@@ -97,6 +97,8 @@ collections:
           - { name: youtube, label: YouTube URL, widget: string, required: false }
           - { name: spotify, label: Spotify URL, widget: string, required: false }
           - { name: apple_music, label: Apple Music URL, widget: string, required: false }
+          - { name: tidal, label: Tidal URL, widget: string, required: false }
+          - { name: youtube_music, label: YouTube Music URL, widget: string, required: false }
 
   - name: tour
     label: Tour Dates
