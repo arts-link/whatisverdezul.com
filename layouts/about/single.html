@@ -1,0 +1,10 @@
+{{ define "main" }}
+<article class="vz-section" style="max-width: 720px; margin: 0 auto;">
+  <span class="vz-section-label">About</span>
+  <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 2rem;">{{ .Site.Data.band.name }}</h1>
+  <div style="font-size: 1.05rem; line-height: 1.75; opacity: 0.85;">
+    {{ .Content }}
+  </div>
+  <p style="margin-top: 2rem; font-size: 0.875rem; opacity: 0.5;">{{ .Site.Data.band.location }}</p>
+</article>
+{{ end }}

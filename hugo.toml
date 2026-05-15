@@ -1,0 +1,47 @@
+baseURL = "https://whatisverdezul.com/"
+languageCode = "en-us"
+title = "Verdèzul"
+theme = "ryder"
+
+[params]
+  description = "Official site for Verdèzul — Los Angeles-based band. Music, tour dates, merch."
+  analytics_provider = "posthog"
+  showDarkToggle = true
+  logo_png = "/images/logo-white-trans.png"
+  headerType = "-verdezul"
+  footerType = "-verdezul"
+  menuType = "-verdezul"
+  showHomeFeed = false
+  showBreadCrumbs = false
+
+[security]
+  [security.funcs]
+    getenv = ['^HUGO_', '^CI$', '^PUBLIC_']
+
+[outputs]
+  home = ["HTML", "RSS", "LLMSTxt"]
+
+[[menus.main]]
+  name = "About"
+  url = "/about/"
+  weight = 10
+
+[[menus.main]]
+  name = "Tour"
+  url = "/tour/"
+  weight = 20
+
+[[menus.main]]
+  name = "Media"
+  url = "/media/"
+  weight = 30
+
+[[menus.main]]
+  name = "Shop"
+  url = "/shop/"
+  weight = 40
+
+[[menus.main]]
+  name = "Contact"
+  url = "/contact/"
+  weight = 50

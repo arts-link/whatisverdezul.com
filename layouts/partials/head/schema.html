@@ -1,0 +1,57 @@
+{{/* MusicGroup schema — present on all pages */}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MusicGroup",
+  "name": "Verdèzul",
+  "url": "{{ .Site.BaseURL }}",
+  "email": "{{ .Site.Data.band.email }}",
+  "foundingLocation": {
+    "@type": "Place",
+    "name": "Los Angeles, CA"
+  },
+  "sameAs": [
+    {{ with .Site.Data.social.instagram }}"{{ . }}"{{ end }}
+    {{ with .Site.Data.social.tiktok }}, "{{ . }}"{{ end }}
+    {{ with .Site.Data.social.youtube }}, "{{ . }}"{{ end }}
+    {{ with .Site.Data.social.spotify }}, "{{ . }}"{{ end }}
+  ]
+}
+</script>
+
+{{/* MusicEvent schema — tour page only */}}
+{{ if eq .RelPermalink "/tour/" }}
+{{ range .Site.Data.tour }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MusicEvent",
+  "name": "Verdèzul at {{ .venue }}",
+  "startDate": "{{ .date }}",
+  "location": {
+    "@type": "Place",
+    "name": "{{ .venue }}",
+    "address": "{{ .city }}"
+  },
+  "performer": { "@type": "MusicGroup", "name": "Verdèzul" }
+  {{ with .ticket_url }}, "url": "{{ . }}"{{ end }}
+}
+</script>
+{{ end }}
+{{ end }}
+
+{{/* MusicAlbum schema — home and media pages */}}
+{{ if or (eq .RelPermalink "/") (eq .RelPermalink "/media/") }}
+{{ range where .Site.Data.releases "featured" true }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MusicAlbum",
+  "name": "{{ .title }}",
+  "byArtist": { "@type": "MusicGroup", "name": "Verdèzul" },
+  "datePublished": "{{ .year }}"
+  {{ with .spotify_url }}, "url": "{{ . }}"{{ end }}
+}
+</script>
+{{ end }}
+{{ end }}

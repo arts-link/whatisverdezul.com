@@ -1,0 +1,34 @@
+{{ define "main" }}
+<section class="vz-section">
+  <span class="vz-section-label">Shop</span>
+  <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 2.5rem;">Merch</h1>
+
+  {{ $merch := .Site.Data.merch }}
+  {{ if $merch }}
+  <div class="vz-merch-grid">
+    {{ range $merch }}
+    <div class="vz-merch-item">
+      {{ if .image }}<img src="{{ .image }}" alt="{{ .name }}" loading="lazy">{{ end }}
+      <div class="vz-merch-item__info">
+        <div style="font-weight: 600;">{{ .name }}</div>
+        {{ with .description }}<div style="font-size: 0.875rem; opacity: 0.6; margin-top: 0.25rem;">{{ . }}</div>{{ end }}
+        <div style="margin-top: 0.75rem; display: flex; align-items: center; gap: 1rem;">
+          <span style="font-size: 0.9rem;">${{ .price }}</span>
+          {{ if .sold_out }}
+            <span class="vz-badge-sold-out">Sold Out</span>
+          {{ else }}
+            <a href="{{ .checkout_url }}" target="_blank" rel="noopener"
+               @click="posthog.capture('merch_click', { item_name: '{{ .name }}', price: {{ .price }} })">
+              Buy
+            </a>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+    {{ end }}
+  </div>
+  {{ else }}
+  <p style="opacity: 0.5;">Merch coming soon.</p>
+  {{ end }}
+</section>
+{{ end }}

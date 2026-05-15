@@ -1,0 +1,43 @@
+{{ define "main" }}
+<section class="vz-section" style="max-width: 600px; margin: 0 auto;">
+  <span class="vz-section-label">Contact</span>
+  <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 1rem;">Get in Touch</h1>
+  <p style="opacity: 0.6; margin-bottom: 2.5rem; font-size: 0.95rem;">
+    Booking, press, and general inquiries —
+    <a href="mailto:{{ .Site.Data.band.email }}">{{ .Site.Data.band.email }}</a>
+  </p>
+
+  <form class="vz-contact-form"
+        x-data="{ name: '', email: '', message: '', status: '' }"
+        @submit.prevent="
+          status = 'loading';
+          fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, message })
+          })
+          .then(r => { status = r.ok ? 'success' : 'error' })
+          .catch(() => { status = 'error' });
+          posthog.capture('contact_form_submit');
+        ">
+
+    <input type="text" name="name" x-model="name" placeholder="Your name" required
+           :disabled="status === 'loading' || status === 'success'">
+    <input type="email" name="email" x-model="email" placeholder="your@email.com" required
+           :disabled="status === 'loading' || status === 'success'">
+    <textarea name="message" x-model="message" placeholder="Your message" required
+              :disabled="status === 'loading' || status === 'success'"></textarea>
+
+    <button type="submit" :disabled="status === 'loading' || status === 'success'"
+            style="padding: 0.875rem 2rem; background: var(--vz-green); color: white; border: none; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; font-size: 0.875rem;">
+      <span x-show="status !== 'loading' && status !== 'success'">Send Message</span>
+      <span x-show="status === 'loading'">Sending...</span>
+      <span x-show="status === 'success'">Message sent ✓</span>
+    </button>
+
+    <p x-show="status === 'error'" style="color: var(--vz-red); font-size: 0.875rem;">
+      Something went wrong. Email us directly at <a href="mailto:{{ .Site.Data.band.email }}">{{ .Site.Data.band.email }}</a>
+    </p>
+  </form>
+</section>
+{{ end }}

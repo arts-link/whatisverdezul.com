@@ -1,0 +1,10 @@
+<div class="vz-spotify-embed"
+     @click="posthog.capture('spotify_play_click', { release_title: '{{ .Get "title" }}' })">
+  <iframe
+    src="https://open.spotify.com/embed/{{ .Get "type" | default "artist" }}/{{ .Get "id" }}?utm_source=generator"
+    width="100%"
+    height="{{ .Get "height" | default "352" }}"
+    loading="lazy"
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+  </iframe>
+</div>

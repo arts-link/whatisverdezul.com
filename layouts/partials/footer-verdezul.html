@@ -1,0 +1,50 @@
+<footer class="vz-footer">
+  <div class="vz-footer__inner">
+
+    {{/* Email collector — compact footer form */}}
+    <div class="vz-footer__email">
+      <p class="vz-section-label">Stay in the loop</p>
+      <form class="vz-email-form" id="footer-email-form"
+            x-data="{ email: '', status: '' }"
+            @submit.prevent="
+              status = 'loading';
+              fetch('/api/subscribe', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+              })
+              .then(r => { status = r.ok ? 'success' : (r.status === 409 ? 'exists' : 'error') })
+              .catch(() => { status = 'error' })
+            ">
+        <input type="email" name="email" x-model="email"
+               placeholder="your@email.com" required
+               :disabled="status === 'loading' || status === 'success'">
+        <button type="submit" :disabled="status === 'loading' || status === 'success'">
+          <span x-show="status !== 'loading' && status !== 'success'">Join</span>
+          <span x-show="status === 'loading'">...</span>
+          <span x-show="status === 'success'">✓</span>
+        </button>
+        <p x-show="status === 'success'" class="vz-form-msg">You're on the list.</p>
+        <p x-show="status === 'exists'" class="vz-form-msg">Already subscribed.</p>
+        <p x-show="status === 'error'" class="vz-form-msg vz-form-msg--error">Something went wrong. Try again.</p>
+      </form>
+    </div>
+
+    {{/* Social icons */}}
+    {{ $social := .Site.Data.social }}
+    {{ if $social }}
+    <div class="vz-social-icons">
+      {{ if $social.instagram }}<a href="{{ $social.instagram }}" target="_blank" rel="noopener" aria-label="Instagram" @click="posthog.capture('social_follow_click', { platform: 'instagram' })"><i class="fa-brands fa-instagram"></i></a>{{ end }}
+      {{ if $social.tiktok }}<a href="{{ $social.tiktok }}" target="_blank" rel="noopener" aria-label="TikTok" @click="posthog.capture('social_follow_click', { platform: 'tiktok' })"><i class="fa-brands fa-tiktok"></i></a>{{ end }}
+      {{ if $social.youtube }}<a href="{{ $social.youtube }}" target="_blank" rel="noopener" aria-label="YouTube" @click="posthog.capture('social_follow_click', { platform: 'youtube' })"><i class="fa-brands fa-youtube"></i></a>{{ end }}
+      {{ if $social.spotify }}<a href="{{ $social.spotify }}" target="_blank" rel="noopener" aria-label="Spotify" @click="posthog.capture('social_follow_click', { platform: 'spotify' })"><i class="fa-brands fa-spotify"></i></a>{{ end }}
+    </div>
+    {{ end }}
+
+    <div class="vz-footer__bottom">
+      <span>© {{ now.Year }} Verdèzul</span>
+      <a href="mailto:{{ .Site.Data.band.email }}">{{ .Site.Data.band.email }}</a>
+    </div>
+
+  </div>
+</footer>

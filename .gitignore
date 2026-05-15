@@ -1,0 +1,8 @@
+public/
+.hugo_build.lock
+.env
+.env.local
+node_modules/
+resources/
+.DS_Store
+**/.DS_Store

@@ -1,0 +1,125 @@
+{{ define "main" }}
+
+{{/* Hero */}}
+<section class="vz-hero">
+  {{ $heroImg := "/images/ETASOBAG.jpg" }}
+  <div class="vz-hero__bg" style="background-image: url('{{ $heroImg }}'); background-size: cover; background-position: center; position: absolute; inset: 0; opacity: 0.35;"></div>
+  <div style="position: relative; z-index: 1;">
+    <h1 class="vz-hero__headline">{{ .Params.hero_headline | default "Verdèzul" }}</h1>
+    <p class="vz-hero__subline">{{ .Params.hero_subline | default "Los Angeles" }}</p>
+    <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+      {{ with (index .Site.Data.tour 0) }}
+      <a href="/tour/"
+         class="vz-btn"
+         @click="posthog.capture('ticket_link_click', { venue: '{{ .venue }}', date: '{{ .date }}', city: '{{ .city }}' })">
+        Next Show →
+      </a>
+      {{ end }}
+      {{ range where .Site.Data.releases "featured" true | first 1 }}
+      <a href="{{ .spotify_url }}" target="_blank" rel="noopener"
+         class="vz-btn vz-btn--outline"
+         @click="posthog.capture('spotify_play_click', { release_title: '{{ .title }}' })">
+        Listen — {{ .title }}
+      </a>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+{{/* Featured release */}}
+{{ $featured := where .Site.Data.releases "featured" true }}
+{{ if $featured }}
+<section class="vz-section">
+  <span class="vz-section-label">Latest Release</span>
+  <div class="vz-releases">
+    {{ range $featured }}
+    <div class="vz-release-card">
+      {{ if .cover_image }}<img src="{{ .cover_image }}" alt="{{ .title }}" loading="lazy">{{ end }}
+      <div class="vz-release-card__info">
+        <strong>{{ .title }}</strong>
+        <div style="font-size: 0.8rem; opacity: 0.6; margin-top: 0.25rem;">{{ .type | title }} · {{ .year }}</div>
+        <div style="margin-top: 0.75rem; display: flex; gap: 0.75rem;">
+          {{ with .spotify_url }}<a href="{{ . }}" target="_blank" rel="noopener" style="font-size: 0.8rem;" @click="posthog.capture('spotify_play_click', { release_title: '{{ $.title }}' })">Spotify</a>{{ end }}
+          {{ with .apple_music_url }}<a href="{{ . }}" target="_blank" rel="noopener" style="font-size: 0.8rem;" @click="posthog.capture('spotify_play_click', { release_title: '{{ $.title }}' })">Apple Music</a>{{ end }}
+        </div>
+      </div>
+    </div>
+    {{ end }}
+  </div>
+</section>
+{{ end }}
+
+{{/* Upcoming shows — next 3 */}}
+{{ $tour := .Site.Data.tour }}
+{{ if $tour }}
+<section class="vz-section" style="border-top: 1px solid rgba(255,255,255,0.06);">
+  <span class="vz-section-label">Upcoming Shows</span>
+  <ul class="vz-tour-list">
+    {{ range first 3 $tour }}
+    <li class="vz-tour-item">
+      <span class="vz-tour-date">{{ dateFormat "Jan 02" .date }}</span>
+      <span>
+        <div class="vz-tour-venue">{{ .venue }}</div>
+        <div class="vz-tour-city">{{ .city }}</div>
+      </span>
+      <span>
+        {{ if .sold_out }}
+          <span class="vz-badge-sold-out">Sold Out</span>
+        {{ else if .ticket_url }}
+          <a href="{{ .ticket_url }}" target="_blank" rel="noopener"
+             @click="posthog.capture('ticket_link_click', { venue: '{{ .venue }}', date: '{{ .date }}', city: '{{ .city }}' })">
+            Get Tickets
+          </a>
+        {{ end }}
+      </span>
+    </li>
+    {{ end }}
+  </ul>
+  <a href="/tour/" style="font-size: 0.875rem; margin-top: 1.5rem; display: inline-block;">All Shows →</a>
+</section>
+{{ end }}
+
+{{/* Featured videos */}}
+<section class="vz-section" style="border-top: 1px solid rgba(255,255,255,0.06);">
+  <span class="vz-section-label">Watch</span>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+    {{ youtube-embed id="Op1oF2qy_ek" title="Taxes Finnah Hit" }}
+    {{ youtube-embed id="VcY5WYEnxH8" title="I Tell Ya" }}
+  </div>
+</section>
+
+{{/* Email collector */}}
+<section class="vz-section" style="border-top: 1px solid rgba(255,255,255,0.06);">
+  <span class="vz-section-label">Stay in the loop</span>
+  <p style="max-width: 400px; opacity: 0.7; margin-bottom: 1.5rem; font-size: 0.95rem;">New music, shows, and merch — straight to your inbox.</p>
+  <form class="vz-email-form" id="home-email-form"
+        x-data="{ email: '', status: '' }"
+        @submit.prevent="
+          status = 'loading';
+          fetch('/api/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+          })
+          .then(r => {
+            if (r.ok) { status = 'success'; posthog.capture('email_signup_success'); }
+            else if (r.status === 409) { status = 'exists'; }
+            else { status = 'error'; }
+          })
+          .catch(() => { status = 'error'; });
+          posthog.capture('email_signup_submit');
+        ">
+    <input type="email" name="email" x-model="email"
+           placeholder="your@email.com" required
+           :disabled="status === 'loading' || status === 'success'">
+    <button type="submit" :disabled="status === 'loading' || status === 'success'">
+      <span x-show="status !== 'loading' && status !== 'success'">Join the list</span>
+      <span x-show="status === 'loading'">...</span>
+      <span x-show="status === 'success'">You're in ✓</span>
+    </button>
+    <p x-show="status === 'exists'" style="margin-top: 0.5rem; font-size: 0.875rem; opacity: 0.7;">Already subscribed.</p>
+    <p x-show="status === 'error'" style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--vz-red);">Something went wrong. Try again.</p>
+  </form>
+</section>
+
+{{ end }}
