@@ -173,9 +173,9 @@
 .vz-contact-form textarea,
 .vz-contact-form select {
   padding: 0.875rem 1rem;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.12);
-  color: var(--vz-white);
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.15);
+  color: var(--vz-black);
   font-size: 0.9rem;
   width: 100%;
   transition: border-color 0.2s;
@@ -183,14 +183,14 @@
 
 .vz-contact-form input::placeholder,
 .vz-contact-form textarea::placeholder {
-  color: rgba(245,245,240,0.3);
+  color: rgba(10,10,10,0.35);
 }
 
 .vz-contact-form input:focus,
 .vz-contact-form textarea:focus,
 .vz-contact-form select:focus {
   outline: none;
-  border-color: rgba(255,255,255,0.35);
+  border-color: var(--vz-green);
 }
 
 .vz-contact-form input:disabled,
@@ -208,15 +208,15 @@
 .vz-contact-form select {
   appearance: none;
   cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='rgba(245,245,240,0.4)'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='rgba(10,10,10,0.4)'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 1rem center;
   padding-right: 2.5rem;
 }
 
 .vz-contact-form select option {
-  background: #1a1a1a;
-  color: var(--vz-white);
+  background: #fff;
+  color: var(--vz-black);
 }
 
 .vz-contact-form button[type="submit"] {
@@ -263,7 +263,7 @@
 .vz-contact-social {
   margin-top: 3.5rem;
   padding-top: 2.5rem;
-  border-top: 1px solid rgba(255,255,255,0.07);
+  border-top: 1px solid rgba(0,0,0,0.07);
 }
 
 .vz-contact-social__label {
@@ -273,7 +273,11 @@
   opacity: 0.4;
   display: block;
   margin-bottom: 1.25rem;
-  color: var(--vz-white);
+  color: var(--vz-black);
+}
+
+.vz-contact-social .vz-social-icons a {
+  color: var(--vz-black);
 }
 
 /* Sold-out badge */
