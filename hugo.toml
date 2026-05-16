@@ -14,6 +14,9 @@ theme = "ryder"
   showHomeFeed = false
   showBreadCrumbs = false
 
+[params.csp]
+  frameSrc = "https://www.youtube-nocookie.com https://open.spotify.com"
+
 [security]
   [security.funcs]
     getenv = ['^HUGO_', '^CI$', '^PUBLIC_']
