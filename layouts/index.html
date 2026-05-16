@@ -38,9 +38,10 @@
       <div class="vz-release-card__info">
         <strong>{{ .title }}</strong>
         <div style="font-size: 0.8rem; opacity: 0.6; margin-top: 0.25rem;">{{ .type | title }} · {{ .year }}</div>
+        {{ $releaseTitle := .title }}
         <div style="margin-top: 0.75rem; display: flex; gap: 0.75rem;">
-          {{ with .spotify_url }}<a href="{{ . }}" target="_blank" rel="noopener" style="font-size: 0.8rem;" @click="posthog.capture('spotify_play_click', { release_title: '{{ $.title }}' })">Spotify</a>{{ end }}
-          {{ with .apple_music_url }}<a href="{{ . }}" target="_blank" rel="noopener" style="font-size: 0.8rem;" @click="posthog.capture('spotify_play_click', { release_title: '{{ $.title }}' })">Apple Music</a>{{ end }}
+          {{ with .spotify_url }}<a href="{{ . }}" target="_blank" rel="noopener" style="font-size: 0.8rem;" @click="posthog.capture('spotify_play_click', { release_title: '{{ $releaseTitle }}' })">Spotify</a>{{ end }}
+          {{ with .apple_music_url }}<a href="{{ . }}" target="_blank" rel="noopener" style="font-size: 0.8rem;" @click="posthog.capture('apple_music_click', { release_title: '{{ $releaseTitle }}' })">Apple Music</a>{{ end }}
         </div>
       </div>
     </div>
