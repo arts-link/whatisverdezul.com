@@ -83,8 +83,8 @@
 <section class="vz-section" style="border-top: 1px solid rgba(255,255,255,0.06);">
   <span class="vz-section-label">Watch</span>
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
-    {{ youtube-embed id="Op1oF2qy_ek" title="Taxes Finnah Hit" }}
-    {{ youtube-embed id="VcY5WYEnxH8" title="I Tell Ya" }}
+    {{ partial "youtube-embed.html" (dict "id" "Op1oF2qy_ek" "title" "Taxes Finnah Hit") }}
+    {{ partial "youtube-embed.html" (dict "id" "VcY5WYEnxH8" "title" "I Tell Ya") }}
   </div>
 </section>
 

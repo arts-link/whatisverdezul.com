@@ -1,0 +1,10 @@
+<div class="vz-embed-16x9"
+     @click="posthog.capture('youtube_play_click', { video_id: '{{ .id }}', video_title: '{{ .title }}' })">
+  <iframe
+    src="https://www.youtube-nocookie.com/embed/{{ .id }}"
+    title="{{ .title }}"
+    loading="lazy"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen>
+  </iframe>
+</div>
