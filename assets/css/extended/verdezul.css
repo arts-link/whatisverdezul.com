@@ -450,6 +450,12 @@ body > div.min-h-lvh {
 @media (max-width: 768px) {
   .vz-nav__toggle {
     display: flex;
+    color: var(--vz-black);
+  }
+
+  /* Hero page: hamburger stays white until user scrolls or opens menu */
+  .vz-nav--has-hero:not(.is-scrolled) .vz-nav__toggle:not([aria-expanded="true"]) {
+    color: var(--vz-white);
   }
 
   .vz-nav__links {
@@ -476,6 +482,11 @@ body > div.min-h-lvh {
     display: block;
     padding: 0.75rem 2rem;
     font-size: 0.7rem;
+    color: rgba(10, 10, 10, 0.8);
+  }
+
+  .vz-nav__links a[aria-current="page"] {
+    color: var(--vz-black);
   }
 
   .vz-nav__links a[aria-current="page"]::after {
