@@ -1,0 +1,36 @@
+{{ define "main" }}
+<section class="vz-section">
+  <span class="vz-section-label">Tour</span>
+  <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 2.5rem;">Shows</h1>
+
+  {{ $tour := .Site.Data.tour }}
+  {{ if $tour }}
+  <ul class="vz-tour-list">
+    {{ range $tour }}
+    <li class="vz-tour-item">
+      <span class="vz-tour-date">{{ dateFormat "Jan 02 '06" .date }}</span>
+      <span>
+        <div class="vz-tour-venue">{{ .venue }}</div>
+        <div class="vz-tour-city">{{ .city }}</div>
+        {{ with .description }}<div style="font-size: 0.8rem; opacity: 0.5; margin-top: 0.2rem;">{{ . }}</div>{{ end }}
+      </span>
+      <span>
+        {{ if .sold_out }}
+          <span class="vz-badge-sold-out">Sold Out</span>
+        {{ else if .ticket_url }}
+          <a href="{{ .ticket_url }}" target="_blank" rel="noopener"
+             @click="posthog.capture('ticket_link_click', { venue: '{{ .venue }}', date: '{{ .date }}', city: '{{ .city }}' })">
+            Get Tickets
+          </a>
+        {{ else }}
+          <span style="font-size: 0.8rem; opacity: 0.4;">Tickets TBA</span>
+        {{ end }}
+      </span>
+    </li>
+    {{ end }}
+  </ul>
+  {{ else }}
+  <p style="opacity: 0.5;">No shows scheduled. Check back soon.</p>
+  {{ end }}
+</section>
+{{ end }}
