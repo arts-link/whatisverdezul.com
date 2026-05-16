@@ -3,7 +3,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { name, email, message } = req.body;
+  const { name, email, message, subject } = req.body;
 
   if (!name || !email || !message) {
     return res.status(400).json({ error: 'Missing required fields' });
@@ -20,7 +20,7 @@ export default async function handler(req, res) {
         from: 'website@whatisverdezul.com',
         to: 'verdezulofficial@gmail.com',
         reply_to: email,
-        subject: `Message from ${name} via whatisverdezul.com`,
+        subject: `[${subject || 'General'}] Message from ${name} via whatisverdezul.com`,
         text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
       }),
     });

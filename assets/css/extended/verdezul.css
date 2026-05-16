@@ -166,21 +166,114 @@
   flex-direction: column;
   gap: 1rem;
   max-width: 540px;
+  margin-top: 2.5rem;
 }
 
 .vz-contact-form input,
-.vz-contact-form textarea {
+.vz-contact-form textarea,
+.vz-contact-form select {
   padding: 0.875rem 1rem;
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.12);
   color: var(--vz-white);
   font-size: 0.9rem;
   width: 100%;
+  transition: border-color 0.2s;
+}
+
+.vz-contact-form input::placeholder,
+.vz-contact-form textarea::placeholder {
+  color: rgba(245,245,240,0.3);
+}
+
+.vz-contact-form input:focus,
+.vz-contact-form textarea:focus,
+.vz-contact-form select:focus {
+  outline: none;
+  border-color: rgba(255,255,255,0.35);
+}
+
+.vz-contact-form input:disabled,
+.vz-contact-form textarea:disabled,
+.vz-contact-form select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .vz-contact-form textarea {
   min-height: 140px;
   resize: vertical;
+}
+
+.vz-contact-form select {
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='rgba(245,245,240,0.4)'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+.vz-contact-form select option {
+  background: #1a1a1a;
+  color: var(--vz-white);
+}
+
+.vz-contact-form button[type="submit"] {
+  padding: 0.875rem 2rem;
+  background: var(--vz-green);
+  color: var(--vz-white);
+  border: none;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.2s;
+  align-self: flex-start;
+}
+
+.vz-contact-form button[type="submit"]:hover:not(:disabled) {
+  background: #3a7234;
+}
+
+.vz-contact-form button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Prominent email link on contact page */
+.vz-contact-email-link {
+  display: inline-block;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  color: var(--vz-green);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(45,90,39,0.4);
+  padding-bottom: 2px;
+  margin-bottom: 0.5rem;
+  transition: border-color 0.2s;
+}
+
+.vz-contact-email-link:hover {
+  border-color: var(--vz-green);
+}
+
+/* Social row on contact page */
+.vz-contact-social {
+  margin-top: 3.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.vz-contact-social__label {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.4;
+  display: block;
+  margin-bottom: 1.25rem;
+  color: var(--vz-white);
 }
 
 /* Sold-out badge */

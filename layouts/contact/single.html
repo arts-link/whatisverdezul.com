@@ -1,43 +1,92 @@
 {{ define "main" }}
-<section class="vz-section" style="max-width: 600px; margin: 0 auto;">
-  <span class="vz-section-label">Contact</span>
-  <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 1rem;">Get in Touch</h1>
-  <p style="opacity: 0.6; margin-bottom: 2.5rem; font-size: 0.95rem;">
-    Booking, press, and general inquiries —
-    <a href="mailto:{{ .Site.Data.band.email }}">{{ .Site.Data.band.email }}</a>
-  </p>
+<div style="background: var(--vz-black); color: var(--vz-white); min-height: calc(100vh - 96px);">
+  <section class="vz-section" style="max-width: 540px; margin: 0 auto;">
 
-  <form class="vz-contact-form"
-        x-data="{ name: '', email: '', message: '', status: '' }"
-        @submit.prevent="
-          status = 'loading';
-          fetch('/api/contact', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, email, message })
-          })
-          .then(r => { status = r.ok ? 'success' : 'error' })
-          .catch(() => { status = 'error' });
-          posthog.capture('contact_form_submit');
-        ">
+    <span class="vz-section-label">Contact</span>
+    <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.05; margin-bottom: 1.5rem;">Get in Touch</h1>
 
-    <input type="text" name="name" x-model="name" placeholder="Your name" required
-           :disabled="status === 'loading' || status === 'success'">
-    <input type="email" name="email" x-model="email" placeholder="your@email.com" required
-           :disabled="status === 'loading' || status === 'success'">
-    <textarea name="message" x-model="message" placeholder="Your message" required
-              :disabled="status === 'loading' || status === 'success'"></textarea>
-
-    <button type="submit" :disabled="status === 'loading' || status === 'success'"
-            style="padding: 0.875rem 2rem; background: var(--vz-green); color: white; border: none; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; font-size: 0.875rem;">
-      <span x-show="status !== 'loading' && status !== 'success'">Send Message</span>
-      <span x-show="status === 'loading'">Sending...</span>
-      <span x-show="status === 'success'">Message sent ✓</span>
-    </button>
-
-    <p x-show="status === 'error'" style="color: var(--vz-red); font-size: 0.875rem;">
-      Something went wrong. Email us directly at <a href="mailto:{{ .Site.Data.band.email }}">{{ .Site.Data.band.email }}</a>
+    <p style="opacity: 0.55; font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.75rem;">
+      Booking, press, and general inquiries.
     </p>
-  </form>
-</section>
+
+    <a href="mailto:{{ .Site.Data.band.email }}" class="vz-contact-email-link">
+      {{ .Site.Data.band.email }}
+    </a>
+
+    <form class="vz-contact-form"
+          x-data="{ name: '', email: '', message: '', subject: 'General', status: '' }"
+          @submit.prevent="
+            status = 'loading';
+            fetch('/api/contact', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ name, email, message, subject })
+            })
+            .then(r => {
+              status = r.ok ? 'success' : 'error';
+              if (r.ok) posthog.capture('contact_form_submit');
+            })
+            .catch(() => { status = 'error' });
+          ">
+
+      <select name="subject" x-model="subject"
+              :disabled="status === 'loading' || status === 'success'">
+        <option value="Booking">Booking</option>
+        <option value="General" selected>General</option>
+        <option value="Press">Press</option>
+      </select>
+
+      <input type="text" name="name" x-model="name" placeholder="Your name"
+             autocomplete="name" required
+             :disabled="status === 'loading' || status === 'success'">
+
+      <input type="email" name="email" x-model="email" placeholder="your@email.com"
+             autocomplete="email" required
+             :disabled="status === 'loading' || status === 'success'">
+
+      <textarea name="message" x-model="message" placeholder="Your message" required
+                :disabled="status === 'loading' || status === 'success'"></textarea>
+
+      <button type="submit" :disabled="status === 'loading' || status === 'success'">
+        <span x-show="status !== 'loading' && status !== 'success'">Send Message</span>
+        <span x-show="status === 'loading'" style="display:none">Sending...</span>
+        <span x-show="status === 'success'" style="display:none">Sent ✓</span>
+      </button>
+
+      <p x-show="status === 'error'" style="display:none; color: var(--vz-red); font-size: 0.85rem; line-height: 1.5;">
+        Something went wrong. Email us directly at
+        <a href="mailto:{{ .Site.Data.band.email }}" style="color: inherit; text-decoration: underline;">{{ .Site.Data.band.email }}</a>
+      </p>
+
+    </form>
+
+    {{ $social := .Site.Data.social }}
+    {{ if $social }}
+    <div class="vz-contact-social">
+      <span class="vz-contact-social__label">Follow</span>
+      <div class="vz-social-icons">
+        {{ if $social.instagram }}
+        <a href="{{ $social.instagram }}" target="_blank" rel="noopener" aria-label="Instagram"
+           @click="posthog.capture('social_follow_click', { platform: 'instagram' })">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        {{ end }}
+        {{ if $social.tiktok }}
+        <a href="{{ $social.tiktok }}" target="_blank" rel="noopener" aria-label="TikTok"
+           @click="posthog.capture('social_follow_click', { platform: 'tiktok' })">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.75a8.17 8.17 0 0 0 4.78 1.52V6.82a4.85 4.85 0 0 1-1.01-.13z"/></svg>
+        </a>
+        {{ end }}
+        {{ if $social.youtube }}
+        <a href="{{ $social.youtube }}" target="_blank" rel="noopener" aria-label="YouTube"
+           @click="posthog.capture('social_follow_click', { platform: 'youtube' })">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+        {{ end }}
+      </div>
+    </div>
+    {{ end }}
+
+  </section>
+</div>
 {{ end }}
