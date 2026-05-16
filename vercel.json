@@ -1,5 +1,6 @@
 {
-  "buildCommand": "npm run build-tw && hugo --minify",
+  "framework": "hugo",
+  "buildCommand": "hugo --minify",
   "outputDirectory": "public",
-  "installCommand": "npm install"
+  "installCommand": "git submodule update --init --recursive && npm install"
 }
