@@ -451,11 +451,16 @@ body > div.min-h-lvh {
   .vz-nav__toggle {
     display: flex;
     color: var(--vz-black);
+    /* Frosted pill keeps lines visible on any background (dark hero or light page) */
+    background: rgba(255, 255, 255, 0.88);
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
   }
 
-  /* Hero page: hamburger stays white until user scrolls or opens menu */
-  .vz-nav--has-hero:not(.is-scrolled) .vz-nav__toggle:not([aria-expanded="true"]) {
-    color: var(--vz-white);
+  /* Drop pill when nav already has a white background */
+  .vz-nav.is-scrolled .vz-nav__toggle {
+    background: transparent;
   }
 
   .vz-nav__links {

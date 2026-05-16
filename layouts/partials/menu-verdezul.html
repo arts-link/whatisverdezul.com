@@ -1,4 +1,4 @@
-<nav class="vz-nav{{ if .IsHome }} vz-nav--has-hero{{ end }}" x-data="{ open: false, scrolled: false }" @scroll.window="scrolled = window.scrollY > 10" :class="{ 'is-scrolled': scrolled }">
+<nav class="vz-nav" x-data="{ open: false, scrolled: false }" @scroll.window="scrolled = window.scrollY > 10" :class="{ 'is-scrolled': scrolled }">
   <div class="vz-nav__inner">
     <a href="/" class="vz-nav__logo">
       {{ if .Site.Params.logo_png }}
