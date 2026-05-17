@@ -30,21 +30,21 @@ theme = "ryder"
   weight = 10
 
 [[menus.main]]
-  name = "Tour"
-  url = "/tour/"
+  name = "Music"
+  url = "/media/"
   weight = 20
 
 [[menus.main]]
-  name = "Media"
-  url = "/media/"
+  name = "Shows"
+  url = "/tour/"
   weight = 30
-
-[[menus.main]]
-  name = "Shop"
-  url = "/shop/"
-  weight = 40
 
 [[menus.main]]
   name = "Contact"
   url = "/contact/"
+  weight = 40
+
+[[menus.main]]
+  name = "Store"
+  url = "/shop/"
   weight = 50

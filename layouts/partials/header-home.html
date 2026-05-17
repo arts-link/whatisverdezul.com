@@ -1,18 +1,12 @@
-<nav class="vz-nav" x-data="vzNav()" :class="{ 'is-scrolled': scrolled }">
+<nav class="vz-nav vz-nav--home" x-data="vzNav()" :class="{ 'is-scrolled': scrolled }">
   <div class="vz-nav__inner">
-    <a href="/" class="vz-nav__logo">
-      {{ if .Site.Params.logo_png }}
-        <img src="{{ .Site.Params.logo_png }}" alt="{{ .Site.Title }}" class="vz-nav__logo-img" height="40">
-      {{ else }}
-        {{ .Site.Title }}
-      {{ end }}
-    </a>
+    <span></span>
 
     <button class="vz-nav__toggle" @click="open = !open" :aria-expanded="open" aria-label="Toggle menu">
       <span></span><span></span><span></span>
     </button>
 
-    <ul class="vz-nav__links" :class="{ 'is-open': open }">
+    <ul class="vz-nav__links vz-nav__links--pill" :class="{ 'is-open': open }">
       {{ range .Site.Menus.main }}
       <li><a href="{{ .URL }}" {{ if eq $.RelPermalink .URL }}aria-current="page"{{ end }}>{{ .Name }}</a></li>
       {{ end }}
