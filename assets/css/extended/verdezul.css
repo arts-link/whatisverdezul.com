@@ -450,6 +450,17 @@ body > div.min-h-lvh {
 @media (max-width: 768px) {
   .vz-nav__toggle {
     display: flex;
+    color: var(--vz-black);
+    /* Frosted pill keeps lines visible on any background (dark hero or light page) */
+    background: rgba(255, 255, 255, 0.88);
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  /* Drop pill when nav already has a white background */
+  .vz-nav.is-scrolled .vz-nav__toggle {
+    background: transparent;
   }
 
   .vz-nav__links {
@@ -476,6 +487,11 @@ body > div.min-h-lvh {
     display: block;
     padding: 0.75rem 2rem;
     font-size: 0.7rem;
+    color: rgba(10, 10, 10, 0.8);
+  }
+
+  .vz-nav__links a[aria-current="page"] {
+    color: var(--vz-black);
   }
 
   .vz-nav__links a[aria-current="page"]::after {
