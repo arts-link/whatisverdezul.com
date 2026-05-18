@@ -529,6 +529,14 @@ body > div.min-h-lvh {
   }
 }
 
+/* Suppress scrolled white bar on home page */
+.vz-nav--home.is-scrolled {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom-color: transparent;
+}
+
 /* Nav pill variant — home page */
 .vz-nav--home .vz-nav__links--pill {
   background: rgba(255, 255, 255, 0.12);
