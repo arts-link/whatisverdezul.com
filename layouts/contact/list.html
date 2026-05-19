@@ -1,11 +1,11 @@
 {{ define "main" }}
-<div style="min-height: calc(100vh - 96px);">
-  <section class="vz-section" style="max-width: 540px; margin: 0 auto;">
+<div class="vz-page--dark" style="min-height: calc(100vh - 96px); padding: 0 1.5rem;">
+  <section class="vz-section vz-neon-box" style="max-width: 540px; margin: 0 auto;">
 
     <span class="vz-section-label">Contact</span>
     <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.05; margin-bottom: 1.5rem;">Get in Touch</h1>
 
-    <p style="opacity: 0.55; font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.75rem;">
+    <p style="opacity: 0.55; font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.75rem; color: var(--vz-white);">
       Booking, press, and general inquiries.
     </p>
 
@@ -13,7 +13,7 @@
       {{ .Site.Data.band.email }}
     </a>
 
-    <form class="vz-contact-form"
+<form class="vz-contact-form"
           x-data="{ name: '', email: '', message: '', subject: 'General', status: '' }"
           @submit.prevent="
             status = 'loading';

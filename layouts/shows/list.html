@@ -1,7 +1,6 @@
 {{ define "main" }}
 <section class="vz-section vz-shows-section">
   <span class="vz-section-label">Shows</span>
-  <h1 class="vz-shows-heading">Shows</h1>
 
   {{ $tour := sort .Site.Data.tour "date" "desc" }}
   {{ if $tour }}

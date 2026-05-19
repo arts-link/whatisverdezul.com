@@ -1,12 +1,18 @@
-<nav class="vz-nav vz-nav--home vz-nav--hero" x-data="vzNav()" @click.outside="open = false">
+<nav class="vz-nav vz-nav--dark" x-data="vzNav()" @click.outside="open = false">
   <div class="vz-nav__inner">
-    <span></span>
+    <a href="/" class="vz-nav__logo">
+      {{ if .Site.Params.logo_png }}
+        <img src="{{ .Site.Params.logo_png }}" alt="{{ .Site.Title }}" class="vz-nav__logo-img" height="40">
+      {{ else }}
+        {{ .Site.Title }}
+      {{ end }}
+    </a>
 
     <button class="vz-nav__toggle" @click="open = !open" :aria-expanded="open" aria-label="Toggle menu">
       <span></span><span></span><span></span>
     </button>
 
-    <ul class="vz-nav__links vz-nav__links--pill" :class="{ 'is-open': open }">
+    <ul class="vz-nav__links" :class="{ 'is-open': open }">
       {{ range .Site.Menus.main }}
       <li><a href="{{ .URL }}" {{ if eq $.RelPermalink .URL }}aria-current="page"{{ end }}>{{ .Name }}</a></li>
       {{ end }}

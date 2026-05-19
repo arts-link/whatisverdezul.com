@@ -25,18 +25,18 @@ theme = "ryder"
   home = ["HTML", "RSS", "LLMSTxt"]
 
 [[menus.main]]
-  name = "About"
-  url = "/about/"
-  weight = 10
-
-[[menus.main]]
   name = "Music"
   url = "/music/"
-  weight = 20
+  weight = 10
 
 [[menus.main]]
   name = "Shows"
   url = "/shows/"
+  weight = 20
+
+[[menus.main]]
+  name = "About"
+  url = "/about/"
   weight = 30
 
 [[menus.main]]

@@ -5,7 +5,7 @@
     "year": 2025,
     "song_count": 6,
     "cover_image": "/images/album-ETASOBAG.jpg",
-    "spotify_url": "https://open.spotify.com/artist/1zf7vVM2XaoaTD3hXWR1If",
+    "spotify_url": "https://open.spotify.com/album/41MixYv9THV7OBZcxUv1Qj",
     "apple_music_url": "",
     "featured": true
   },
@@ -14,8 +14,8 @@
     "type": "Single",
     "year": 2025,
     "song_count": 1,
-    "cover_image": "/images/album-PCE.jpg",
-    "spotify_url": "",
+    "cover_image": "/images/album-EPC.jpg",
+    "spotify_url": "https://open.spotify.com/album/0p84uJOIlfwpqcXnS7ynC2",
     "apple_music_url": "",
     "featured": false
   },
@@ -24,8 +24,8 @@
     "type": "Single",
     "year": 2024,
     "song_count": 1,
-    "cover_image": "/images/album-i-tell-yah.jpg",
-    "spotify_url": "",
+    "cover_image": "/images/album-i-tell-ya.jpg",
+    "spotify_url": "https://open.spotify.com/album/7Ij3uhwwb7my0AH1nxFY2C",
     "apple_music_url": "",
     "featured": false
   },
@@ -35,7 +35,7 @@
     "year": 2024,
     "song_count": 1,
     "cover_image": "/images/album-love-somebody.jpg",
-    "spotify_url": "",
+    "spotify_url": "https://open.spotify.com/album/0JwRAoMCbBdAfPNNSSbLsC",
     "apple_music_url": "",
     "featured": false
   },
@@ -45,7 +45,7 @@
     "year": 2023,
     "song_count": 3,
     "cover_image": "/images/album-GreenPack.jpg",
-    "spotify_url": "",
+    "spotify_url": "https://open.spotify.com/album/5dCZZkQMObk1WuiupTgyV0",
     "apple_music_url": "",
     "featured": false
   },
@@ -55,7 +55,7 @@
     "year": 2023,
     "song_count": 1,
     "cover_image": "/images/album-taxes-finnah-hit.png",
-    "spotify_url": "",
+    "spotify_url": "https://open.spotify.com/album/0bYOtOwlikOYQc5TkkRo2e",
     "apple_music_url": "",
     "featured": false
   }
