@@ -1,0 +1,36 @@
+{{ define "main" }}
+<section class="vz-section vz-shows-section">
+  <span class="vz-section-label">Shows</span>
+  <h1 class="vz-shows-heading">Shows</h1>
+
+  {{ $tour := sort .Site.Data.tour "date" "desc" }}
+  {{ if $tour }}
+  <ul class="vz-tour-list">
+    {{ range $tour }}
+    <li class="vz-tour-item">
+      <div class="vz-tour-main">
+        <div class="vz-tour-city">{{ .city }}</div>
+        <div class="vz-tour-meta">
+          <span class="vz-tour-date">{{ dateFormat "Mon, Jan 2, 2006" .date }}</span>
+          <span class="vz-tour-sep">·</span>
+          <span class="vz-tour-venue">{{ .venue }}</span>
+        </div>
+        {{ with .description }}<div class="vz-tour-desc">{{ . }}</div>{{ end }}
+      </div>
+      <div class="vz-tour-action">
+        {{ if .sold_out }}
+          <span class="vz-btn-sold-out">Sold Out</span>
+        {{ else if .ticket_url }}
+          <a class="vz-btn-tickets" href="{{ .ticket_url }}" target="_blank" rel="noopener">Tickets</a>
+        {{ else }}
+          <span class="vz-btn-tba">Tickets TBA</span>
+        {{ end }}
+      </div>
+    </li>
+    {{ end }}
+  </ul>
+  {{ else }}
+  <p class="vz-shows-empty">No shows scheduled. Check back soon.</p>
+  {{ end }}
+</section>
+{{ end }}

@@ -41,7 +41,7 @@
 {{ end }}
 
 {{/* MusicAlbum schema — home and media pages */}}
-{{ if or (eq .RelPermalink "/") (eq .RelPermalink "/media/") }}
+{{ if or (eq .RelPermalink "/") (eq .RelPermalink "/music/") }}
 {{ range where .Site.Data.releases "featured" true }}
 <script type="application/ld+json">
 {

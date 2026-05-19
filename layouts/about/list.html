@@ -1,11 +1,22 @@
 {{ define "main" }}
-<article class="vz-section" style="max-width: 720px; margin: 0 auto;">
+<div class="w-full overflow-hidden leading-none">
+  <picture>
+    <source media="(max-width: 767px)" srcset="/images/premium_photo-about-portrait-reflection.png">
+    <img src="/images/premium_photo-about-landscape-reflection.jpg" alt="" class="w-full block object-cover object-center" style="max-height: 80vh;">
+  </picture>
+</div>
+
+<div class="max-w-5xl mx-auto px-8 pt-12">
+  <p class="italic font-light text-neutral-900 text-2xl md:text-3xl leading-snug m-0 text-center">We are in the world, not of the world, but we reflect the world.</p>
+</div>
+
+<article class="max-w-2xl mx-auto px-8 py-12">
   <span class="vz-section-label">About</span>
-  <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 2rem;">{{ .Site.Data.band.name }}</h1>
-  <img src="/images/verdezul-group-1.jpg" alt="Verdèzul" style="width: 100%; height: auto; margin-bottom: 2rem; display: block;">
-  <div style="font-size: 1.05rem; line-height: 1.75; opacity: 0.85;">
+  <h1 class="text-4xl md:text-5xl font-black mb-8">{{ .Site.Data.band.name }}</h1>
+  <img src="/images/verdezul-group-1.jpg" alt="Verdèzul" class="w-full h-auto mb-8 block">
+  <div class="text-base leading-relaxed opacity-85">
     {{ .Content }}
   </div>
-  <p style="margin-top: 2rem; font-size: 0.875rem; opacity: 0.5;">{{ .Site.Data.band.location }}</p>
+  <p class="mt-8 text-sm opacity-50">{{ .Site.Data.band.location }}</p>
 </article>
 {{ end }}

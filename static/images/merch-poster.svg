@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+  <rect width="600" height="600" fill="#2d5a27"/>
+  <text x="300" y="255" font-family="Georgia, serif" font-size="28" fill="rgba(255,255,255,0.4)" text-anchor="middle" letter-spacing="4">VERDÈZUL</text>
+  <text x="300" y="300" font-family="Georgia, serif" font-size="13" fill="rgba(255,255,255,0.25)" text-anchor="middle" letter-spacing="6">TOUR POSTER</text>
+  <text x="300" y="335" font-family="Georgia, serif" font-size="13" fill="rgba(255,255,255,0.2)" text-anchor="middle" letter-spacing="4">COMING SOON</text>
+  <line x1="200" y1="360" x2="400" y2="360" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+</svg>

@@ -1,0 +1,27 @@
+{{ define "main" }}
+<section class="vz-section">
+  <span class="vz-section-label">Music</span>
+  <h1 class="vz-music-heading">Watch & Listen</h1>
+
+  <nav class="vz-music-subnav">
+    <a href="/music/" class="vz-music-subnav__link">Albums</a>
+    <a href="/music/streaming/" class="vz-music-subnav__link is-active">Streaming</a>
+  </nav>
+
+  <h2 class="vz-music-section-label">Videos</h2>
+  <div class="vz-video-grid">
+    {{ partial "youtube-embed.html" (dict "id" "Op1oF2qy_ek" "title" "Taxes Finnah Hit") }}
+    {{ partial "youtube-embed.html" (dict "id" "VcY5WYEnxH8" "title" "I Tell Ya") }}
+  </div>
+
+  <h2 class="vz-music-section-label">Listen</h2>
+  <div class="vz-spotify-wrap"
+       @click="posthog.capture('spotify_play_click', { release_title: 'ETASOBAG' })">
+    <iframe
+      src="https://open.spotify.com/embed/artist/1zf7vVM2XaoaTD3hXWR1If?utm_source=generator"
+      width="100%" height="352" loading="lazy"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+    </iframe>
+  </div>
+</section>
+{{ end }}

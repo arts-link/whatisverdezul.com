@@ -69,87 +69,363 @@
 }
 
 /* Tour list */
-.vz-tour-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+/* Shows / Tour */
+.vz-shows-section {
+  max-width: 860px;
 }
 
-.vz-tour-item {
-  display: grid;
-  grid-template-columns: 6rem 1fr auto;
-  gap: 1.5rem;
-  align-items: center;
-  padding: 1.25rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+/* Music section */
+.vz-music-heading {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  margin-bottom: 2rem;
 }
 
-.vz-tour-date {
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
+.vz-music-subnav {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid rgba(10, 10, 10, 0.1);
+  padding-bottom: 0;
+}
+
+.vz-music-subnav__link {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--vz-green);
+  text-decoration: none;
+  color: rgba(10, 10, 10, 0.4);
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s;
 }
 
-.vz-tour-venue {
-  font-weight: 600;
+.vz-music-subnav__link:hover {
+  color: var(--vz-black);
 }
 
-.vz-tour-city {
-  font-size: 0.875rem;
-  opacity: 0.6;
+.vz-music-subnav__link.is-active {
+  color: var(--vz-black);
+  border-bottom-color: var(--vz-green);
 }
 
-/* Release cards */
-.vz-releases {
+.vz-releases-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+}
+
+@media (max-width: 640px) {
+  .vz-releases-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .vz-release-card {
-  position: relative;
-  aspect-ratio: 1;
-  overflow: hidden;
-  background: var(--vz-black);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
-.vz-release-card img {
+.vz-release-card__art {
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: rgba(10, 10, 10, 0.05);
+}
+
+.vz-release-card__art img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  display: block;
+  transition: transform 0.3s ease;
 }
 
-.vz-release-card:hover img {
-  transform: scale(1.04);
+.vz-release-card:hover .vz-release-card__art img {
+  transform: scale(1.03);
 }
 
 .vz-release-card__info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 1rem;
-  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  background: rgba(10, 10, 10, 0.04);
+  border: 1px solid rgba(10, 10, 10, 0.08);
+  border-top: none;
+  padding: 0.85rem 1rem;
 }
+
+.vz-release-card__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.vz-release-card__meta {
+  font-size: 0.7rem;
+  color: rgba(10, 10, 10, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.vz-release-card__dot {
+  opacity: 0.4;
+}
+
+.vz-release-card__link {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--vz-green);
+  text-decoration: none;
+  margin-top: 0.25rem;
+}
+
+.vz-release-card__link:hover {
+  text-decoration: underline;
+}
+
+.vz-music-section-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin-bottom: 1.5rem;
+}
+
+.vz-video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.vz-spotify-wrap {
+  margin-bottom: 4rem;
+}
+
+.vz-shows-heading {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin-bottom: 0;
+  line-height: 1;
+}
+
+.vz-tour-list {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0 0;
+}
+
+.vz-tour-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.vz-tour-city {
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: #4a9a5e;
+}
+
+.vz-tour-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+  font-size: 1rem;
+}
+
+.vz-tour-date {
+  font-weight: 600;
+  color: var(--vz-black);
+}
+
+.vz-tour-sep {
+  color: var(--vz-black);
+  opacity: 0.3;
+}
+
+.vz-tour-venue {
+  color: var(--vz-black);
+  opacity: 0.65;
+}
+
+.vz-tour-desc {
+  margin-top: 0.4rem;
+  font-size: 0.825rem;
+  color: var(--vz-black);
+  opacity: 0.4;
+}
+
+.vz-tour-action {
+  margin-top: 0.25rem;
+}
+
+.vz-btn-tickets {
+  display: block;
+  width: 100%;
+  padding: 1rem 2rem;
+  background: var(--vz-green);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.vz-btn-tickets:hover {
+  background: #3a7a4a;
+  transform: translateY(-1px);
+}
+
+.vz-btn-sold-out {
+  display: block;
+  width: 100%;
+  padding: 1rem 2rem;
+  border: 2px solid rgba(0,0,0,0.15);
+  color: rgba(0,0,0,0.3);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.vz-btn-tba {
+  display: block;
+  width: 100%;
+  padding: 1rem 2rem;
+  border: 2px solid rgba(0,0,0,0.12);
+  color: rgba(0,0,0,0.3);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.vz-shows-empty {
+  opacity: 0.5;
+  margin-top: 2rem;
+}
+
+@media (min-width: 640px) {
+  .vz-tour-item {
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .vz-tour-main {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .vz-tour-action {
+    flex-shrink: 0;
+    width: 180px;
+    margin-top: 0;
+  }
+
+  .vz-btn-tickets,
+  .vz-btn-sold-out,
+  .vz-btn-tba {
+    width: 180px;
+  }
+}
+
 
 /* Merch grid */
 .vz-merch-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2.5rem;
 }
 
-.vz-merch-item img {
-  width: 100%;
+.vz-merch-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.vz-merch-item__art {
   aspect-ratio: 1;
+  overflow: hidden;
+  background: rgba(10, 10, 10, 0.05);
+}
+
+.vz-merch-item__art img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.3s ease;
+}
+
+.vz-merch-item:hover .vz-merch-item__art img {
+  transform: scale(1.03);
 }
 
 .vz-merch-item__info {
-  padding: 1rem 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  background: rgba(10, 10, 10, 0.04);
+  border: 1px solid rgba(10, 10, 10, 0.08);
+  border-top: none;
+  padding: 1rem;
+}
+
+.vz-merch-item__name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.vz-merch-item__desc {
+  font-size: 0.75rem;
+  color: rgba(10, 10, 10, 0.5);
+  line-height: 1.4;
+}
+
+.vz-merch-item__price {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.vz-btn-buy {
+  margin-top: 0.5rem;
+  background: var(--vz-green);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 100%;
+  transition: opacity 0.2s;
+}
+
+.vz-btn-buy:hover {
+  opacity: 0.85;
 }
 
 /* Email form */
@@ -345,45 +621,23 @@
 /* ─── NAV ─── */
 
 body {
-  padding-top: 96px;
   background-color: #f5f5f5 !important;
   color: #0a0a0a !important;
 }
 
-/* Ryder's wrapper has min-h-lvh; subtract nav height so page = exactly 100vh */
-body > div.min-h-lvh {
-  min-height: calc(100lvh - 96px);
-}
-
-/* Hero starts at full viewport behind the nav */
-.vz-hero {
-  margin-top: -96px;
-}
-
 .vz-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: relative;
   z-index: 100;
-  height: 96px;
+  height: auto;
   border-bottom: 1px solid transparent;
-  transition: background 0.35s ease, border-color 0.35s ease, backdrop-filter 0.35s ease;
-}
-
-.vz-nav.is-scrolled {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom-color: rgba(0, 0, 0, 0.08);
 }
 
 .vz-nav__inner {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   height: 100%;
-  padding: 0 2rem;
+  padding: 2rem 2rem 1.5rem;
   max-width: 1440px;
   margin: 0 auto;
 }
@@ -396,8 +650,9 @@ body > div.min-h-lvh {
 }
 
 .vz-nav__logo-img {
-  height: 84px;
-  width: auto;
+  width: 200px;
+  max-width: 50vw;
+  height: auto;
   display: block;
 }
 
@@ -486,6 +741,8 @@ body > div.min-h-lvh {
     border-radius: 4px;
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
+    position: relative;
+    z-index: 200;
   }
 
   /* Drop pill when nav already has a white background */
@@ -495,10 +752,11 @@ body > div.min-h-lvh {
 
   .vz-nav__links {
     display: none;
-    position: absolute;
-    top: 96px;
+    position: fixed;
+    top: 0;
     left: 0;
     right: 0;
+    z-index: 150;
     flex-direction: column;
     align-items: flex-start;
     gap: 0;
@@ -529,12 +787,16 @@ body > div.min-h-lvh {
   }
 }
 
-/* Suppress scrolled white bar on home page */
-.vz-nav--home.is-scrolled {
-  background: transparent;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  border-bottom-color: transparent;
+/* Home nav floats over content — no stripe */
+.vz-nav--home {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+body:has(.vz-nav--home) > div:not(.fixed) {
+  position: relative;
 }
 
 /* Nav pill variant — home page */

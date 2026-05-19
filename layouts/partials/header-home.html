@@ -1,4 +1,4 @@
-<nav class="vz-nav vz-nav--home" x-data="vzNav()" :class="{ 'is-scrolled': scrolled }">
+<nav class="vz-nav vz-nav--home" x-data="vzNav()" @click.outside="open = false">
   <div class="vz-nav__inner">
     <span></span>
 

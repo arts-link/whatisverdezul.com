@@ -7,7 +7,7 @@ theme = "ryder"
   description = "Official site for Verdèzul — Los Angeles-based band. Music, tour dates, merch."
   analytics_provider = "posthog"
   showDarkToggle = false
-  logo_png = "/images/logo-header.png"
+  logo_png = "/images/logo-trans-512.png"
   headerType = "-verdezul"
   footerType = "-verdezul"
   menuType = "-verdezul"
@@ -31,12 +31,12 @@ theme = "ryder"
 
 [[menus.main]]
   name = "Music"
-  url = "/media/"
+  url = "/music/"
   weight = 20
 
 [[menus.main]]
   name = "Shows"
-  url = "/tour/"
+  url = "/shows/"
   weight = 30
 
 [[menus.main]]
@@ -45,6 +45,6 @@ theme = "ryder"
   weight = 40
 
 [[menus.main]]
-  name = "Store"
+  name = "Shop"
   url = "/shop/"
   weight = 50

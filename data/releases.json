@@ -1,12 +1,62 @@
 [
   {
-    "title": "ETASOBAG",
-    "type": "album",
+    "title": "Earthtones & Shades of Blue and Green",
+    "type": "EP",
     "year": 2025,
-    "description": "Earthtones and Shades of Blue and Green — debut album.",
+    "song_count": 6,
+    "cover_image": "/images/album-ETASOBAG.jpg",
     "spotify_url": "https://open.spotify.com/artist/1zf7vVM2XaoaTD3hXWR1If",
     "apple_music_url": "",
-    "cover_image": "/images/ETASOBAG.jpg",
     "featured": true
+  },
+  {
+    "title": "EPC",
+    "type": "Single",
+    "year": 2025,
+    "song_count": 1,
+    "cover_image": "/images/album-PCE.jpg",
+    "spotify_url": "",
+    "apple_music_url": "",
+    "featured": false
+  },
+  {
+    "title": "I Tell Ya",
+    "type": "Single",
+    "year": 2024,
+    "song_count": 1,
+    "cover_image": "/images/album-i-tell-yah.jpg",
+    "spotify_url": "",
+    "apple_music_url": "",
+    "featured": false
+  },
+  {
+    "title": "Love Somebody",
+    "type": "Single",
+    "year": 2024,
+    "song_count": 1,
+    "cover_image": "/images/album-love-somebody.jpg",
+    "spotify_url": "",
+    "apple_music_url": "",
+    "featured": false
+  },
+  {
+    "title": "Green Pack",
+    "type": "Single",
+    "year": 2023,
+    "song_count": 3,
+    "cover_image": "/images/album-GreenPack.jpg",
+    "spotify_url": "",
+    "apple_music_url": "",
+    "featured": false
+  },
+  {
+    "title": "Taxes Finnah Hit",
+    "type": "Single",
+    "year": 2023,
+    "song_count": 1,
+    "cover_image": "/images/album-taxes-finnah-hit.png",
+    "spotify_url": "",
+    "apple_music_url": "",
+    "featured": false
   }
 ]

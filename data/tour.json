@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "date": "2026-07-12",
+    "venue": "Kia Forum",
+    "city": "Inglewood, CA",
+    "ticket_url": ""
+  },
+  {
+    "date": "2026-08-29",
+    "venue": "Crypto.com Arena",
+    "city": "Los Angeles, CA",
+    "ticket_url": ""
+  },
+  {
+    "date": "2026-10-03",
+    "venue": "Intuit Dome",
+    "city": "Inglewood, CA",
+    "ticket_url": ""
+  },
+  {
+    "date": "2025-04-19",
+    "venue": "Orpheum Theatre",
+    "city": "Los Angeles, CA",
+    "ticket_url": ""
+  }
+]
