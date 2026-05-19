@@ -659,9 +659,9 @@ body {
 .vz-nav__links {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 2.75rem;
   list-style: none;
-  margin: 0;
+  margin: 0 0 0 auto;
   padding: 0;
 }
 
@@ -671,32 +671,40 @@ body {
 }
 
 .vz-nav__links a {
-  font-size: 0.65rem;
-  letter-spacing: 0.2em;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: rgba(10, 10, 10, 0.5);
+  color: rgba(10, 10, 10, 0.55);
   text-decoration: none;
   transition: color 0.2s;
   position: relative;
-  padding-bottom: 2px;
+  padding-bottom: 4px;
+}
+
+.vz-nav__links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  right: 50%;
+  height: 2px;
+  background: var(--vz-green);
+  transition: left 0.25s ease, right 0.25s ease;
 }
 
 .vz-nav__links a:hover {
   color: var(--vz-black);
 }
 
-.vz-nav__links a[aria-current="page"] {
-  color: var(--vz-black);
-}
-
+.vz-nav__links a:hover::after,
 .vz-nav__links a[aria-current="page"]::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
   left: 0;
   right: 0;
-  height: 1px;
-  background: var(--vz-green);
+}
+
+.vz-nav__links a[aria-current="page"] {
+  color: var(--vz-black);
 }
 
 /* Hamburger */
