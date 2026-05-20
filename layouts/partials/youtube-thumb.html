@@ -1,5 +1,7 @@
 <button class="vz-video-thumb"
-        @click="open('{{ .id }}')"
+        data-video-id="{{ .id }}"
+        data-video-title="{{ .title }}"
+        @click="openVideo"
         aria-label="Play {{ .title }}">
   <img src="https://img.youtube.com/vi/{{ .id }}/maxresdefault.jpg"
        alt="{{ .title }}" loading="lazy">

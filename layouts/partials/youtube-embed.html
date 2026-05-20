@@ -1,5 +1,6 @@
+{{ $youtubeEvent := dict "video_id" .id "video_title" .title }}
 <div class="vz-embed-16x9"
-     @click="posthog.capture('youtube_play_click', { video_id: '{{ .id }}', video_title: '{{ .title }}' })">
+     @click="window.posthog && posthog.capture('youtube_play_click', {{ $youtubeEvent | jsonify }})">
   <iframe
     src="https://www.youtube-nocookie.com/embed/{{ .id }}"
     title="{{ .title }}"

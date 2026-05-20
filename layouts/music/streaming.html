@@ -18,8 +18,9 @@
   </div>
 
   <h2 class="vz-music-section-label">Listen</h2>
+  {{ $spotifyEvent := dict "release_title" "ETASOBAG" }}
   <div class="vz-spotify-wrap"
-       @click="posthog.capture('spotify_play_click', { release_title: 'ETASOBAG' })">
+       @click="window.posthog && posthog.capture('spotify_play_click', {{ $spotifyEvent | jsonify }})">
     <iframe
       src="https://open.spotify.com/embed/artist/1zf7vVM2XaoaTD3hXWR1If?utm_source=generator"
       width="100%" height="352" loading="lazy"

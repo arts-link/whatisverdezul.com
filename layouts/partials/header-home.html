@@ -8,7 +8,8 @@
 
     <ul class="vz-nav__links vz-nav__links--pill" :class="{ 'is-open': open }">
       {{ range .Site.Menus.main }}
-      <li><a href="{{ .URL }}" {{ if eq $.RelPermalink .URL }}aria-current="page"{{ end }}>{{ .Name }}</a></li>
+      {{ $isCurrent := or (eq $.RelPermalink .URL) (and (ne .URL "/") (hasPrefix $.RelPermalink .URL)) }}
+      <li><a href="{{ .URL }}" {{ if $isCurrent }}aria-current="page"{{ end }}>{{ .Name }}</a></li>
       {{ end }}
       {{ if gt (len $.Site.Data.press) 0 }}
       <li><a href="/press/" {{ if eq $.RelPermalink "/press/" }}aria-current="page"{{ end }}>Press</a></li>

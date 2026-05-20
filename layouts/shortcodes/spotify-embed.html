@@ -1,5 +1,6 @@
+{{ $spotifyEvent := dict "release_title" (.Get "title") }}
 <div class="vz-spotify-embed"
-     @click="posthog.capture('spotify_play_click', { release_title: '{{ .Get "title" }}' })">
+     @click="window.posthog && posthog.capture('spotify_play_click', {{ $spotifyEvent | jsonify }})">
   <iframe
     src="https://open.spotify.com/embed/{{ .Get "type" | default "artist" }}/{{ .Get "id" }}?utm_source=generator"
     width="100%"

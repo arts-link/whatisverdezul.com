@@ -1185,9 +1185,9 @@ body:has(.vz-nav--home) > div:not(.fixed) {
 
 .vz-footer__copy {
   font-size: 0.6rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(245, 240, 232, 0.6);
+  color: #ffffff;
 }
 
 .vz-footer__socials {
@@ -1209,14 +1209,15 @@ body:has(.vz-nav--home) > div:not(.fixed) {
 
 .vz-footer__contact {
   font-size: 0.6rem;
-  letter-spacing: 0.1em;
-  color: rgba(245, 240, 232, 0.55);
+  letter-spacing: 0.22em;
+  color: #ffffff;
   text-decoration: none;
   transition: color 0.2s;
+  text-transform: uppercase;
 }
 
 .vz-footer__contact:hover {
-  color: rgba(232, 224, 208, 0.6);
+  color: #e8e0d0;
 }
 
 @media (max-width: 768px) {

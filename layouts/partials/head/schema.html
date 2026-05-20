@@ -1,57 +1,53 @@
 {{/* MusicGroup schema — present on all pages */}}
+{{- $sameAs := slice -}}
+{{- with .Site.Data.social.instagram }}{{ $sameAs = $sameAs | append . }}{{ end -}}
+{{- with .Site.Data.social.tiktok }}{{ $sameAs = $sameAs | append . }}{{ end -}}
+{{- with .Site.Data.social.youtube }}{{ $sameAs = $sameAs | append . }}{{ end -}}
+{{- with .Site.Data.social.spotify }}{{ $sameAs = $sameAs | append . }}{{ end -}}
+{{- $musicGroup := dict
+  "@context" "https://schema.org"
+  "@type" "MusicGroup"
+  "name" "Verdèzul"
+  "url" .Site.BaseURL
+  "email" .Site.Data.band.email
+  "foundingLocation" (dict "@type" "Place" "name" "Los Angeles, CA")
+  "sameAs" $sameAs
+-}}
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "MusicGroup",
-  "name": "Verdèzul",
-  "url": "{{ .Site.BaseURL }}",
-  "email": "{{ .Site.Data.band.email }}",
-  "foundingLocation": {
-    "@type": "Place",
-    "name": "Los Angeles, CA"
-  },
-  "sameAs": [
-    {{ with .Site.Data.social.instagram }}"{{ . }}"{{ end }}
-    {{ with .Site.Data.social.tiktok }}, "{{ . }}"{{ end }}
-    {{ with .Site.Data.social.youtube }}, "{{ . }}"{{ end }}
-    {{ with .Site.Data.social.spotify }}, "{{ . }}"{{ end }}
-  ]
-}
+{{ $musicGroup | jsonify | safeJS }}
 </script>
 
-{{/* MusicEvent schema — tour page only */}}
-{{ if eq .RelPermalink "/tour/" }}
+{{/* MusicEvent schema — shows page only */}}
+{{ if eq .RelPermalink "/shows/" }}
 {{ range .Site.Data.tour }}
+{{- $event := dict
+  "@context" "https://schema.org"
+  "@type" "MusicEvent"
+  "name" (printf "Verdèzul at %s" .venue)
+  "startDate" .date
+  "location" (dict "@type" "Place" "name" .venue "address" .city)
+  "performer" (dict "@type" "MusicGroup" "name" "Verdèzul")
+-}}
+{{- with .ticket_url }}{{ $event = merge $event (dict "url" .) }}{{ end -}}
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "MusicEvent",
-  "name": "Verdèzul at {{ .venue }}",
-  "startDate": "{{ .date }}",
-  "location": {
-    "@type": "Place",
-    "name": "{{ .venue }}",
-    "address": "{{ .city }}"
-  },
-  "performer": { "@type": "MusicGroup", "name": "Verdèzul" }
-  {{ with .ticket_url }}, "url": "{{ . }}"{{ end }}
-}
+{{ $event | jsonify | safeJS }}
 </script>
 {{ end }}
 {{ end }}
 
-{{/* MusicAlbum schema — home and media pages */}}
+{{/* MusicAlbum schema — home and music pages */}}
 {{ if or (eq .RelPermalink "/") (eq .RelPermalink "/music/") }}
 {{ range where .Site.Data.releases "featured" true }}
+{{- $album := dict
+  "@context" "https://schema.org"
+  "@type" "MusicAlbum"
+  "name" .title
+  "byArtist" (dict "@type" "MusicGroup" "name" "Verdèzul")
+  "datePublished" (printf "%v" .year)
+-}}
+{{- with .spotify_url }}{{ $album = merge $album (dict "url" .) }}{{ end -}}
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "MusicAlbum",
-  "name": "{{ .title }}",
-  "byArtist": { "@type": "MusicGroup", "name": "Verdèzul" },
-  "datePublished": "{{ .year }}"
-  {{ with .spotify_url }}, "url": "{{ . }}"{{ end }}
-}
+{{ $album | jsonify | safeJS }}
 </script>
 {{ end }}
 {{ end }}

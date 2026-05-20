@@ -26,7 +26,9 @@
           {{ .song_count }} {{ if eq (int .song_count) 1 }}song{{ else }}songs{{ end }}
         </div>
         {{ if .spotify_url }}
-        <a class="vz-release-card__link" href="{{ .spotify_url }}" target="_blank" rel="noopener">Listen on Spotify</a>
+        {{ $spotifyEvent := dict "release_title" .title }}
+        <a class="vz-release-card__link" href="{{ .spotify_url }}" target="_blank" rel="noopener"
+           @click="window.posthog && posthog.capture('spotify_play_click', {{ $spotifyEvent | jsonify }})">Listen on Spotify</a>
         {{ end }}
       </div>
     </li>

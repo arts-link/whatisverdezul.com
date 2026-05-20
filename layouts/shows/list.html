@@ -20,7 +20,9 @@
         {{ if .sold_out }}
           <span class="vz-btn-sold-out">Sold Out</span>
         {{ else if .ticket_url }}
-          <a class="vz-btn-tickets" href="{{ .ticket_url }}" target="_blank" rel="noopener">Tickets</a>
+          {{ $ticketEvent := dict "venue" .venue "date" .date "city" .city }}
+          <a class="vz-btn-tickets" href="{{ .ticket_url }}" target="_blank" rel="noopener"
+             @click="window.posthog && posthog.capture('ticket_link_click', {{ $ticketEvent | jsonify }})">Tickets</a>
         {{ else }}
           <span class="vz-btn-tba">Tickets TBA</span>
         {{ end }}
