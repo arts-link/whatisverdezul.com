@@ -202,6 +202,112 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
   margin-bottom: 4rem;
+  position: relative;
+}
+
+/* Video thumbnail */
+.vz-video-thumb {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: #000;
+}
+
+.vz-video-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.vz-video-thumb:hover img {
+  transform: scale(1.03);
+  opacity: 0.75;
+}
+
+.vz-video-thumb__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.2);
+  transition: background 0.2s;
+}
+
+.vz-video-thumb:hover .vz-video-thumb__overlay {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.vz-video-thumb__play {
+  width: 56px;
+  height: 56px;
+  color: #fff;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6));
+  transition: transform 0.2s;
+}
+
+.vz-video-thumb:hover .vz-video-thumb__play {
+  transform: scale(1.12);
+}
+
+.vz-video-thumb__title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: linear-gradient(transparent, rgba(0,0,0,0.65));
+  text-align: left;
+}
+
+/* Lightbox modal */
+.vz-video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: opacity 0.2s;
+}
+
+.vz-video-modal__inner {
+  position: relative;
+  width: 90vw;
+  max-width: 1000px;
+}
+
+.vz-video-modal__close {
+  position: absolute;
+  top: -2.5rem;
+  right: 0;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.7);
+  font-size: 1.25rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.25rem 0.5rem;
+  transition: color 0.15s;
+}
+
+.vz-video-modal__close:hover {
+  color: #fff;
 }
 
 .vz-spotify-wrap {

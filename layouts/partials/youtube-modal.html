@@ -1,0 +1,17 @@
+<div class="vz-video-modal"
+     x-show="activeVideo"
+     @click.self="close()"
+     style="display: none;">
+  <div class="vz-video-modal__inner">
+    <button class="vz-video-modal__close" @click="close()" aria-label="Close">✕</button>
+    <div class="vz-embed-16x9">
+      <iframe
+        x-ref="frame"
+        src=""
+        title="YouTube video"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</div>

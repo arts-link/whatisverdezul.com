@@ -1,0 +1,12 @@
+<button class="vz-video-thumb"
+        @click="open('{{ .id }}')"
+        aria-label="Play {{ .title }}">
+  <img src="https://img.youtube.com/vi/{{ .id }}/maxresdefault.jpg"
+       alt="{{ .title }}" loading="lazy">
+  <div class="vz-video-thumb__overlay">
+    <svg class="vz-video-thumb__play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M8 5v14l11-7z"/>
+    </svg>
+  </div>
+  <span class="vz-video-thumb__title">{{ .title }}</span>
+</button>

@@ -16,6 +16,7 @@ theme = "ryder"
 
 [params.csp]
   frameSrc = "https://www.youtube-nocookie.com https://open.spotify.com"
+  imgSrc = "https://img.youtube.com"
 
 [security]
   [security.funcs]
