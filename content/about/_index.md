@@ -1,5 +1,6 @@
 ---
 title: "About"
+og_image: "/images/og/og-about.png"
 description: "Verdèzul is a Los Angeles-based band. We are in the world, not of the world, but we reflect the world around us."
 ---
 

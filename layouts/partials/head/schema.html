@@ -4,12 +4,15 @@
 {{- with .Site.Data.social.tiktok }}{{ $sameAs = $sameAs | append . }}{{ end -}}
 {{- with .Site.Data.social.youtube }}{{ $sameAs = $sameAs | append . }}{{ end -}}
 {{- with .Site.Data.social.spotify }}{{ $sameAs = $sameAs | append . }}{{ end -}}
+{{- $ogImage := .Param "og_image" | default "/images/og/og-home.png" -}}
+{{- $ogImageAbsolute := printf "%s%s" (strings.TrimSuffix "/" .Site.BaseURL) $ogImage -}}
 {{- $musicGroup := dict
   "@context" "https://schema.org"
   "@type" "MusicGroup"
   "name" "Verdèzul"
   "url" .Site.BaseURL
   "email" .Site.Data.band.email
+  "image" $ogImageAbsolute
   "foundingLocation" (dict "@type" "Place" "name" "Los Angeles, CA")
   "sameAs" $sameAs
 -}}

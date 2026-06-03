@@ -13,6 +13,7 @@ theme = "ryder"
   menuType = "-verdezul"
   showHomeFeed = false
   showBreadCrumbs = false
+  og_image_default = "/images/og/og-home.png"
 
 [params.csp]
   frameSrc = "https://www.youtube-nocookie.com https://open.spotify.com"
