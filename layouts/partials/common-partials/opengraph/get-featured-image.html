@@ -1,4 +1,4 @@
-{{/* Use per-page og_image, fall back to site og_image_default, then theme base */}}
-{{ $ogImage := .Param "og_image" | default (.Param "og_image_default") | default "/images/og/og-home.png" }}
-{{ $featured := resources.Get $ogImage }}
+{{/* Use per-page og_image, fall back to site og_image_default */}}
+{{ $ogPath := .Param "og_image" | default (.Param "og_image_default") | default "/images/og/og-home.png" }}
+{{ $featured := resources.Get (strings.TrimPrefix "/" $ogPath) }}
 {{ return $featured }}
