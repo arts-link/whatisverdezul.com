@@ -27,7 +27,7 @@
   background-color: var(--vz-black);
   background-image: url('/images/logo-hp-bg-padded.png');
   background-repeat: repeat;
-  background-size: 384px auto;
+  background-size: 256px auto;
   opacity: 0.5;
 }
 
