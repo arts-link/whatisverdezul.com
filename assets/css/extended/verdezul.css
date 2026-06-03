@@ -24,30 +24,40 @@
 .vz-hero__bg {
   position: absolute;
   inset: 0;
+  background-color: var(--vz-black);
+  background-image: url('/images/logo-hp-bg-512.png');
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  opacity: 0.35;
 }
 
-.vz-hero__bg-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  display: block;
-}
-
-.vz-hero__overlay {
+.vz-hero__center-box {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(10,10,10,0.15) 0%,
-    rgba(10,10,10,0.1) 40%,
-    rgba(10,10,10,0.65) 100%
-  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
 }
 
-@media (max-width: 768px) {
-  .vz-hero__bg-img {
-    object-position: 60% center;
+.vz-hero__question-box {
+  padding: 2rem 3rem;
+  text-align: center;
+  background: rgba(10, 10, 10, 0.55);
+}
+
+.vz-hero__question {
+  font-size: clamp(1.25rem, 4vw, 2.25rem);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vz-white);
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .vz-hero__question-box {
+    padding: 1.5rem 1.75rem;
   }
 }
 
@@ -1334,6 +1344,38 @@ body:has(.vz-nav--home) > div:not(.fixed) {
       0 0 75px rgba(0, 120, 255, 0.4),
       0 0 135px rgba(0, 90, 220, 0.18),
       inset 0 0 50px rgba(0, 163, 255, 0.07);
+  }
+}
+
+/* ─── Neon box — electric green bloom (homepage) ─── */
+
+.vz-neon-box--green {
+  border: 2px solid #00ff7f;
+  box-shadow:
+    0 0 6px  rgba(0, 255, 127, 0.9),
+    0 0 20px rgba(0, 255, 127, 0.55),
+    0 0 55px rgba(0, 200, 90, 0.28),
+    0 0 100px rgba(0, 150, 60, 0.12),
+    inset 0 0 40px rgba(0, 255, 127, 0.04);
+  animation: vz-neon-breathe-green 3.5s ease-in-out infinite;
+}
+
+@keyframes vz-neon-breathe-green {
+  0%, 100% {
+    box-shadow:
+      0 0 8px  rgba(0, 255, 127, 0.9),
+      0 0 22px rgba(0, 255, 127, 0.55),
+      0 0 58px rgba(0, 200, 90, 0.28),
+      0 0 105px rgba(0, 150, 60, 0.12),
+      inset 0 0 40px rgba(0, 255, 127, 0.04);
+  }
+  50% {
+    box-shadow:
+      0 0 10px rgba(0, 255, 127, 1),
+      0 0 30px rgba(0, 255, 127, 0.7),
+      0 0 75px rgba(0, 200, 90, 0.4),
+      0 0 135px rgba(0, 150, 60, 0.18),
+      inset 0 0 50px rgba(0, 255, 127, 0.07);
   }
 }
 
