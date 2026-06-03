@@ -1,5 +1,9 @@
 /* Verdèzul site-specific styles — loaded after Ryder's compiled CSS */
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --vz-green: #2d5a27;
   --vz-blue: #1a3a6b;
@@ -11,7 +15,7 @@
 
 /* Hero */
 .vz-hero {
-  height: 100svh;
+  height: calc(100svh - 20px);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -24,30 +28,92 @@
 .vz-hero__bg {
   position: absolute;
   inset: 0;
+  background-color: var(--vz-black);
+  background-image: url('/images/logo-hp-bg-padded.png');
+  background-repeat: repeat;
+  background-size: 256px auto;
+  opacity: 0.5;
 }
 
-.vz-hero__bg-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  display: block;
+@media (max-width: 640px) {
+  .vz-hero__bg {
+    background-size: 202px 202px;
+  }
 }
 
-.vz-hero__overlay {
+.vz-hero__center-box {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(10,10,10,0.15) 0%,
-    rgba(10,10,10,0.1) 40%,
-    rgba(10,10,10,0.65) 100%
-  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
 }
 
-@media (max-width: 768px) {
-  .vz-hero__bg-img {
-    object-position: 60% center;
+.vz-hero__question-box {
+  border-radius: 1rem;
+  padding: 3rem;
+  text-align: center;
+  background: rgba(28, 6, 50, 0.92);
+}
+
+.vz-hero__question {
+  font-size: clamp(1.25rem, 4vw, 2.25rem);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vz-white);
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .vz-hero__question-box {
+    padding: 1.5rem 1.75rem;
+  }
+}
+
+.vz-hero__scroll-arrow {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  color: #00ff7f;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  filter:
+    drop-shadow(0 0 4px rgba(0, 255, 127, 0.9))
+    drop-shadow(0 0 12px rgba(0, 255, 127, 0.5))
+    drop-shadow(0 0 24px rgba(0, 200, 90, 0.3));
+  animation: vz-arrow-bounce 2s ease-in-out infinite, vz-arrow-glow 3.5s ease-in-out infinite;
+}
+
+.vz-hero__scroll-arrow svg {
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes vz-arrow-bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(6px); }
+}
+
+@keyframes vz-arrow-glow {
+  0%, 100% {
+    filter:
+      drop-shadow(0 0 4px rgba(0, 255, 127, 0.9))
+      drop-shadow(0 0 12px rgba(0, 255, 127, 0.5))
+      drop-shadow(0 0 24px rgba(0, 200, 90, 0.3));
+  }
+  50% {
+    filter:
+      drop-shadow(0 0 6px rgba(0, 255, 127, 1))
+      drop-shadow(0 0 20px rgba(0, 255, 127, 0.7))
+      drop-shadow(0 0 40px rgba(0, 200, 90, 0.5));
   }
 }
 
@@ -967,32 +1033,14 @@ body:has(.vz-nav--home) > div:not(.fixed) {
   position: relative;
 }
 
-/* Nav pill — shared base */
-.vz-nav--home .vz-nav__links--pill {
+/* Nav pill — all navs */
+.vz-nav__links--pill {
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 999px;
   padding: 0.45rem 1.5rem;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-.vz-nav--home .vz-nav__links--pill a {
-  color: rgba(255, 255, 255, 0.82);
-}
-
-.vz-nav--home .vz-nav__links--pill a:hover,
-.vz-nav--home .vz-nav__links--pill a[aria-current="page"] {
-  color: #fff;
-}
-
-/* Home hero pill — subtle frosted, warms with the background image */
-.vz-nav--hero .vz-nav__links--pill {
-  background: rgba(255, 255, 255, 0.12);
-}
-
-/* Site-wide pill — forest green → deep blue */
-.vz-nav--home:not(.vz-nav--hero) .vz-nav__links--pill {
   background: linear-gradient(
     135deg,
     rgba(45, 90, 39, 0.55) 0%,
@@ -1000,8 +1048,28 @@ body:has(.vz-nav--home) > div:not(.fixed) {
   );
 }
 
+.vz-nav__links--pill a {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.vz-nav__links--pill a:hover,
+.vz-nav__links--pill a[aria-current="page"] {
+  color: #fff;
+}
+
+/* Home hero pill — subtle frosted over background image */
+.vz-nav--hero .vz-nav__links--pill {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Nav bar — dark background for pill-nav pages */
+.vz-nav--pill {
+  background: rgba(10, 10, 10, 0.92);
+  border-bottom-color: transparent;
+}
+
 @media (max-width: 768px) {
-  .vz-nav--home .vz-nav__links--pill:not(.is-open) {
+  .vz-nav__links--pill:not(.is-open) {
     background: none;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -1011,8 +1079,8 @@ body:has(.vz-nav--home) > div:not(.fixed) {
     box-shadow: none;
   }
 
-  .vz-nav--home .vz-nav__links--pill.is-open {
-    background: rgba(255, 255, 255, 0.97);
+  .vz-nav__links--pill.is-open {
+    background: rgba(10, 10, 10, 0.97);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-radius: 0;
@@ -1021,8 +1089,8 @@ body:has(.vz-nav--home) > div:not(.fixed) {
     padding: 0.5rem 0 1rem;
   }
 
-  .vz-nav--home .vz-nav__links--pill.is-open a {
-    color: rgba(10, 10, 10, 0.75);
+  .vz-nav__links--pill.is-open a {
+    color: rgba(255, 255, 255, 0.85);
   }
 }
 
@@ -1057,6 +1125,10 @@ body:has(.vz-nav--home) > div:not(.fixed) {
   );
   background-size: 200% 100%;
   animation: vz-stripe-shift 8s linear infinite;
+}
+
+.vz-hero-divider {
+  height: 20px;
 }
 
 @keyframes vz-stripe-shift {
@@ -1308,6 +1380,7 @@ body:has(.vz-nav--home) > div:not(.fixed) {
 /* ─── Neon box — electric blue bloom ─── */
 
 .vz-neon-box {
+  border-radius: 1rem;
   border: 2px solid #00a3ff;
   box-shadow:
     0 0 6px  rgba(0, 163, 255, 0.9),
@@ -1334,6 +1407,38 @@ body:has(.vz-nav--home) > div:not(.fixed) {
       0 0 75px rgba(0, 120, 255, 0.4),
       0 0 135px rgba(0, 90, 220, 0.18),
       inset 0 0 50px rgba(0, 163, 255, 0.07);
+  }
+}
+
+/* ─── Neon box — electric green bloom (homepage) ─── */
+
+.vz-neon-box--green {
+  border: 2px solid #00ff7f;
+  box-shadow:
+    0 0 6px  rgba(0, 255, 127, 0.9),
+    0 0 20px rgba(0, 255, 127, 0.55),
+    0 0 55px rgba(0, 200, 90, 0.28),
+    0 0 100px rgba(0, 150, 60, 0.12),
+    inset 0 0 40px rgba(0, 255, 127, 0.04);
+  animation: vz-neon-breathe-green 3.5s ease-in-out infinite;
+}
+
+@keyframes vz-neon-breathe-green {
+  0%, 100% {
+    box-shadow:
+      0 0 8px  rgba(0, 255, 127, 0.9),
+      0 0 22px rgba(0, 255, 127, 0.55),
+      0 0 58px rgba(0, 200, 90, 0.28),
+      0 0 105px rgba(0, 150, 60, 0.12),
+      inset 0 0 40px rgba(0, 255, 127, 0.04);
+  }
+  50% {
+    box-shadow:
+      0 0 10px rgba(0, 255, 127, 1),
+      0 0 30px rgba(0, 255, 127, 0.7),
+      0 0 75px rgba(0, 200, 90, 0.4),
+      0 0 135px rgba(0, 150, 60, 0.18),
+      inset 0 0 50px rgba(0, 255, 127, 0.07);
   }
 }
 

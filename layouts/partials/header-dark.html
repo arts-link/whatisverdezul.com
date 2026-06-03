@@ -1,4 +1,4 @@
-<nav class="vz-nav vz-nav--dark" x-data="vzNav()" @click.outside="open = false">
+<nav class="vz-nav vz-nav--dark vz-nav--pill" x-data="vzNav()" @click.outside="open = false">
   <div class="vz-nav__inner">
     <a href="/" class="vz-nav__logo">
       {{ if .Site.Params.logo_png }}
@@ -12,7 +12,7 @@
       <span></span><span></span><span></span>
     </button>
 
-    <ul class="vz-nav__links" :class="{ 'is-open': open }">
+    <ul class="vz-nav__links vz-nav__links--pill" :class="{ 'is-open': open }">
       {{ range .Site.Menus.main }}
       {{ $isCurrent := or (eq $.RelPermalink .URL) (and (ne .URL "/") (hasPrefix $.RelPermalink .URL)) }}
       <li><a href="{{ .URL }}" {{ if $isCurrent }}aria-current="page"{{ end }}>{{ .Name }}</a></li>

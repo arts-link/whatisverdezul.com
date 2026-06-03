@@ -23,7 +23,7 @@
               .catch(() => { status = 'error' })
             ">
         <input type="email" name="email" x-model="email"
-               placeholder="your@email.com" required
+               placeholder="name@email.com" required
                :disabled="status === 'loading' || status === 'success'">
         <button type="submit" :disabled="status === 'loading' || status === 'success'">
           <span x-show="status !== 'loading' && status !== 'success'">Join</span>

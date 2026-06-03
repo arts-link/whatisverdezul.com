@@ -1,20 +1,20 @@
 {{ define "main" }}
 <div class="w-full overflow-hidden leading-none">
   <picture>
-    <source media="(max-width: 767px)" srcset="/images/premium_photo-about-portrait-reflection.png">
-    <img src="/images/premium_photo-about-landscape-reflection.jpg" alt="" class="w-full block object-cover object-center" style="max-height: 80vh;">
+    <source media="(max-width: 767px)" srcset="/images/premium_photo-about-portrait-reflection.png" width="800" height="1000">
+    <img src="/images/premium_photo-about-landscape-reflection.jpg" alt="" width="2670" height="1780" class="w-full block object-cover object-center" style="max-height: 80vh;">
   </picture>
 </div>
 
 <div class="max-w-5xl mx-auto px-8 py-12">
-  <p class="italic font-light text-neutral-900 text-2xl md:text-3xl leading-snug m-0 text-center">We are in the world, not of the world, but we reflect the world.</p>
+  <p class="italic font-light text-neutral-900 text-2xl md:text-3xl leading-snug m-0 text-center">We are in the world, not of the world, but we reflect the world around us.</p>
 </div>
 
 <div class="vz-section--music">
   <article class="max-w-2xl mx-auto p-12">
     <span class="vz-section-label">About</span>
     <h1 class="text-4xl md:text-5xl font-black mb-8">{{ .Site.Data.band.name }}</h1>
-    <img src="/images/verdezul-group-1.jpg" alt="Verdèzul" class="w-full h-auto mb-8 block">
+    <img src="/images/verdezul-group-1.jpg" alt="Verdèzul" width="640" height="640" class="w-full h-auto mb-8 block">
     <div class="text-base leading-relaxed opacity-85">
       {{ .Content }}
     </div>
