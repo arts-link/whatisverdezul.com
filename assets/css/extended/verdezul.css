@@ -27,8 +27,14 @@
   background-color: var(--vz-black);
   background-image: url('/images/logo-hp-bg-512.png');
   background-repeat: repeat;
-  background-size: 200px 200px;
+  background-size: 788px 788px;
   opacity: 0.5;
+}
+
+@media (max-width: 640px) {
+  .vz-hero__bg {
+    background-size: 320px 320px;
+  }
 }
 
 .vz-hero__center-box {
