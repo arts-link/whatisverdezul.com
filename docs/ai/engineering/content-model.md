@@ -139,7 +139,7 @@ The home page `content/_index.md` may also carry:
 ```yaml
 ---
 title: "Verdèzul"
-description: "Official site for Verdèzul — Los Angeles-based band. Music, tour dates, merch."
+description: "Official site for Verdèzul — Los Angeles-based hip-hop duo. Music, tour dates, merch."
 hero_headline: "We reflect the World"
 hero_subline: "Los Angeles"
 ---

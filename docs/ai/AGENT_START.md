@@ -17,7 +17,7 @@ Starting any new task on this project — read this file first, every time.
 
 ## What this project is
 
-The official website for **Verdèzul**, a Los Angeles-based band. Built and managed by Arts-Link.
+The official website for **Verdèzul**, a Los Angeles-based hip-hop duo. Built and managed by Arts-Link.
 
 - **Live domain:** whatisverdezul.com
 - **Repo:** arts-link/whatisverdezul.com (GitHub, private)
