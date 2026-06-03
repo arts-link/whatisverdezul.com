@@ -63,7 +63,7 @@ docs/ai/
 - Name: Verdèzul (exact spelling with accent)
 - Email: verdezulofficial@gmail.com
 - Location: Los Angeles, CA
-- Vibe: "We're in the world, not of the world, but we reflect the World around us"
+- Vibe: "We are in the world, not of the world, but we reflect the world"
 - Featured album: ETASOBAG (Earthtones and Shades of Blue and Green)
 - Colors: Green, Blue, Black, White, Red (occasional), Brown (occasional)
 - Aesthetic: wilderness, hunting/nature scenes, Verdèzul as globe/life
