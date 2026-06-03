@@ -41,8 +41,9 @@
   position: absolute;
   inset: 0;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 0 2rem 2rem 0;
   z-index: 1;
 }
 
