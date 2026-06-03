@@ -11,7 +11,7 @@
 
 /* Hero */
 .vz-hero {
-  height: calc(100svh - 40px);
+  height: calc(100svh - 20px);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -1068,7 +1068,7 @@ body:has(.vz-nav--home) > div:not(.fixed) {
 
 /* Botanical stripe at top */
 .vz-footer__top-stripe {
-  height: 40px;
+  height: 20px;
   background: linear-gradient(90deg,
     #2d6e45, #4a9e6a, #5aad8e, #3a7a9e, #2a5a8e, #3d7a5a, #2d6e45
   );
