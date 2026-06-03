@@ -48,9 +48,9 @@
 
 .vz-hero__question-box {
   border-radius: 1rem;
-  padding: 2rem 3rem;
+  padding: 0.75rem 1.75rem;
   text-align: center;
-  background: rgba(28, 6, 50, 0.92);
+  background: rgba(10, 10, 10, 0.9);
 }
 
 .vz-hero__question {
