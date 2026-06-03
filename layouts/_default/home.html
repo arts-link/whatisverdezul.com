@@ -2,16 +2,20 @@
 
 {{/* Hero */}}
 <section class="vz-hero">
-  <div class="vz-hero__bg">
-    <img src="/images/premium_photo-stag-woods.jpg" alt="" class="vz-hero__bg-img">
-    <div class="vz-hero__overlay"></div>
+  <div class="vz-hero__bg"></div>
+  <div class="vz-hero__center-box">
+    <div class="vz-neon-box--green vz-hero__question-box">
+      <p class="vz-hero__question">What is Verd&egrave;zul?</p>
+    </div>
   </div>
-  <div style="position: absolute; bottom: 2rem; left: 2rem; right: 2rem; z-index: 1; text-align: center;">
-    <h1 class="vz-hero__headline">{{ .Params.hero_headline | default "Verdèzul" }}</h1>
-  </div>
+  <a href="#hero-next" class="vz-hero__scroll-arrow" aria-label="Scroll down">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </a>
 </section>
 
-<div class="vz-footer__top-stripe"></div>
+<div id="hero-next" class="vz-footer__top-stripe vz-hero-divider"></div>
 
 {{/* Album image */}}
 <section style="margin: 0; padding: 0; line-height: 0; display: flex; justify-content: center; overflow: hidden; background: linear-gradient(145deg, #162c1e 0%, #1b3226 25%, #1a2e34 55%, #172438 100%);">
