@@ -27,7 +27,7 @@
   background-color: var(--vz-black);
   background-image: url('/images/logo-hp-bg-padded.png');
   background-repeat: repeat;
-  background-size: 404px 404px;
+  background-size: 444px 444px;
   opacity: 0.5;
 }
 
@@ -50,7 +50,7 @@
   border-radius: 1rem;
   padding: 2rem 3rem;
   text-align: center;
-  background: rgba(10, 10, 10, 0.9);
+  background: rgba(28, 6, 50, 0.92);
 }
 
 .vz-hero__question {
