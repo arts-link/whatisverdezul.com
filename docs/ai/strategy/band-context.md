@@ -21,7 +21,7 @@ Referencing any band detail — name spelling, contact info, social links, brand
 
 - Never: verde-azul, verdezul (no accent), Verde Azul, Verdezul
 - Meaning: "Verdèzul" = verde (green) + azul (blue). Represents the globe, life, the natural world.
-- Tagline/vibe: *"We are in the world, not of the world, but we reflect the world"*
+- Tagline/vibe: *"We are in the world, not of the world, but we reflect the world around us"*
 
 ---
 

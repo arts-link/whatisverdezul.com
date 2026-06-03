@@ -19,7 +19,7 @@ Writing or editing any text on the site — bio, page headlines, meta descriptio
 
 **Grounded, present, world-aware.** Not hype. Not marketing-speak. Not humble either.
 
-The band's own words: *"We are in the world, not of the world, but we reflect the world."*
+The band's own words: *"We are in the world, not of the world, but we reflect the world around us."*
 
 Write as if the band is speaking directly — confident, intentional, unhurried.
 
