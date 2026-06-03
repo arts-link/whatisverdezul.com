@@ -25,15 +25,15 @@
   position: absolute;
   inset: 0;
   background-color: var(--vz-black);
-  background-image: url('/images/logo-hp-bg-512.png');
+  background-image: url('/images/logo-hp-bg-padded.png');
   background-repeat: repeat;
-  background-size: 788px 788px;
+  background-size: 404px 404px;
   opacity: 0.5;
 }
 
 @media (max-width: 640px) {
   .vz-hero__bg {
-    background-size: 320px 320px;
+    background-size: 202px 202px;
   }
 }
 
