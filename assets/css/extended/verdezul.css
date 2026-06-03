@@ -1062,9 +1062,9 @@ body:has(.vz-nav--home) > div:not(.fixed) {
   background: rgba(255, 255, 255, 0.12);
 }
 
-/* Nav bar transparent when pill treatment is active */
+/* Nav bar — dark background for pill-nav pages */
 .vz-nav--pill {
-  background: transparent;
+  background: rgba(10, 10, 10, 0.92);
   border-bottom-color: transparent;
 }
 
