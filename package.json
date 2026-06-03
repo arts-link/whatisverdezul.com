@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "postinstall": "cd themes/ryder && npm install",
-    "build-tw": "cd themes/ryder && npm run build-tw",
-    "deploy-tw": "cd themes/ryder && npm run deploy-tw",
-    "watch-tw": "cd themes/ryder && npm run watch-tw"
+    "build-tw": "npx tailwindcss -i ./themes/ryder/assets/css/main.css -o ./assets/css/tw-built.css",
+    "deploy-tw": "npx tailwindcss -i ./themes/ryder/assets/css/main.css -o ./assets/css/tw-built.css --minify",
+    "watch-tw": "npx tailwindcss -i ./themes/ryder/assets/css/main.css -o ./assets/css/tw-built.css -w"
   },
   "devDependencies": {
     "@alpinejs/csp": "^3.15.12",
