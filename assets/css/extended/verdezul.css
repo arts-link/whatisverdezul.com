@@ -1380,6 +1380,7 @@ body:has(.vz-nav--home) > div:not(.fixed) {
 /* ─── Neon box — electric blue bloom ─── */
 
 .vz-neon-box {
+  border-radius: 1rem;
   border: 2px solid #00a3ff;
   box-shadow:
     0 0 6px  rgba(0, 163, 255, 0.9),
