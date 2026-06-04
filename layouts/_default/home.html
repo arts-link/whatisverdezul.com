@@ -30,12 +30,15 @@
 
     <button
       class="vz-album-play-btn"
-      x-show="!playerOpen"
-      @click="$refs.spotifyFrame.src = 'https://open.spotify.com/embed/album/41MixYv9THV7OBZcxUv1Qj?utm_source=generator&amp;autoplay=1'; playerOpen = true; window.posthog &amp;&amp; posthog.capture('album_play_click', { album: 'ETASOBAG', source: 'home' })"
-      aria-label="Play Earthtones and Shades of Blue and Green on Spotify">
+      @click="if (playerOpen) { playerOpen = false; $refs.spotifyFrame.src = 'about:blank'; } else { $refs.spotifyFrame.src = 'https://open.spotify.com/embed/album/41MixYv9THV7OBZcxUv1Qj?utm_source=generator&amp;autoplay=1'; playerOpen = true; window.posthog &amp;&amp; posthog.capture('album_play_click', { album: 'ETASOBAG', source: 'home' }); }"
+      :aria-label="playerOpen ? 'Stop playback' : 'Play Earthtones and Shades of Blue and Green on Spotify'">
       <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="40" cy="40" r="38" fill="rgba(0,0,0,0.52)" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
-        <polygon points="33,25 59,40 33,55" fill="white"/>
+        <polygon x-show="!playerOpen" points="33,25 59,40 33,55" fill="white"/>
+        <g x-show="playerOpen" style="display:none">
+          <rect x="28" y="27" width="8" height="26" rx="1" fill="white"/>
+          <rect x="44" y="27" width="8" height="26" rx="1" fill="white"/>
+        </g>
       </svg>
     </button>
   </div>
@@ -43,17 +46,7 @@
   <div
     class="vz-album-player"
     x-show="playerOpen"
-    x-transition.opacity
     style="display: none;">
-    <button
-      class="vz-album-player__close"
-      @click="playerOpen = false; $refs.spotifyFrame.src = 'about:blank'"
-      aria-label="Close player">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="18" y1="6" x2="6" y2="18"/>
-        <line x1="6" y1="6" x2="18" y2="18"/>
-      </svg>
-    </button>
     <iframe
       x-ref="spotifyFrame"
       src="about:blank"

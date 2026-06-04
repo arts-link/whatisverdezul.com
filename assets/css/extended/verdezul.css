@@ -1472,25 +1472,19 @@ body:has(.vz-nav--home) > div:not(.fixed) {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 2;
   width: 88px;
   height: 88px;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
-  opacity: 0;
-  transition: opacity 0.25s ease;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
 }
 
 .vz-album-cover:hover .vz-album-play-btn {
   opacity: 1;
-}
-
-/* Always visible on touch devices */
-@media (hover: none) {
-  .vz-album-play-btn {
-    opacity: 0.8;
-  }
 }
 
 .vz-album-play-btn svg {
@@ -1509,43 +1503,12 @@ body:has(.vz-nav--home) > div:not(.fixed) {
 }
 
 .vz-album-player {
-  position: relative;
   line-height: 0;
 }
 
 .vz-album-player iframe {
   display: block;
   border: 0;
-}
-
-.vz-album-player__close {
-  position: absolute;
-  top: 50%;
-  right: 8px;
-  transform: translateY(-50%);
-  z-index: 10;
-  background: rgba(0, 0, 0, 0.65);
-  border: none;
-  color: rgba(255, 255, 255, 0.75);
-  cursor: pointer;
-  padding: 0;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s, color 0.2s;
-}
-
-.vz-album-player__close:hover {
-  background: rgba(0, 0, 0, 0.88);
-  color: #fff;
-}
-
-.vz-album-player__close svg {
-  width: 11px;
-  height: 11px;
 }
 
 /* ─── Dark page variant (contact) ─── */
