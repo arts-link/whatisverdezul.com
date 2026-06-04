@@ -17,9 +17,50 @@
 
 <div id="hero-next" class="vz-footer__top-stripe vz-hero-divider"></div>
 
-{{/* Album image */}}
-<section style="margin: 0; padding: 0; line-height: 0; display: flex; justify-content: center; overflow: hidden; background: linear-gradient(145deg, #162c1e 0%, #1b3226 25%, #1a2e34 55%, #172438 100%);">
-  <img src="/images/album-ETASOBAG.jpg" alt="Verdèzul — Earthtones and Shades of Blue and Green" style="display: block; width: auto; max-width: 100%; height: auto;">
+{{/* Album image with play button overlay */}}
+<section
+  x-data="{ playerOpen: false }"
+  class="vz-album-section">
+
+  <div class="vz-album-cover">
+    <img
+      src="/images/album-ETASOBAG.jpg"
+      alt="Verd&egrave;zul — Earthtones and Shades of Blue and Green"
+      class="vz-album-cover__img">
+
+    <button
+      class="vz-album-play-btn"
+      x-show="!playerOpen"
+      @click="playerOpen = true; window.posthog && posthog.capture('album_play_click', { album: 'ETASOBAG', source: 'home' })"
+      aria-label="Play Earthtones and Shades of Blue and Green on Spotify">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="40" r="38" fill="rgba(0,0,0,0.52)" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+        <polygon points="33,25 59,40 33,55" fill="white"/>
+      </svg>
+    </button>
+  </div>
+
+  <template x-if="playerOpen">
+    <div class="vz-album-player" x-transition.opacity>
+      <button
+        class="vz-album-player__close"
+        @click="playerOpen = false"
+        aria-label="Close player">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <iframe
+        src="https://open.spotify.com/embed/album/41MixYv9THV7OBZcxUv1Qj?utm_source=generator&amp;autoplay=1"
+        width="100%"
+        height="80"
+        frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+      </iframe>
+    </div>
+  </template>
+
 </section>
 
 {{ end }}

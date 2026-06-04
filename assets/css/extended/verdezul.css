@@ -1442,6 +1442,112 @@ body:has(.vz-nav--home) > div:not(.fixed) {
   }
 }
 
+/* ─── Album cover play button ─── */
+
+.vz-album-section {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(145deg, #162c1e 0%, #1b3226 25%, #1a2e34 55%, #172438 100%);
+}
+
+.vz-album-cover {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  line-height: 0;
+  overflow: hidden;
+}
+
+.vz-album-cover__img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+}
+
+.vz-album-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 88px;
+  height: 88px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.vz-album-cover:hover .vz-album-play-btn {
+  opacity: 1;
+}
+
+/* Always visible on touch devices */
+@media (hover: none) {
+  .vz-album-play-btn {
+    opacity: 0.8;
+  }
+}
+
+.vz-album-play-btn svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.75));
+  transition: transform 0.2s ease;
+}
+
+.vz-album-play-btn:hover svg {
+  transform: scale(1.1);
+}
+
+.vz-album-play-btn:active svg {
+  transform: scale(0.94);
+}
+
+.vz-album-player {
+  position: relative;
+  line-height: 0;
+}
+
+.vz-album-player iframe {
+  display: block;
+  border: 0;
+}
+
+.vz-album-player__close {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.65);
+  border: none;
+  color: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+  padding: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+
+.vz-album-player__close:hover {
+  background: rgba(0, 0, 0, 0.88);
+  color: #fff;
+}
+
+.vz-album-player__close svg {
+  width: 11px;
+  height: 11px;
+}
+
 /* ─── Dark page variant (contact) ─── */
 
 .vz-page--dark {
