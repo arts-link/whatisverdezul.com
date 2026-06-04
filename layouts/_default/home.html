@@ -43,10 +43,7 @@
     </button>
   </div>
 
-  <div
-    class="vz-album-player"
-    x-show="playerOpen"
-    style="display: none;">
+  <div class="vz-album-player" :class="{ 'is-open': playerOpen }">
     <iframe
       x-ref="spotifyFrame"
       src="about:blank"
