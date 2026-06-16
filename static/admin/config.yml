@@ -2,9 +2,10 @@ backend:
   name: github
   repo: arts-link/whatisverdezul.com
   branch: main
-  base_url: https://whatisverdezul.com
+  base_url: https://whatisverdezul.com/api/oauth
+  auth_endpoint: auth
 
-media_folder: images/uploads
+media_folder: static/images/uploads
 public_folder: /images/uploads
 
 collections:
@@ -34,61 +35,86 @@ collections:
           - { name: tidal, label: Tidal URL, widget: string, required: false }
           - { name: youtube_music, label: YouTube Music URL, widget: string, required: false }
 
-  - name: tour
-    label: Tour Dates
-    file: data/tour.json
-    format: json
-    label_singular: Tour Date
-    widget: list
-    fields:
-      - { name: date, label: Date, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
-      - { name: venue, label: Venue, widget: string }
-      - { name: city, label: City, widget: string }
-      - { name: description, label: Description, widget: text, required: false }
-      - { name: ticket_url, label: Ticket URL, widget: string, required: false }
-      - { name: sold_out, label: Sold Out, widget: boolean, default: false }
+  - name: shows
+    label: Shows
+    files:
+      - name: shows
+        label: Shows
+        file: data/shows.json
+        format: json
+        fields:
+          - label: Shows
+            name: items
+            widget: list
+            label_singular: Show
+            fields:
+              - { name: date, label: Date, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+              - { name: venue, label: Venue, widget: string }
+              - { name: city, label: City, widget: string }
+              - { name: description, label: Description, widget: text, required: false }
+              - { name: ticket_url, label: Ticket URL, widget: string, required: false }
+              - { name: sold_out, label: Sold Out, widget: boolean, default: false }
 
   - name: releases
     label: Releases
-    file: data/releases.json
-    format: json
-    label_singular: Release
-    widget: list
-    fields:
-      - { name: title, label: Title, widget: string }
-      - { name: type, label: Type, widget: select, options: [album, ep, single] }
-      - { name: year, label: Year, widget: number }
-      - { name: description, label: Description, widget: text, required: false }
-      - { name: spotify_url, label: Spotify URL, widget: string, required: false }
-      - { name: apple_music_url, label: Apple Music URL, widget: string, required: false }
-      - { name: cover_image, label: Cover Image, widget: image, required: false }
-      - { name: featured, label: Featured on Home, widget: boolean, default: false }
+    files:
+      - name: releases
+        label: Releases
+        file: data/releases.json
+        format: json
+        fields:
+          - label: Releases
+            name: items
+            widget: list
+            label_singular: Release
+            fields:
+              - { name: title, label: Title, widget: string }
+              - { name: type, label: Type, widget: select, options: [album, ep, single] }
+              - { name: year, label: Year, widget: number, value_type: int }
+              - { name: song_count, label: Song Count, widget: number, value_type: int, min: 1 }
+              - { name: description, label: Description, widget: text, required: false }
+              - { name: spotify_url, label: Spotify URL, widget: string, required: false }
+              - { name: apple_music_url, label: Apple Music URL, widget: string, required: false }
+              - { name: cover_image, label: Cover Image, widget: image, required: false }
+              - { name: featured, label: Featured on Home, widget: boolean, default: false }
 
   - name: press
     label: Press Quotes
-    file: data/press.json
-    format: json
-    label_singular: Press Quote
-    widget: list
-    fields:
-      - { name: quote, label: Quote, widget: text }
-      - { name: source, label: Source, widget: string }
-      - { name: url, label: URL, widget: string, required: false }
-      - { name: date, label: Date, widget: string, hint: "e.g. 2026-01" }
+    files:
+      - name: press
+        label: Press Quotes
+        file: data/press.json
+        format: json
+        fields:
+          - label: Press Quotes
+            name: items
+            widget: list
+            label_singular: Press Quote
+            fields:
+              - { name: quote, label: Quote, widget: text }
+              - { name: source, label: Source, widget: string }
+              - { name: url, label: URL, widget: string, required: false }
+              - { name: date, label: Date, widget: string, hint: "e.g. 2026-01" }
 
   - name: merch
     label: Shop / Merch
-    file: data/merch.json
-    format: json
-    label_singular: Item
-    widget: list
-    fields:
-      - { name: name, label: Item Name, widget: string }
-      - { name: price, label: Price (USD), widget: number }
-      - { name: description, label: Description, widget: text, required: false }
-      - { name: image, label: Image, widget: image }
-      - { name: checkout_url, label: Checkout URL, widget: string }
-      - { name: sold_out, label: Sold Out, widget: boolean, default: false }
+    files:
+      - name: merch
+        label: Shop / Merch
+        file: data/merch.json
+        format: json
+        fields:
+          - label: Items
+            name: items
+            widget: list
+            label_singular: Item
+            fields:
+              - { name: name, label: Item Name, widget: string }
+              - { name: price, label: Price (USD), widget: number, value_type: float }
+              - { name: description, label: Description, widget: text, required: false }
+              - { name: image, label: Image, widget: image }
+              - { name: checkout_url, label: Checkout URL, widget: string, required: false }
+              - { name: sold_out, label: Sold Out, widget: boolean, default: false }
 
   - name: pages
     label: Page Content

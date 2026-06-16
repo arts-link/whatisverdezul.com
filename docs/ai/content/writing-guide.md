@@ -50,8 +50,8 @@ Write as if the band is speaking directly — confident, intentional, unhurried.
 - State what the page is, not what it promises
 - Include "Verdèzul" and the primary topic
 
-Good: `"Verdèzul tour dates and live show info — Los Angeles-based hip-hop duo. Buy tickets."`
-Bad: `"Check out Verdèzul's amazing upcoming tour dates and grab your tickets before they sell out!"`
+Good: `"Verdèzul shows and live info — Los Angeles-based hip-hop duo. Buy tickets."`
+Bad: `"Check out Verdèzul's amazing upcoming shows and grab your tickets before they sell out!"`
 
 ---
 

@@ -25,7 +25,7 @@ npm run build-tw && hugo --minify   # full production build → public/
 
 ## Key rules
 
-- **Never edit `themes/ryder/`** — override via `layouts/`, `assets/css/verdezul.css`, `hugo.toml`
-- **All editable content is in `data/*.json`** — templates read from there, Decap CMS writes there
-- **Press nav is hidden when `data/press.json` is `[]`**
+- **Never edit `themes/ryder/`** — override via `layouts/`, `assets/css/extended/verdezul.css`, `hugo.toml`
+- **All editable content is in `data/*.json`** — list files use an `items` array, templates read from there, Decap CMS writes there
+- **Press nav is hidden when `data/press.json.items` is empty**
 - Run `docs/ai/checklists/coding-agent-checklist.md` before marking any task done

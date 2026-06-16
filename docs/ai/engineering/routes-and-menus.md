@@ -4,7 +4,7 @@ description: Hugo menu config, URL structure, section organization, and nav cond
 metadata:
   type: reference
   status: active
-  updated: 2026-05-15
+  updated: 2026-06-05
   tags: [engineering, routes, menus, navigation, hugo]
   related: [engineering/architecture.md, engineering/content-model.md]
 ---
@@ -18,15 +18,16 @@ Adding a new page, changing nav items, or understanding how URLs map to content 
 ## URL structure
 
 | URL | Content file | Layout file |
-|-----|-------------|-------------|
-| `/` | `content/_index.md` | `layouts/index.html` |
-| `/about/` | `content/about/_index.md` | `layouts/about/single.html` |
-| `/tour/` | `content/tour/_index.md` | `layouts/tour/single.html` |
-| `/press/` | `content/press/_index.md` | `layouts/press/single.html` |
-| `/media/` | `content/media/_index.md` | `layouts/media/single.html` |
-| `/shop/` | `content/shop/_index.md` | `layouts/shop/single.html` |
-| `/contact/` | `content/contact/_index.md` | `layouts/contact/single.html` |
-| `/admin/` | `static/admin/index.html` | (Decap CMS, not Hugo) |
+|-----|--------------|-------------|
+| `/` | `content/_index.md` | `layouts/_default/home.html` |
+| `/about/` | `content/about/_index.md` | `layouts/about/list.html` |
+| `/shows/` | `content/shows/_index.md` | `layouts/shows/list.html` |
+| `/press/` | `content/press/_index.md` | `layouts/press/list.html` |
+| `/music/` | `content/music/_index.md` | `layouts/music/list.html` |
+| `/music/streaming/` | `content/music/streaming.md` | `layouts/music/streaming.html` |
+| `/shop/` | `content/shop/_index.md` | `layouts/shop/list.html` |
+| `/contact/` | `content/contact/_index.md` | `layouts/contact/list.html` |
+| `/admin/` | `static/admin/index.html` | Decap CMS, not Hugo |
 
 ---
 
@@ -34,35 +35,35 @@ Adding a new page, changing nav items, or understanding how URLs map to content 
 
 ```toml
 [[menus.main]]
-  name = "About"
-  url = "/about/"
+  name = "Music"
+  url = "/music/"
   weight = 10
 
 [[menus.main]]
-  name = "Tour"
-  url = "/tour/"
+  name = "Shows"
+  url = "/shows/"
   weight = 20
 
 [[menus.main]]
-  name = "Media"
-  url = "/media/"
+  name = "About"
+  url = "/about/"
   weight = 30
-
-[[menus.main]]
-  name = "Shop"
-  url = "/shop/"
-  weight = 40
 
 [[menus.main]]
   name = "Contact"
   url = "/contact/"
+  weight = 40
+
+[[menus.main]]
+  name = "Shop"
+  url = "/shop/"
   weight = 50
 ```
 
-**Press is NOT in the static menu config.** It is rendered conditionally in `layouts/partials/menu-verdezul.html`:
+**Press is not in the static menu config.** It is rendered conditionally in nav partials:
 
-```html
-{{ if gt (len .Site.Data.press) 0 }}
+```go-html-template
+{{ if gt (len (.Site.Data.press.items | default slice)) 0 }}
   <li><a href="/press/">Press</a></li>
 {{ end }}
 ```
@@ -71,17 +72,17 @@ Adding a new page, changing nav items, or understanding how URLs map to content 
 
 ## Adding a new page
 
-1. Create `content/<section>/_index.md` with `title` and `description` frontmatter
-2. Create `layouts/<section>/single.html` (or `list.html` if it has sub-content)
-3. Add to `hugo.toml` menus if it should appear in nav
-4. Add to `static/admin/config.yml` if it should be CMS-editable
-5. Run [[page-publish-checklist]] before considering it done
+1. Create `content/<section>/_index.md` with `title` and `description` frontmatter.
+2. Create `layouts/<section>/list.html` for section pages.
+3. Add to `hugo.toml` menus if it should appear in nav.
+4. Add to `static/admin/config.yml` if it should be CMS-editable.
+5. Run [[page-publish-checklist]] before considering it done.
 
 ---
 
 ## Section vs single layouts
 
-Hugo uses `_index.md` for section list pages and individual `.md` files for single posts. For this site, every page is treated as a standalone section with `_index.md` — there are no blog-style content collections.
+Hugo uses `_index.md` for section list pages and individual `.md` files for single pages. The top-level pages on this site are section list pages, so active section layouts use `list.html`.
 
 ## Related knowledge
 

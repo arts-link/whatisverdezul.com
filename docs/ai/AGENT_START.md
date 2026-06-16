@@ -4,7 +4,7 @@ description: Minimum context needed to begin any task on the Verdèzul website p
 metadata:
   type: reference
   status: active
-  updated: 2026-05-15
+  updated: 2026-06-05
   tags: [onboarding, overview, start-here]
   related: [strategy/band-context.md, engineering/architecture.md, AI_INDEX.md]
 ---
@@ -46,9 +46,9 @@ The band name is always **Verdèzul** — with the accent on the è. Never "verd
 
 ## Key constraints
 
-- **Never edit `themes/ryder/` directly.** Override via `layouts/`, `assets/css/verdezul.css`, and `hugo.toml` params.
-- **All client-editable content lives in `data/*.json`.** Templates consume these; Decap CMS edits them.
-- **Press nav is hidden when `data/press.json` is empty.** Same conditional pattern applies to any data-driven section with no entries.
+- **Never edit `themes/ryder/` directly.** Override via `layouts/`, `assets/css/extended/verdezul.css`, and `hugo.toml` params.
+- **All client-editable content lives in `data/*.json`.** List-backed files use an `items` array; templates consume these; Decap CMS edits them.
+- **Press nav is hidden when `data/press.json.items` is empty.** Same conditional pattern applies to any data-driven section with no entries.
 - **Logo is `/images/logo-white-trans.png`** — oversized, flagged for future optimization.
 - **Repo is `arts-link/whatisverdezul.com`** — not `benstraw/`.
 

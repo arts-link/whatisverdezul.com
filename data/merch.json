@@ -1,26 +1,28 @@
-[
-  {
-    "name": "Earthtones & Shades of Blue and Green — EP",
-    "description": "Debut EP on CD. Hand-numbered edition.",
-    "price": "12.00",
-    "image": "/images/album-ETASOBAG.jpg",
-    "paypal_button_id": "PLACEHOLDER_ALBUM",
-    "sold_out": false
-  },
-  {
-    "name": "Verdèzul Logo Tee",
-    "description": "100% cotton. Sizes S–XXL. Black.",
-    "price": "30.00",
-    "image": "/images/merch-tee.svg",
-    "paypal_button_id": "PLACEHOLDER_TEE",
-    "sold_out": false
-  },
-  {
-    "name": "Tour Poster",
-    "description": "18×24 inch screen print. Limited run of 50.",
-    "price": "20.00",
-    "image": "/images/merch-poster.svg",
-    "paypal_button_id": "PLACEHOLDER_POSTER",
-    "sold_out": false
-  }
-]
+{
+  "items": [
+    {
+      "name": "Earthtones & Shades of Blue and Green - EP",
+      "description": "Debut EP on CD. Hand-numbered edition.",
+      "price": 12,
+      "image": "/images/album-ETASOBAG.jpg",
+      "checkout_url": "",
+      "sold_out": false
+    },
+    {
+      "name": "Verdèzul Logo Tee",
+      "description": "100% cotton. Sizes S-XXL. Black.",
+      "price": 30,
+      "image": "/images/merch-tee.svg",
+      "checkout_url": "",
+      "sold_out": false
+    },
+    {
+      "name": "Tour Poster",
+      "description": "18x24 inch screen print. Limited run of 50.",
+      "price": 20,
+      "image": "/images/merch-poster.svg",
+      "checkout_url": "",
+      "sold_out": false
+    }
+  ]
+}

@@ -29,7 +29,7 @@ You have built a new page or made significant changes to an existing page and ar
 
 ### Navigation
 - [ ] Page appears in the correct nav position (or is intentionally excluded)
-- [ ] Press nav item is hidden when `data/press.json` is empty
+- [ ] Press nav item is hidden when `data/press.json.items` is empty
 - [ ] URL matches the expected route from [[routes-and-menus]]
 
 ### SEO

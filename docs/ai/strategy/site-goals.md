@@ -43,7 +43,7 @@ Making decisions about page hierarchy, CTA placement, content emphasis, or featu
 - The email collector form is on the home page and in the footer globally
 - Tour dates should be prominent on the home page (next 3 shows)
 - Featured release (ETASOBAG) gets above-the-fold placement on home
-- Press page is nav-hidden until `data/press.json` is non-empty — do not show an empty press page
+- Press page is nav-hidden until `data/press.json.items` is non-empty — do not show an empty press page
 
 ---
 

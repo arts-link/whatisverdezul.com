@@ -1,62 +1,70 @@
-[
-  {
-    "title": "Earthtones & Shades of Blue and Green",
-    "type": "EP",
-    "year": 2025,
-    "song_count": 6,
-    "cover_image": "/images/album-ETASOBAG.jpg",
-    "spotify_url": "https://open.spotify.com/album/41MixYv9THV7OBZcxUv1Qj",
-    "apple_music_url": "",
-    "featured": true
-  },
-  {
-    "title": "EPC",
-    "type": "Single",
-    "year": 2025,
-    "song_count": 1,
-    "cover_image": "/images/album-EPC.jpg",
-    "spotify_url": "https://open.spotify.com/album/0p84uJOIlfwpqcXnS7ynC2",
-    "apple_music_url": "",
-    "featured": false
-  },
-  {
-    "title": "I Tell Ya",
-    "type": "Single",
-    "year": 2024,
-    "song_count": 1,
-    "cover_image": "/images/album-i-tell-ya.jpg",
-    "spotify_url": "https://open.spotify.com/album/7Ij3uhwwb7my0AH1nxFY2C",
-    "apple_music_url": "",
-    "featured": false
-  },
-  {
-    "title": "Love Somebody",
-    "type": "Single",
-    "year": 2024,
-    "song_count": 1,
-    "cover_image": "/images/album-love-somebody.jpg",
-    "spotify_url": "https://open.spotify.com/album/0JwRAoMCbBdAfPNNSSbLsC",
-    "apple_music_url": "",
-    "featured": false
-  },
-  {
-    "title": "Green Pack",
-    "type": "Single",
-    "year": 2023,
-    "song_count": 3,
-    "cover_image": "/images/album-GreenPack.jpg",
-    "spotify_url": "https://open.spotify.com/album/5dCZZkQMObk1WuiupTgyV0",
-    "apple_music_url": "",
-    "featured": false
-  },
-  {
-    "title": "Taxes Finnah Hit",
-    "type": "Single",
-    "year": 2023,
-    "song_count": 1,
-    "cover_image": "/images/album-taxes-finnah-hit.png",
-    "spotify_url": "https://open.spotify.com/album/0bYOtOwlikOYQc5TkkRo2e",
-    "apple_music_url": "",
-    "featured": false
-  }
-]
+{
+  "items": [
+    {
+      "title": "Earthtones & Shades of Blue and Green",
+      "type": "ep",
+      "year": 2025,
+      "song_count": 6,
+      "description": "",
+      "cover_image": "/images/album-ETASOBAG.jpg",
+      "spotify_url": "https://open.spotify.com/album/41MixYv9THV7OBZcxUv1Qj",
+      "apple_music_url": "",
+      "featured": true
+    },
+    {
+      "title": "EPC",
+      "type": "single",
+      "year": 2025,
+      "song_count": 1,
+      "description": "",
+      "cover_image": "/images/album-EPC.jpg",
+      "spotify_url": "https://open.spotify.com/album/0p84uJOIlfwpqcXnS7ynC2",
+      "apple_music_url": "",
+      "featured": false
+    },
+    {
+      "title": "I Tell Ya",
+      "type": "single",
+      "year": 2024,
+      "song_count": 1,
+      "description": "",
+      "cover_image": "/images/album-i-tell-ya.jpg",
+      "spotify_url": "https://open.spotify.com/album/7Ij3uhwwb7my0AH1nxFY2C",
+      "apple_music_url": "",
+      "featured": false
+    },
+    {
+      "title": "Love Somebody",
+      "type": "single",
+      "year": 2024,
+      "song_count": 1,
+      "description": "",
+      "cover_image": "/images/album-love-somebody.jpg",
+      "spotify_url": "https://open.spotify.com/album/0JwRAoMCbBdAfPNNSSbLsC",
+      "apple_music_url": "",
+      "featured": false
+    },
+    {
+      "title": "Green Pack",
+      "type": "single",
+      "year": 2023,
+      "song_count": 3,
+      "description": "",
+      "cover_image": "/images/album-GreenPack.jpg",
+      "spotify_url": "https://open.spotify.com/album/5dCZZkQMObk1WuiupTgyV0",
+      "apple_music_url": "",
+      "featured": false
+    },
+    {
+      "title": "Taxes Finnah Hit",
+      "type": "single",
+      "year": 2023,
+      "song_count": 1,
+      "description": "",
+      "cover_image": "/images/album-taxes-finnah-hit.png",
+      "spotify_url": "https://open.spotify.com/album/0bYOtOwlikOYQc5TkkRo2e",
+      "apple_music_url": "",
+      "featured": false
+    }
+  ]
+}

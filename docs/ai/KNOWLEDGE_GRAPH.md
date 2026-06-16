@@ -72,5 +72,5 @@ These rules appear across multiple docs. If they ever conflict with each other, 
 
 1. **Name rule** (band-context → all docs): Always "Verdèzul" with accent, never hyphenated
 2. **Override rule** (architecture → coding-agent-checklist): Never edit `themes/ryder/`, always override in `layouts/`
-3. **Press conditional** (content-model → routes-and-menus → coding-agent-checklist): Press nav/page hidden when `data/press.json` is empty
+3. **Press conditional** (content-model → routes-and-menus → coding-agent-checklist): Press nav/page hidden when `data/press.json.items` is empty
 4. **No hardcoded secrets** (build-commands → coding-agent-checklist): All env vars via `process.env` / Vercel env

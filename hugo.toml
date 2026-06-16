@@ -4,7 +4,7 @@ title = "Verdèzul"
 theme = "ryder"
 
 [params]
-  description = "Official site for Verdèzul — Los Angeles-based hip-hop duo. Music, tour dates, merch."
+  description = "Official site for Verdèzul — Los Angeles-based hip-hop duo. Music, shows, merch."
   analytics_provider = "posthog"
   showDarkToggle = false
   logo_png = "/images/logo-trans-512.png"

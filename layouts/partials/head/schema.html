@@ -22,7 +22,7 @@
 
 {{/* MusicEvent schema — shows page only */}}
 {{ if eq .RelPermalink "/shows/" }}
-{{ range .Site.Data.tour }}
+{{ range (.Site.Data.shows.items | default slice) }}
 {{- $event := dict
   "@context" "https://schema.org"
   "@type" "MusicEvent"
@@ -40,7 +40,7 @@
 
 {{/* MusicAlbum schema — home and music pages */}}
 {{ if or (eq .RelPermalink "/") (eq .RelPermalink "/music/") }}
-{{ range where .Site.Data.releases "featured" true }}
+{{ range where (.Site.Data.releases.items | default slice) "featured" true }}
 {{- $album := dict
   "@context" "https://schema.org"
   "@type" "MusicAlbum"

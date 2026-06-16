@@ -4,7 +4,7 @@ description: Task-based routing table — find which docs to read for any task o
 metadata:
   type: index
   status: active
-  updated: 2026-05-15
+  updated: 2026-06-05
   tags: [index, routing, navigation]
   related: [AGENT_START.md, KNOWLEDGE_GRAPH.md]
 ---
@@ -30,7 +30,7 @@ You know the task but aren't sure which docs apply. Use this as a routing table 
 → [[routes-and-menus]] (URL structure, menu config)
 → [[page-publish-checklist]] (gate before done)
 
-### Working with data files (tour, merch, releases, press)
+### Working with data files (shows, merch, releases, press)
 → [[content-model]] (data shapes, field definitions)
 → [[cms-config]] (CMS collection mappings)
 

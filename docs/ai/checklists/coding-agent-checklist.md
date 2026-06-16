@@ -4,7 +4,7 @@ description: Engineering finish gate — run before marking any coding task comp
 metadata:
   type: reference
   status: active
-  updated: 2026-05-15
+  updated: 2026-06-05
   tags: [checklist, engineering, coding, finish]
   related: [engineering/architecture.md, engineering/build-commands.md]
 ---
@@ -19,7 +19,7 @@ Finishing any coding task — new feature, layout change, data file update, CMS 
 
 ### Theme override rule
 - [ ] No files inside `themes/ryder/` were edited
-- [ ] All overrides are in `layouts/`, `assets/css/verdezul.css`, or `hugo.toml` params
+- [ ] All overrides are in `layouts/`, `assets/css/extended/verdezul.css`, or `hugo.toml` params
 
 ### Band name
 - [ ] "Verdèzul" is spelled with the accent everywhere in new/changed code and content
@@ -28,10 +28,10 @@ Finishing any coding task — new feature, layout change, data file update, CMS 
 ### Data files
 - [ ] Any new data field is documented in [[content-model]]
 - [ ] Any new data field has a corresponding Decap CMS widget in [[cms-config]] / `static/admin/config.yml`
-- [ ] Empty data arrays (`[]`) still render without errors — tested locally
+- [ ] Empty list data wrappers (`{ "items": [] }`) still render without errors — tested locally
 
 ### Navigation
-- [ ] Press nav item is still conditionally hidden when `data/press.json` is empty
+- [ ] Press nav item is still conditionally hidden when `data/press.json.items` is empty
 - [ ] Any new nav item has correct `weight` ordering in `hugo.toml`
 
 ### Analytics

@@ -1,10 +1,11 @@
 {{ define "main" }}
-{{ if gt (len .Site.Data.press) 0 }}
+{{ $press := .Site.Data.press.items | default slice }}
+{{ if gt (len $press) 0 }}
 <section class="vz-section" style="max-width: 720px; margin: 0 auto;">
   <span class="vz-section-label">Press</span>
   <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 2.5rem;">What They're Saying</h1>
 
-  {{ range .Site.Data.press }}
+  {{ range $press }}
   <div class="vz-press-quote">
     <blockquote>"{{ .quote }}"</blockquote>
     <p class="vz-press-source">

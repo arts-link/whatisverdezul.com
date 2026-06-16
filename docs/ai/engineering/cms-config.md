@@ -4,7 +4,7 @@ description: Decap CMS setup, collection definitions, field mappings, and GitHub
 metadata:
   type: reference
   status: active
-  updated: 2026-05-15
+  updated: 2026-06-05
   tags: [engineering, cms, decap, oauth, admin]
   related: [engineering/content-model.md, engineering/architecture.md]
 ---
@@ -17,7 +17,7 @@ Working on the CMS admin interface, adding new editable fields, debugging auth, 
 
 ## How it works
 
-Decap CMS is a React app served from `/admin`. When the client visits `whatisverdezul.com/admin`, they authenticate via GitHub OAuth, then edit content through a web UI. Every save creates a git commit to `main`. Vercel detects the push and redeploys the site in ~30 seconds.
+Decap CMS is served from `/admin`. Editors authenticate with GitHub OAuth, edit content through a web UI, and each save commits to `main`. Vercel detects the commit and redeploys the site.
 
 ---
 
@@ -26,14 +26,15 @@ Decap CMS is a React app served from `/admin`. When the client visits `whatisver
 | File | Purpose |
 |------|---------|
 | `static/admin/index.html` | CMS entry point — loads Decap from CDN |
-| `static/admin/config.yml` | Defines all editable collections and fields |
-| `api/oauth/` | Vercel serverless function — GitHub OAuth handshake proxy |
+| `static/admin/config.yml` | Defines editable collections and fields |
+| `api/oauth/auth.js` | Starts GitHub OAuth for Decap |
+| `api/oauth/callback.js` | Exchanges the GitHub code for a token and returns it to Decap |
 
 ---
 
 ## Auth setup
 
-Decap CMS requires a GitHub OAuth app. The `api/oauth/` proxy handles the OAuth handshake server-side so the GitHub client secret isn't exposed in the browser.
+Decap CMS uses a GitHub OAuth app through Vercel serverless functions so the GitHub client secret is never exposed in the browser.
 
 **GitHub OAuth App settings:**
 - Authorization callback URL: `https://whatisverdezul.com/api/oauth/callback`
@@ -43,155 +44,102 @@ Decap CMS requires a GitHub OAuth app. The `api/oauth/` proxy handles the OAuth 
 - `GITHUB_CLIENT_ID`
 - `GITHUB_CLIENT_SECRET`
 
-If Decap CMS auth proves fussy, drop in **Sveltia CMS** (same `config.yml` schema, cleaner GitHub OAuth, no proxy needed).
-
----
-
-## Collection overview
-
-| Collection | Type | File edited |
-|-----------|------|------------|
-| Band Info | single file | `data/band.json` |
-| Social Links | single file | `data/social.json` |
-| Tour Dates | list in file | `data/tour.json` |
-| Press Quotes | list in file | `data/press.json` |
-| Releases | list in file | `data/releases.json` |
-| Shop / Merch | list in file | `data/merch.json` |
-| Pages | single files | `content/_index.md`, `content/about/_index.md`, `content/contact/_index.md` |
-
----
-
-## `static/admin/config.yml` (full reference)
+**Decap backend settings:**
 
 ```yaml
 backend:
   name: github
   repo: arts-link/whatisverdezul.com
   branch: main
-  base_url: https://whatisverdezul.com
-
-media_folder: images/uploads
-public_folder: /images/uploads
-
-collections:
-
-  - name: site-config
-    label: Site Config
-    files:
-      - name: band
-        label: Band Info
-        file: data/band.json
-        format: json
-        fields:
-          - { name: name, label: Band Name, widget: string }
-          - { name: email, label: Contact Email, widget: string }
-          - { name: location, label: City, widget: string }
-          - { name: bio, label: Short Bio, widget: text }
-      - name: social
-        label: Social Links
-        file: data/social.json
-        format: json
-        fields:
-          - { name: instagram, label: Instagram URL, widget: string, required: false }
-          - { name: tiktok, label: TikTok URL, widget: string, required: false }
-          - { name: youtube, label: YouTube URL, widget: string, required: false }
-          - { name: spotify, label: Spotify URL, widget: string, required: false }
-          - { name: apple_music, label: Apple Music URL, widget: string, required: false }
-          - { name: tidal, label: Tidal URL, widget: string, required: false }
-          - { name: youtube_music, label: YouTube Music URL, widget: string, required: false }
-
-  - name: tour
-    label: Tour Dates
-    file: data/tour.json
-    format: json
-    label_singular: Tour Date
-    widget: list
-    fields:
-      - { name: date, label: Date, widget: datetime, format: "YYYY-MM-DD" }
-      - { name: venue, label: Venue, widget: string }
-      - { name: city, label: City, widget: string }
-      - { name: description, label: Description, widget: text, required: false }
-      - { name: ticket_url, label: Ticket URL, widget: string, required: false }
-      - { name: sold_out, label: Sold Out, widget: boolean, default: false }
-
-  - name: press
-    label: Press Quotes
-    file: data/press.json
-    format: json
-    label_singular: Press Quote
-    widget: list
-    fields:
-      - { name: quote, label: Quote, widget: text }
-      - { name: source, label: Source, widget: string }
-      - { name: url, label: URL, widget: string, required: false }
-      - { name: date, label: Date, widget: string, hint: "e.g. 2026-01" }
-
-  - name: releases
-    label: Releases
-    file: data/releases.json
-    format: json
-    label_singular: Release
-    widget: list
-    fields:
-      - { name: title, label: Title, widget: string }
-      - { name: type, label: Type, widget: select, options: [album, ep, single] }
-      - { name: year, label: Year, widget: number }
-      - { name: description, label: Description, widget: text, required: false }
-      - { name: spotify_url, label: Spotify URL, widget: string, required: false }
-      - { name: apple_music_url, label: Apple Music URL, widget: string, required: false }
-      - { name: cover_image, label: Cover Image, widget: image, required: false }
-      - { name: featured, label: Featured on Home, widget: boolean, default: false }
-
-  - name: merch
-    label: Shop / Merch
-    file: data/merch.json
-    format: json
-    label_singular: Item
-    widget: list
-    fields:
-      - { name: name, label: Item Name, widget: string }
-      - { name: price, label: Price (USD), widget: number }
-      - { name: description, label: Description, widget: text, required: false }
-      - { name: image, label: Image, widget: image }
-      - { name: checkout_url, label: Checkout URL, widget: string }
-      - { name: sold_out, label: Sold Out, widget: boolean, default: false }
-
-  - name: pages
-    label: Page Content
-    files:
-      - name: home
-        label: Home Page
-        file: content/_index.md
-        fields:
-          - { name: title, label: Title, widget: string }
-          - { name: description, label: Meta Description, widget: text }
-          - { name: hero_headline, label: Hero Headline, widget: string, required: false }
-          - { name: hero_subline, label: Hero Subline, widget: string, required: false }
-          - { name: body, label: Body, widget: markdown, required: false }
-      - name: about
-        label: About Page
-        file: content/about/_index.md
-        fields:
-          - { name: title, label: Title, widget: string }
-          - { name: description, label: Meta Description, widget: text }
-          - { name: body, label: Body, widget: markdown }
-      - name: contact
-        label: Contact Page
-        file: content/contact/_index.md
-        fields:
-          - { name: title, label: Title, widget: string }
-          - { name: description, label: Meta Description, widget: text }
-          - { name: body, label: Body, widget: markdown, required: false }
+  base_url: https://whatisverdezul.com/api/oauth
+  auth_endpoint: auth
 ```
+
+The repo is private, so OAuth keeps `scope=repo`.
+
+If Decap CMS auth proves fussy after these routes are verified, consider Sveltia CMS as a later fallback. It can use the same data and collection model.
+
+---
+
+## Collection overview
+
+| Collection | Type | File edited |
+|-----------|------|-------------|
+| Band Info | single file | `data/band.json` |
+| Social Links | single file | `data/social.json` |
+| Shows | file with `items` list | `data/shows.json` |
+| Press Quotes | file with `items` list | `data/press.json` |
+| Releases | file with `items` list | `data/releases.json` |
+| Shop / Merch | file with `items` list | `data/merch.json` |
+| Pages | single files | `content/_index.md`, `content/about/_index.md`, `content/contact/_index.md` |
+
+List-backed collections must be Decap file collections with a list field named `items`; do not configure them as top-level `file` + `widget: list` collections.
+
+---
+
+## Editable list fields
+
+### Shows
+
+`data/shows.json`:
+- `items[].date` — datetime widget, stored as `YYYY-MM-DD`
+- `items[].venue`
+- `items[].city`
+- `items[].description` — optional
+- `items[].ticket_url` — optional
+- `items[].sold_out` — boolean
+
+### Releases
+
+`data/releases.json`:
+- `items[].title`
+- `items[].type` — select: `album`, `ep`, `single`
+- `items[].year` — integer
+- `items[].song_count` — integer, minimum `1`
+- `items[].description` — optional
+- `items[].spotify_url` — optional
+- `items[].apple_music_url` — optional
+- `items[].cover_image` — optional image
+- `items[].featured` — boolean
+
+### Press
+
+`data/press.json`:
+- `items[].quote`
+- `items[].source`
+- `items[].url` — optional
+- `items[].date` — string, e.g. `2026-01`
+
+### Merch
+
+`data/merch.json`:
+- `items[].name`
+- `items[].price` — number
+- `items[].description` — optional
+- `items[].image`
+- `items[].checkout_url` — optional external checkout URL
+- `items[].sold_out` — boolean
+
+---
+
+## Media uploads
+
+```yaml
+media_folder: static/images/uploads
+public_folder: /images/uploads
+```
+
+Decap writes uploaded media into Hugo's `static/` tree, and templates reference the public URL under `/images/uploads`.
 
 ---
 
 ## Adding a new editable field
 
-1. Add the field to the appropriate JSON in `data/`
-2. Add the corresponding widget entry in `config.yml`
-3. Update the Hugo template that consumes the data
-4. Update [[content-model]] with the new field definition
+1. Add the field to the appropriate `data/*.json` file.
+2. Add the corresponding widget in `static/admin/config.yml`.
+3. Update the Hugo template that consumes the field.
+4. Update [[content-model]] with the field definition.
+5. Run [[coding-agent-checklist]] before marking the task complete.
 
 ## Related knowledge
 

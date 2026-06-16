@@ -93,10 +93,10 @@ Referencing any band detail — name spelling, contact info, social links, brand
 |------|-------|
 | Home | Hero, latest release, upcoming shows (3), email collector |
 | About | Band bio, full story |
-| Tour | All tour dates from data/tour.json |
-| Press | Hidden until data/press.json is populated |
+| Shows | All shows from data/shows.json items |
+| Press | Hidden until data/press.json items is populated |
 | Media | YouTube embeds, Spotify embed, photo gallery |
-| Shop | Merch grid from data/merch.json, external PayPal checkout |
+| Shop | Merch grid from data/merch.json items, external checkout links |
 | Contact | Contact form → verdezulofficial@gmail.com |
 
 ---

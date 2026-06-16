@@ -4,7 +4,7 @@ description: OG tags, JSON-LD schema types, canonical URLs, and GEO/LLMsTxt setu
 metadata:
   type: reference
   status: active
-  updated: 2026-05-15
+  updated: 2026-06-05
   tags: [engineering, seo, schema, og, jsonld, geo]
   related: [engineering/architecture.md, engineering/routes-and-menus.md]
 ---
@@ -55,7 +55,7 @@ Override `layouts/partials/head/schema.html` to inject band-specific structured 
 }
 ```
 
-### MusicEvent (Tour page, per event)
+### MusicEvent (Shows page, per show)
 
 ```json
 {
@@ -73,9 +73,9 @@ Override `layouts/partials/head/schema.html` to inject band-specific structured 
 }
 ```
 
-Rendered inside `{{ range .Site.Data.tour }}` in the tour page schema partial.
+Rendered inside `{{ range (.Site.Data.shows.items | default slice) }}` in the shows page schema partial.
 
-### MusicAlbum (Media/Home release cards)
+### MusicAlbum (Music/Home release cards)
 
 ```json
 {

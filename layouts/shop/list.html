@@ -3,10 +3,11 @@
   <span class="vz-section-label">Shop</span>
   <h1 class="vz-music-heading">Merch</h1>
 
-  {{ $merch := .Site.Data.merch }}
-  {{ if $merch }}
+  {{ $merch := .Site.Data.merch.items | default slice }}
+  {{ if gt (len $merch) 0 }}
   <div class="vz-merch-grid">
     {{ range $merch }}
+    {{ $price := printf "%.2f" (float .price) }}
     <div class="vz-merch-item">
       {{ if .image }}
       <div class="vz-merch-item__art">
@@ -16,21 +17,15 @@
       <div class="vz-merch-item__info">
         <div class="vz-merch-item__name">{{ .name }}</div>
         {{ with .description }}<div class="vz-merch-item__desc">{{ . }}</div>{{ end }}
-        <div class="vz-merch-item__price">${{ .price }}</div>
+        <div class="vz-merch-item__price">${{ $price }}</div>
         {{ if .sold_out }}
           <span class="vz-badge-sold-out">Sold Out</span>
-        {{ else }}
+        {{ else if .checkout_url }}
           {{ $merchEvent := dict "item_name" .name "price" .price }}
-          <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank"
-                @submit="window.posthog && posthog.capture('merch_buy_click', {{ $merchEvent | jsonify }})">
-            <input type="hidden" name="cmd" value="_xclick">
-            <input type="hidden" name="business" value="shop@whatisverdezul.com">
-            <input type="hidden" name="item_name" value="{{ .name }}">
-            <input type="hidden" name="amount" value="{{ .price }}">
-            <input type="hidden" name="currency_code" value="USD">
-            <input type="hidden" name="hosted_button_id" value="{{ .paypal_button_id }}">
-            <button type="submit" class="vz-btn-buy">Buy Now — ${{ .price }}</button>
-          </form>
+          <a class="vz-btn-buy" href="{{ .checkout_url }}" target="_blank" rel="noopener"
+             @click="window.posthog && posthog.capture('merch_buy_click', {{ $merchEvent | jsonify }})">Buy Now - ${{ $price }}</a>
+        {{ else }}
+          <span class="vz-badge-sold-out">Coming Soon</span>
         {{ end }}
       </div>
     </div>

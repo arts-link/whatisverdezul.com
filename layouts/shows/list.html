@@ -2,10 +2,10 @@
 <section class="vz-section vz-shows-section">
   <span class="vz-section-label">Shows</span>
 
-  {{ $tour := sort .Site.Data.tour "date" "desc" }}
-  {{ if $tour }}
+  {{ $shows := sort (.Site.Data.shows.items | default slice) "date" "desc" }}
+  {{ if gt (len $shows) 0 }}
   <ul class="vz-tour-list">
-    {{ range $tour }}
+    {{ range $shows }}
     <li class="vz-tour-item">
       <div class="vz-tour-main">
         <div class="vz-tour-city">{{ .city }}</div>

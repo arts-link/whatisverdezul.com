@@ -8,8 +8,9 @@
   </nav>
 
   <ul class="vz-releases-grid">
-    {{ range .Site.Data.releases }}
+    {{ range (.Site.Data.releases.items | default slice) }}
     {{ $release := . }}
+    {{ $typeLabel := cond (eq .type "ep") "EP" (title .type) }}
     <li class="vz-release-card">
       {{ with .cover_image }}
       <div class="vz-release-card__art">
@@ -19,11 +20,13 @@
       <div class="vz-release-card__info">
         <div class="vz-release-card__title">{{ .title }}</div>
         <div class="vz-release-card__meta">
-          {{ .type }}
+          {{ $typeLabel }}
           <span class="vz-release-card__dot">•</span>
           {{ .year }}
+          {{ with .song_count }}
           <span class="vz-release-card__dot">•</span>
-          {{ .song_count }} {{ if eq (int .song_count) 1 }}song{{ else }}songs{{ end }}
+          {{ . }} {{ if eq (int .) 1 }}song{{ else }}songs{{ end }}
+          {{ end }}
         </div>
         {{ if .spotify_url }}
         {{ $spotifyEvent := dict "release_title" .title }}
