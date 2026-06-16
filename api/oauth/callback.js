@@ -1,6 +1,5 @@
 const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
-const CALLBACK_URL = 'https://whatisverdezul.com/api/oauth/callback';
 
 export default async function handler(req, res) {
   if (!CLIENT_ID || !CLIENT_SECRET) {
@@ -8,6 +7,7 @@ export default async function handler(req, res) {
   }
 
   const requestUrl = new URL(req.url, `https://${req.headers.host}`);
+  const callbackUrl = `https://${req.headers.host}/api/oauth/callback`;
   const code = requestUrl.searchParams.get('code');
 
   if (!code) {
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
         client_id: CLIENT_ID,
         client_secret: CLIENT_SECRET,
         code,
-        redirect_uri: CALLBACK_URL,
+        redirect_uri: callbackUrl,
       }),
     });
 
