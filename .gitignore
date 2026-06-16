@@ -7,3 +7,5 @@ resources/
 .DS_Store
 **/.DS_Store
 assets/css/tw-built.css
+.vercel
+.env*
