@@ -15,6 +15,7 @@ Use this as the running backlog for audit follow-up work. Keep statuses current 
 
 | Status | Priority | Item | Notes |
 |---|---:|---|---|
+| Open | P1 | Revert Decap OAuth to production domain after DNS cutover | DNS for `whatisverdezul.com` isn't live yet, so `static/admin/config.yml`'s `backend.base_url` was temporarily pointed at `https://whatisverdezul-com.vercel.app/api/oauth` and the Vercel Production env vars `GITHUB_CLIENT_ID`/`GITHUB_CLIENT_SECRET` were swapped to a dev GitHub OAuth App (callback `https://whatisverdezul-com.vercel.app/api/oauth/callback`). Once DNS resolves: set `base_url` back to `https://whatisverdezul.com/api/oauth`, and reset the Production env vars to the original GitHub OAuth App's credentials (callback `https://whatisverdezul.com/api/oauth/callback`). |
 | Open | P1 | Configure or guard PostHog initialization | Ryder expects `PUBLIC_POSTHOG_KEY` and `PUBLIC_POSTHOG_HOST` or matching params. Confirm Vercel env names and avoid runtime failures when analytics is unavailable. |
 | Open | P2 | Complete analytics event coverage | Ensure active CTAs emit documented events: `ticket_link_click`, `merch_click`, `email_signup_submit`, `email_signup_success`, `spotify_play_click`, `youtube_play_click`, and `social_follow_click`. |
 | Open | P3 | Reduce static asset duplication | `images/` and `static/images/` contain many duplicate binaries. Decide whether assets should be Hugo-processed or served directly, then remove the redundant copy. |
