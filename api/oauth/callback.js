@@ -38,8 +38,13 @@ export default async function handler(req, res) {
       <html>
         <body>
           <script>
-            window.opener.postMessage(${JSON.stringify(message)}, "*");
-            window.close();
+            const receiveMessage = (e) => {
+              window.opener.postMessage(${JSON.stringify(message)}, e.origin);
+              window.removeEventListener("message", receiveMessage, false);
+              window.close();
+            };
+            window.addEventListener("message", receiveMessage, false);
+            window.opener.postMessage("authorizing:github", "*");
           <\/script>
         </body>
       </html>`;
