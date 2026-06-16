@@ -2,8 +2,8 @@ backend:
   name: github
   repo: arts-link/whatisverdezul.com
   branch: main
-  base_url: https://whatisverdezul-com.vercel.app/api/oauth
-  auth_endpoint: auth
+  base_url: https://whatisverdezul-com.vercel.app
+  auth_endpoint: api/oauth/auth
 
 media_folder: static/images/uploads
 public_folder: /images/uploads
