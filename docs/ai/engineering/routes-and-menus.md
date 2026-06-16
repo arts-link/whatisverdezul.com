@@ -20,12 +20,12 @@ Adding a new page, changing nav items, or understanding how URLs map to content 
 | URL | Content file | Layout file |
 |-----|-------------|-------------|
 | `/` | `content/_index.md` | `layouts/index.html` |
-| `/about/` | `content/about/_index.md` | `layouts/about/single.html` |
-| `/tour/` | `content/tour/_index.md` | `layouts/tour/single.html` |
-| `/press/` | `content/press/_index.md` | `layouts/press/single.html` |
-| `/media/` | `content/media/_index.md` | `layouts/media/single.html` |
-| `/shop/` | `content/shop/_index.md` | `layouts/shop/single.html` |
-| `/contact/` | `content/contact/_index.md` | `layouts/contact/single.html` |
+| `/music/` | `content/music/_index.md` | `layouts/music/list.html` |
+| `/shows/` | `content/shows/_index.md` | `layouts/shows/list.html` |
+| `/about/` | `content/about/_index.md` | `layouts/about/list.html` |
+| `/contact/` | `content/contact/_index.md` | `layouts/contact/list.html` |
+| `/shop/` | `content/shop/_index.md` | `layouts/shop/list.html` |
+| `/press/` | `content/press/_index.md` | `layouts/press/list.html` |
 | `/admin/` | `static/admin/index.html` | (Decap CMS, not Hugo) |
 
 ---
@@ -34,28 +34,28 @@ Adding a new page, changing nav items, or understanding how URLs map to content 
 
 ```toml
 [[menus.main]]
-  name = "About"
-  url = "/about/"
+  name = "Music"
+  url = "/music/"
   weight = 10
 
 [[menus.main]]
-  name = "Tour"
-  url = "/tour/"
+  name = "Shows"
+  url = "/shows/"
   weight = 20
 
 [[menus.main]]
-  name = "Media"
-  url = "/media/"
+  name = "About"
+  url = "/about/"
   weight = 30
-
-[[menus.main]]
-  name = "Shop"
-  url = "/shop/"
-  weight = 40
 
 [[menus.main]]
   name = "Contact"
   url = "/contact/"
+  weight = 40
+
+[[menus.main]]
+  name = "Shop"
+  url = "/shop/"
   weight = 50
 ```
 
@@ -72,7 +72,7 @@ Adding a new page, changing nav items, or understanding how URLs map to content 
 ## Adding a new page
 
 1. Create `content/<section>/_index.md` with `title` and `description` frontmatter
-2. Create `layouts/<section>/single.html` (or `list.html` if it has sub-content)
+2. Create `layouts/<section>/list.html` (every active section uses `list.html`, not `single.html`)
 3. Add to `hugo.toml` menus if it should appear in nav
 4. Add to `static/admin/config.yml` if it should be CMS-editable
 5. Run [[page-publish-checklist]] before considering it done

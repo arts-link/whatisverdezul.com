@@ -45,9 +45,9 @@ whatisverdezul.com/
 ├── content/
 │   ├── _index.md                 # Home page content/frontmatter
 │   ├── about/_index.md
-│   ├── tour/_index.md
+│   ├── music/_index.md
+│   ├── shows/_index.md
 │   ├── press/_index.md
-│   ├── media/_index.md
 │   ├── shop/_index.md
 │   └── contact/_index.md
 ├── data/
@@ -65,12 +65,12 @@ whatisverdezul.com/
 │   ├── index.html                # Home page layout
 │   ├── _default/
 │   │   └── baseof.html           # Base template override if needed
-│   ├── about/single.html
-│   ├── tour/single.html
-│   ├── press/single.html
-│   ├── media/single.html
-│   ├── shop/single.html
-│   ├── contact/single.html
+│   ├── about/list.html
+│   ├── music/list.html
+│   ├── shows/list.html
+│   ├── press/list.html
+│   ├── shop/list.html
+│   ├── contact/list.html
 │   ├── partials/
 │   │   ├── header-verdezul.html  # Overrides Ryder header (set by headerType param)
 │   │   ├── footer-verdezul.html  # Overrides Ryder footer

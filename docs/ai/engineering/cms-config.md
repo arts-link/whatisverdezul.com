@@ -36,7 +36,7 @@ Decap CMS is a React app served from `/admin`. When the client visits `whatisver
 Decap CMS requires a GitHub OAuth app. The `api/oauth/` proxy handles the OAuth handshake server-side so the GitHub client secret isn't exposed in the browser.
 
 **GitHub OAuth App settings:**
-- Authorization callback URL: `https://whatisverdezul.com/api/oauth/callback`
+- Authorization callback URL: `https://whatisverdezul.com/api/oauth` (Vercel routes this to `api/oauth/index.js` — there is no `/callback` suffix; verify the GitHub OAuth App's configured callback URL matches this exactly)
 - Homepage URL: `https://whatisverdezul.com`
 
 **Vercel env vars required:**
@@ -155,7 +155,11 @@ collections:
       - { name: image, label: Image, widget: image }
       - { name: checkout_url, label: Checkout URL, widget: string }
       - { name: sold_out, label: Sold Out, widget: boolean, default: false }
+```
 
+`layouts/shop/list.html` renders a `<a href="{{ .checkout_url }}">` buy link — there is no PayPal-hosted-button integration. `checkout_url` should point to wherever checkout actually happens (a PayPal.me link, Shopify product, etc.).
+
+```yaml
   - name: pages
     label: Page Content
     files:
