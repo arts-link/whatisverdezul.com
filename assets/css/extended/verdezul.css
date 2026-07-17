@@ -447,7 +447,13 @@ html {
   font-size: 1rem;
 }
 
-.vz-tour-date {
+.vz-tour-date-location {
+  display: flex;
+  flex-direction: column;
+}
+
+.vz-tour-date,
+.vz-tour-city {
   font-weight: 600;
   color: var(--vz-black);
 }

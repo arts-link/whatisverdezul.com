@@ -4,7 +4,7 @@ description: OG tags, JSON-LD schema types, canonical URLs, and GEO/LLMsTxt setu
 metadata:
   type: reference
   status: active
-  updated: 2026-06-05
+  updated: 2026-07-17
   tags: [engineering, seo, schema, og, jsonld, geo]
   related: [engineering/architecture.md, engineering/routes-and-menus.md]
 ---
@@ -74,6 +74,7 @@ Override `layouts/partials/head/schema.html` to inject band-specific structured 
 ```
 
 Rendered inside `{{ range (.Site.Data.shows.items | default slice) }}` in the shows page schema partial.
+The event location includes `city` as its address even when the optional venue is empty.
 
 ### MusicAlbum (Music/Home release cards)
 
