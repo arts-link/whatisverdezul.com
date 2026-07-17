@@ -26,7 +26,7 @@ Understanding the project structure, deciding where a new file belongs, or figur
 | CMS | Decap CMS | `static/admin/` — git-backed, GitHub OAuth |
 | Analytics | PostHog | Init via Ryder param, custom events in templates |
 | Contact form | Formspree | `contactForm` Alpine component in `assets/js/extended.js` fetches `https://formspree.io/f/xojgerbg`. Requires `https://formspree.io` in CSP `connect-src` (`[params.csp] connectSrc` in `hugo.toml`). No server-side code or env var. |
-| Email signup | Formspree | `subscribeForm` Alpine component in `assets/js/extended.js` fetches `https://formspree.io/f/mlgqjvro`. Same CSP requirement. Replaced the Buttondown `api/subscribe.js` proxy. |
+| Email signup | Formspree | `subscribeForm` Alpine component in `assets/js/extended.js` fetches `https://formspree.io/f/mlgqjvro`. Same CSP requirement. Replaced the Buttondown `api/subscribe.js` proxy. Signups collect into a Google Sheet via Formspree's Sheets plugin; a dedicated newsletter/sending platform is intentionally deferred until the band has a list and owns their own account. Band-facing guide: `docs/for-the-band/email-list-and-newsletter.md`. |
 | Hosting | Vercel | Auto-deploy from `main`; Hugo build via `vercel.json` |
 | Functions | Vercel (Node.js) | `api/oauth/` (Decap CMS OAuth proxy) only |
 
