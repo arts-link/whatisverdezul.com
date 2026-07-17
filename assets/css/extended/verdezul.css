@@ -1461,6 +1461,87 @@ body:has(.vz-nav--home) > div:not(.fixed) {
   }
 }
 
+/* ─── Album cover play button ─── */
+
+.vz-album-section {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(145deg, #162c1e 0%, #1b3226 25%, #1a2e34 55%, #172438 100%);
+}
+
+.vz-album-cover {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  line-height: 0;
+  overflow: hidden;
+}
+
+.vz-album-cover__img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+}
+
+.vz-album-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 88px;
+  height: 88px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+
+.vz-album-cover:hover .vz-album-play-btn {
+  opacity: 1;
+}
+
+.vz-album-play-btn svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.75));
+  transition: transform 0.2s ease;
+}
+
+.vz-album-play-btn:hover svg {
+  transform: scale(1.1);
+}
+
+.vz-album-play-btn:active svg {
+  transform: scale(0.94);
+}
+
+.vz-album-player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  line-height: 0;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.45);
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.vz-album-player.is-open {
+  transform: translateY(0);
+}
+
+.vz-album-player iframe {
+  display: block;
+  border: 0;
+}
+
 /* ─── Dark page variant (contact) ─── */
 
 .vz-page--dark {
