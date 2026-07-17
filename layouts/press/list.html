@@ -9,7 +9,8 @@
   <div class="vz-press-quote">
     <blockquote>"{{ .quote }}"</blockquote>
     <p class="vz-press-source">
-      {{ if .url }}<a href="{{ .url }}" target="_blank" rel="noopener">{{ .source }}</a>{{ else }}{{ .source }}{{ end }}
+      {{ if .url }}{{ $pressEvent := dict "source" .source }}<a href="{{ .url }}" target="_blank" rel="noopener"
+         @click="window.posthog && posthog.capture('press_link_click', {{ $pressEvent | jsonify }})">{{ .source }}</a>{{ else }}{{ .source }}{{ end }}
       {{ with .date }} · {{ . }}{{ end }}
     </p>
   </div>

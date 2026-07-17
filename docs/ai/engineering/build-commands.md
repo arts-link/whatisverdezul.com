@@ -46,8 +46,6 @@ Output goes to `public/`. This is what Vercel runs.
 | `npm run build-tw` | Compile TailwindCSS → `themes/ryder/assets/css/style.css` |
 | `npm run watch-tw` | Watch and recompile TailwindCSS on changes |
 | `npm run deploy-tw` | Build + minify TailwindCSS for production |
-| `npm test` | Run Vitest unit tests |
-| `npm run test:e2e` | Run Playwright end-to-end tests |
 
 ---
 
@@ -69,7 +67,8 @@ Vercel also runs `git submodule update --init --recursive` automatically before 
 
 | Variable | Used by | How to set |
 |----------|---------|-----------|
-| `POSTHOG_KEY` | PostHog analytics | `vercel env add POSTHOG_KEY` |
+| `PUBLIC_POSTHOG_KEY` | PostHog project key | `vercel env add PUBLIC_POSTHOG_KEY` |
+| `PUBLIC_POSTHOG_HOST` | PostHog ingestion host | `vercel env add PUBLIC_POSTHOG_HOST` |
 | `GITHUB_CLIENT_ID` | Decap CMS OAuth | `vercel env add GITHUB_CLIENT_ID` |
 | `GITHUB_CLIENT_SECRET` | Decap CMS OAuth | `vercel env add GITHUB_CLIENT_SECRET` |
 
