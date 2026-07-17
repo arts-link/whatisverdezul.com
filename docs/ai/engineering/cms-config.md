@@ -4,7 +4,7 @@ description: Decap CMS setup, collection definitions, field mappings, and GitHub
 metadata:
   type: reference
   status: active
-  updated: 2026-06-05
+  updated: 2026-07-17
   tags: [engineering, cms, decap, oauth, admin]
   related: [engineering/content-model.md, engineering/architecture.md]
 ---
@@ -84,6 +84,7 @@ List-backed collections must be Decap file collections with a list field named `
 `data/shows.json`:
 - `items[].title` — event name
 - `items[].date` — datetime widget, stored as `YYYY-MM-DD`
+- `items[].city` — city and state; defaults to `Los Angeles, CA` for new entries
 - `items[].venue` — optional
 - `items[].description` — optional
 - `items[].ticket_url` — optional

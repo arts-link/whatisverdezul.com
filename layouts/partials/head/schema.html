@@ -30,7 +30,10 @@
   "startDate" .date
   "performer" (dict "@type" "MusicGroup" "name" "Verdèzul")
 -}}
-{{- with .venue }}{{ $event = merge $event (dict "location" (dict "@type" "Place" "name" .)) }}{{ end -}}
+{{- $place := dict "@type" "Place" -}}
+{{- with .venue }}{{ $place = merge $place (dict "name" .) }}{{ end -}}
+{{- with .city }}{{ $place = merge $place (dict "address" .) }}{{ end -}}
+{{- if or .venue .city }}{{ $event = merge $event (dict "location" $place) }}{{ end -}}
 {{- with .ticket_url }}{{ $event = merge $event (dict "url" .) }}{{ end -}}
 <script type="application/ld+json">
 {{ $event | jsonify | safeJS }}

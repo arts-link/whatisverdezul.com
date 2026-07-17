@@ -2,7 +2,10 @@
   <div class="vz-tour-main">
     <div class="vz-tour-title">{{ .title }}</div>
     <div class="vz-tour-meta">
-      <span class="vz-tour-date">{{ dateFormat "Mon, Jan 2, 2006" .date }}</span>
+      <div class="vz-tour-date-location">
+        <span class="vz-tour-date">{{ dateFormat "Mon, Jan 2, 2006" .date }}</span>
+        <span class="vz-tour-city">{{ .city }}</span>
+      </div>
       {{ with .venue }}
       <span class="vz-tour-sep">·</span>
       <span class="vz-tour-venue">@ {{ . }}</span>
@@ -15,7 +18,7 @@
     {{ if .sold_out }}
       <span class="vz-btn-sold-out">Sold Out</span>
     {{ else }}
-      {{ $ticketEvent := dict "title" .title "venue" .venue "date" .date }}
+      {{ $ticketEvent := dict "title" .title "venue" .venue "date" .date "city" .city }}
       <a class="vz-btn-tickets" href="{{ .ticket_url }}" target="_blank" rel="noopener"
          @click="window.posthog && posthog.capture('ticket_link_click', {{ $ticketEvent | jsonify }})">Tickets</a>
     {{ end }}

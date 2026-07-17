@@ -50,6 +50,7 @@ collections:
             fields:
               - { name: title, label: Event Name, widget: string }
               - { name: date, label: Date, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+              - { name: city, label: City, widget: string, default: "Los Angeles, CA" }
               - { name: venue, label: Venue, widget: string, required: false }
               - { name: description, label: Description, widget: text, required: false }
               - { name: ticket_url, label: Ticket URL, widget: string, required: false }
