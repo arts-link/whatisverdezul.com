@@ -23,7 +23,7 @@
         {{ else if .checkout_url }}
           {{ $merchEvent := dict "item_name" .name "price" .price }}
           <a class="vz-btn-buy" href="{{ .checkout_url }}" target="_blank" rel="noopener"
-             @click="window.posthog && posthog.capture('merch_buy_click', {{ $merchEvent | jsonify }})">Buy Now - ${{ $price }}</a>
+             @click="window.posthog && posthog.capture('merch_click', {{ $merchEvent | jsonify }})">Buy Now - ${{ $price }}</a>
         {{ else }}
           <span class="vz-badge-sold-out">Coming Soon</span>
         {{ end }}

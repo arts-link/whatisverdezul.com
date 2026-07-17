@@ -22,10 +22,11 @@ PostHog is initialized by Ryder's built-in analytics partial. Set in `hugo.toml`
 ```toml
 [params]
   analytics_provider = "posthog"
-  posthog_key = "{{ getenv "POSTHOG_KEY" }}"
 ```
 
-`POSTHOG_KEY` is a Vercel environment variable. Do not hardcode it.
+Ryder reads `PUBLIC_POSTHOG_KEY` and `PUBLIC_POSTHOG_HOST` from the build environment. Set both in Vercel for Production and Preview, then redeploy. Do not hardcode them in `hugo.toml`.
+
+The site uses PostHog's current web defaults, including automatic pageviews and autocapture, with person profiles limited to identified visitors. Session replay is controlled in the PostHog project settings; it is not required for the conversion dashboards defined here.
 
 Ryder calls `posthog.init()` once globally — do not call it again in custom templates.
 
@@ -58,7 +59,8 @@ Use `data-track` attributes on HTML elements. PostHog's autocapture picks these 
 | `contact_form_submit` | Contact form submission | (none — just conversion signal) |
 | `email_signup_submit` | "Stay in the loop" form submit | (none — signup data goes to Formspree) |
 | `email_signup_success` | Formspree returns 200 for the signup | (none) |
-| `social_follow_click` | Any social icon in header/footer | `platform` (instagram, tiktok, youtube, spotify) |
+| `social_follow_click` | Any social icon in contact/footer | `platform` (instagram, tiktok, youtube, spotify, apple_music, tidal, youtube_music) |
+| `press_link_click` | Press coverage source link | `source` |
 
 ---
 
