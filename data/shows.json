@@ -1,33 +1,121 @@
 {
   "items": [
     {
-      "date": "2026-07-12",
-      "venue": "Kia Forum",
-      "city": "Inglewood, CA",
+      "title": "Soulstice Sounds",
+      "date": "2026-07-21",
+      "venue": "the slipper clutch",
       "description": "",
       "ticket_url": "",
       "sold_out": false
     },
     {
-      "date": "2026-08-29",
-      "venue": "Crypto.com Arena",
-      "city": "Los Angeles, CA",
+      "title": "Wave District Records Hot Dog Fest 2026",
+      "date": "2026-06-27",
+      "venue": "",
       "description": "",
       "ticket_url": "",
       "sold_out": false
     },
     {
-      "date": "2026-10-03",
-      "venue": "Intuit Dome",
-      "city": "Inglewood, CA",
+      "title": "Wave District Records House Show #3",
+      "date": "2026-05-23",
+      "venue": "",
       "description": "",
       "ticket_url": "",
       "sold_out": false
     },
     {
-      "date": "2025-04-19",
-      "venue": "Orpheum Theatre",
-      "city": "Los Angeles, CA",
+      "title": "POPIVAL",
+      "date": "2026-03-07",
+      "venue": "",
+      "description": "",
+      "ticket_url": "",
+      "sold_out": false
+    },
+    {
+      "title": "Spotlight Events act IX",
+      "date": "2025-12-13",
+      "venue": "",
+      "description": "",
+      "ticket_url": "",
+      "sold_out": false
+    },
+    {
+      "title": "Spotlight Events act VIII",
+      "date": "2025-10-25",
+      "venue": "",
+      "description": "",
+      "ticket_url": "",
+      "sold_out": false
+    },
+    {
+      "title": "Eleygawd & Friends",
+      "date": "2025-09-28",
+      "venue": "",
+      "description": "",
+      "ticket_url": "",
+      "sold_out": false
+    },
+    {
+      "title": "Usual Spot",
+      "date": "2025-07-11",
+      "venue": "",
+      "description": "",
+      "ticket_url": "",
+      "sold_out": false
+    },
+    {
+      "title": "Members only",
+      "date": "2025-06-28",
+      "venue": "",
+      "description": "",
+      "ticket_url": "",
+      "sold_out": false
+    },
+    {
+      "title": "Usual Spot",
+      "date": "2025-06-26",
+      "venue": "",
+      "description": "",
+      "ticket_url": "",
+      "sold_out": false
+    },
+    {
+      "title": "CREATE showcase",
+      "date": "2025-06-06",
+      "venue": "",
+      "description": "",
+      "ticket_url": "",
+      "sold_out": false
+    },
+    {
+      "title": "Members Only",
+      "date": "2025-05-24",
+      "venue": "",
+      "description": "",
+      "ticket_url": "",
+      "sold_out": false
+    },
+    {
+      "title": "Bars & Blunts",
+      "date": "2025-04-17",
+      "venue": "",
+      "description": "",
+      "ticket_url": "",
+      "sold_out": false
+    },
+    {
+      "title": "Showdown Sunday round 1",
+      "date": "2025-03-16",
+      "venue": "",
+      "description": "",
+      "ticket_url": "",
+      "sold_out": false
+    },
+    {
+      "title": "ICON",
+      "date": "2024-04-06",
+      "venue": "",
       "description": "",
       "ticket_url": "",
       "sold_out": false

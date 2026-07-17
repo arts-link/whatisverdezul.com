@@ -48,9 +48,9 @@ collections:
             widget: list
             label_singular: Show
             fields:
+              - { name: title, label: Event Name, widget: string }
               - { name: date, label: Date, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
-              - { name: venue, label: Venue, widget: string }
-              - { name: city, label: City, widget: string }
+              - { name: venue, label: Venue, widget: string, required: false }
               - { name: description, label: Description, widget: text, required: false }
               - { name: ticket_url, label: Ticket URL, widget: string, required: false }
               - { name: sold_out, label: Sold Out, widget: boolean, default: false }

@@ -2,34 +2,52 @@
 <section class="vz-section vz-shows-section">
   <span class="vz-section-label">Shows</span>
 
-  {{ $shows := sort (.Site.Data.shows.items | default slice) "date" "desc" }}
+  {{ $shows := .Site.Data.shows.items | default slice }}
   {{ if gt (len $shows) 0 }}
-  <ul class="vz-tour-list">
-    {{ range $shows }}
-    <li class="vz-tour-item">
-      <div class="vz-tour-main">
-        <div class="vz-tour-city">{{ .city }}</div>
-        <div class="vz-tour-meta">
-          <span class="vz-tour-date">{{ dateFormat "Mon, Jan 2, 2006" .date }}</span>
-          <span class="vz-tour-sep">·</span>
-          <span class="vz-tour-venue">{{ .venue }}</span>
-        </div>
-        {{ with .description }}<div class="vz-tour-desc">{{ . }}</div>{{ end }}
-      </div>
-      <div class="vz-tour-action">
-        {{ if .sold_out }}
-          <span class="vz-btn-sold-out">Sold Out</span>
-        {{ else if .ticket_url }}
-          {{ $ticketEvent := dict "venue" .venue "date" .date "city" .city }}
-          <a class="vz-btn-tickets" href="{{ .ticket_url }}" target="_blank" rel="noopener"
-             @click="window.posthog && posthog.capture('ticket_link_click', {{ $ticketEvent | jsonify }})">Tickets</a>
-        {{ else }}
-          <span class="vz-btn-tba">Tickets TBA</span>
-        {{ end }}
-      </div>
-    </li>
-    {{ end }}
-  </ul>
+  {{ $today := now.Format "2006-01-02" }}
+  {{ $upcoming := sort (where $shows "date" "ge" $today) "date" "asc" }}
+  {{ $past := sort (where $shows "date" "lt" $today) "date" "desc" }}
+
+  {{/* Build-time split is a fallback; the inline script below re-partitions
+       against the visitor's local date, since deploys can be far apart. */}}
+  <div id="vz-shows" class="vz-shows-cloak">
+    <h2 class="vz-shows-subheading">Upcoming</h2>
+    <ul class="vz-tour-list" data-shows-upcoming>
+      {{ range $upcoming }}{{ partial "show-card.html" . }}{{ end }}
+    </ul>
+    <p class="vz-shows-empty" data-shows-none {{ if gt (len $upcoming) 0 }}hidden{{ end }}>No shows scheduled. Check back soon.</p>
+
+    <div data-shows-past-section {{ if eq (len $past) 0 }}hidden{{ end }}>
+      <h2 class="vz-shows-subheading">Past Shows</h2>
+      <ul class="vz-tour-list vz-tour-list--past" data-shows-past>
+        {{ range $past }}{{ partial "show-card.html" . }}{{ end }}
+      </ul>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var root = document.getElementById('vz-shows');
+      var upcoming = root.querySelector('[data-shows-upcoming]');
+      var past = root.querySelector('[data-shows-past]');
+      try {
+        var d = new Date();
+        var today = new URLSearchParams(location.search).get('vz-today') ||
+          d.getFullYear() + '-' +
+          String(d.getMonth() + 1).padStart(2, '0') + '-' +
+          String(d.getDate()).padStart(2, '0');
+        // Upcoming is soonest-first, so prepending each stale item in order
+        // keeps the past list newest-first.
+        Array.prototype.slice.call(upcoming.children).forEach(function (item) {
+          if (item.dataset.date < today) past.prepend(item);
+        });
+        root.querySelector('[data-shows-none]').hidden = upcoming.children.length > 0;
+        root.querySelector('[data-shows-past-section]').hidden = past.children.length === 0;
+      } finally {
+        root.classList.remove('vz-shows-cloak');
+      }
+    })();
+  </script>
+  <noscript><style>.vz-shows-cloak { visibility: visible; }</style></noscript>
   {{ else }}
   <p class="vz-shows-empty">No shows scheduled. Check back soon.</p>
   {{ end }}

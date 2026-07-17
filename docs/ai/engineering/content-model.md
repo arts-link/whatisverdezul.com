@@ -61,11 +61,11 @@ Shows are the canonical name for public performance dates and the `/shows/` rout
 {
   "items": [
     {
-      "date": "2026-06-14",
-      "venue": "The Roxy",
-      "city": "Los Angeles, CA",
-      "description": "Headline show with special guests.",
-      "ticket_url": "https://...",
+      "title": "Soulstice Sounds",
+      "date": "2026-07-21",
+      "venue": "the slipper clutch",
+      "description": "",
+      "ticket_url": "",
       "sold_out": false
     }
   ]
@@ -73,12 +73,14 @@ Shows are the canonical name for public performance dates and the `/shows/` rout
 ```
 
 Fields:
-- `date` — ISO 8601 string `YYYY-MM-DD`, used for sorting and display
-- `venue` — venue name
-- `city` — city, state
+- `title` — event name; the card header on `/shows/`
+- `date` — ISO 8601 string `YYYY-MM-DD`, used for sorting, display, and the upcoming/past split
+- `venue` — optional venue name; rendered as "@ venue" next to the date when non-empty
 - `description` — optional short description
-- `ticket_url` — optional external ticket link; empty string if unavailable
+- `ticket_url` — optional external ticket link; when empty (and not sold out) no button renders at all — there is no "Tickets TBA" fallback
 - `sold_out` — boolean; renders "Sold Out" instead of a ticket link
+
+The template (`layouts/shows/list.html`) splits items into an **Upcoming** section (`date >= today`, soonest first) and a **Past Shows** section (`date < today`, newest first), comparing ISO date strings against `now` at build time. Because the site is static and deploys can be far apart, an inline script in the same template re-partitions on page load against the visitor's local date: each card carries `data-date`, the section is hidden via `.vz-shows-cloak` until the script finishes (a `<noscript>` style reveals the build-time split for no-JS visitors), and any upcoming card whose date has passed is moved to the top of the past list. For QA, `?vz-today=YYYY-MM-DD` overrides the client-side "today". Each card is rendered by `layouts/partials/show-card.html`. There is no `city` field — it was removed when the real show list (event names + dates only) went live in July 2026.
 
 ### `data/releases.json`
 

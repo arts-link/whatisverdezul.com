@@ -26,11 +26,11 @@
 {{- $event := dict
   "@context" "https://schema.org"
   "@type" "MusicEvent"
-  "name" (printf "Verdèzul at %s" .venue)
+  "name" .title
   "startDate" .date
-  "location" (dict "@type" "Place" "name" .venue "address" .city)
   "performer" (dict "@type" "MusicGroup" "name" "Verdèzul")
 -}}
+{{- with .venue }}{{ $event = merge $event (dict "location" (dict "@type" "Place" "name" .)) }}{{ end -}}
 {{- with .ticket_url }}{{ $event = merge $event (dict "url" .) }}{{ end -}}
 <script type="application/ld+json">
 {{ $event | jsonify | safeJS }}

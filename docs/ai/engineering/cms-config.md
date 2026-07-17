@@ -82,9 +82,9 @@ List-backed collections must be Decap file collections with a list field named `
 ### Shows
 
 `data/shows.json`:
+- `items[].title` — event name
 - `items[].date` — datetime widget, stored as `YYYY-MM-DD`
-- `items[].venue`
-- `items[].city`
+- `items[].venue` — optional
 - `items[].description` — optional
 - `items[].ticket_url` — optional
 - `items[].sold_out` — boolean

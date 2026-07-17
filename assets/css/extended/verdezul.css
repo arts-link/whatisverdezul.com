@@ -388,10 +388,38 @@ html {
   line-height: 1;
 }
 
+.vz-shows-cloak {
+  visibility: hidden;
+}
+
+.vz-shows-subheading {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 3.5rem 0 0;
+}
+
+.vz-shows-subheading:first-of-type {
+  margin-top: 1.5rem;
+}
+
 .vz-tour-list {
   list-style: none;
   padding: 0;
   margin: 2rem 0 0;
+}
+
+.vz-shows-subheading + .vz-tour-list {
+  margin-top: 0.75rem;
+}
+
+.vz-tour-list--past .vz-tour-title {
+  font-size: clamp(1.4rem, 4vw, 2rem);
+}
+
+.vz-tour-list--past .vz-tour-item {
+  padding: 1.25rem 0;
 }
 
 .vz-tour-item {
@@ -402,7 +430,7 @@ html {
   border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
-.vz-tour-city {
+.vz-tour-title {
   font-size: clamp(2rem, 8vw, 3.5rem);
   font-weight: 900;
   letter-spacing: -0.02em;
@@ -480,19 +508,6 @@ html {
   text-align: center;
 }
 
-.vz-btn-tba {
-  display: block;
-  width: 100%;
-  padding: 1rem 2rem;
-  border: 2px solid rgba(0,0,0,0.12);
-  color: rgba(0,0,0,0.3);
-  font-size: 0.875rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  text-align: center;
-}
-
 .vz-shows-empty {
   opacity: 0.5;
   margin-top: 2rem;
@@ -517,8 +532,7 @@ html {
   }
 
   .vz-btn-tickets,
-  .vz-btn-sold-out,
-  .vz-btn-tba {
+  .vz-btn-sold-out {
     width: 180px;
   }
 }
