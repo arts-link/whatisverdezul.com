@@ -30,7 +30,7 @@ Making decisions about page hierarchy, CTA placement, content emphasis, or featu
 | Signal | How we measure it |
 |--------|------------------|
 | Booking inquiries | Contact form submissions (PostHog: `contact_form_submit`) |
-| Fan growth | Email subscribers (Buttondown list size) + social follows |
+| Fan growth | Email signups (Formspree submissions, `email_signup_success`) + social follows |
 | Music discovery | Spotify streams, YouTube views, `spotify_play_click` + `youtube_play_click` events |
 | Merch revenue | PayPal checkout completions (tracked via `merch_click` outbound event) |
 | Press | Eventually: press mentions, booking agent contact rate |

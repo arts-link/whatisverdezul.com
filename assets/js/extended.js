@@ -36,6 +36,33 @@ document.addEventListener('alpine:init', () => {
     },
   }));
 
+  // "Stay in the loop" email signup — POSTs to Formspree. Same CSP-driven
+  // component pattern as contactForm. Requires https://formspree.io in the
+  // CSP connect-src (set in hugo.toml).
+  Alpine.data('subscribeForm', () => ({
+    email: '',
+    gotcha: '',
+    status: '',
+    submit() {
+      this.status = 'loading';
+      if (window.posthog) window.posthog.capture('email_signup_submit');
+      fetch('https://formspree.io/f/mlgqjvro', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          email: this.email,
+          _subject: 'New Verdèzul mailing list signup',
+          _gotcha: this.gotcha,
+        }),
+      })
+        .then((r) => {
+          this.status = r.ok ? 'success' : 'error';
+          if (r.ok && window.posthog) window.posthog.capture('email_signup_success');
+        })
+        .catch(() => { this.status = 'error'; });
+    },
+  }));
+
   Alpine.data('vzLightbox', () => ({
     activeVideo: null,
     openVideo(event) {

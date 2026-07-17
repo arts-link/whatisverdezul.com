@@ -8,31 +8,22 @@
       <span class="vz-footer__location">Los Angeles, CA</span>
     </div>
 
-    <div class="vz-footer__signup"
-         x-data="{ email: '', status: '' }">
+    <div class="vz-footer__signup" x-data="subscribeForm">
       <span class="vz-footer__signup-label">Stay in the loop</span>
-      <form class="vz-footer__form"
-            @submit.prevent="
-              status = 'loading';
-              fetch('/api/subscribe', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email })
-              })
-              .then(r => { status = r.ok ? 'success' : (r.status === 409 ? 'exists' : 'error') })
-              .catch(() => { status = 'error' })
-            ">
+      <form class="vz-footer__form" @submit.prevent="submit">
         <input type="email" name="email" x-model="email"
                placeholder="name@email.com" required
                :disabled="status === 'loading' || status === 'success'">
+        {{/* Honeypot — hidden from humans; Formspree discards submissions where _gotcha is filled */}}
+        <input type="text" name="_gotcha" x-model="gotcha" tabindex="-1" autocomplete="off"
+               style="position: absolute; left: -9999px;" aria-hidden="true">
         <button type="submit" :disabled="status === 'loading' || status === 'success'">
           <span x-show="status !== 'loading' && status !== 'success'">Join</span>
           <span x-show="status === 'loading'" style="display:none">…</span>
           <span x-show="status === 'success'" style="display:none">✓</span>
         </button>
       </form>
-      <p x-show="status === 'success'" class="vz-footer__form-msg" style="display:none">You're on the list.</p>
-      <p x-show="status === 'exists'" class="vz-footer__form-msg" style="display:none">Already subscribed.</p>
+      <p x-show="status === 'success'" class="vz-footer__form-msg vz-footer__form-msg--success" style="display:none">We appreciate you for entering the world of Verdèzul! Stay tuned here as we continue to update you on shows, merch and all things Verdèzul.</p>
       <p x-show="status === 'error'" class="vz-footer__form-msg vz-footer__form-msg--error" style="display:none">Something went wrong. Try again.</p>
     </div>
   </div>

@@ -25,10 +25,10 @@ Understanding the project structure, deciding where a new file belongs, or figur
 | JS | Alpine.js (CSP build) | Ryder bundles `@alpinejs/csp`. **Inline `x-on`/`@submit` expressions cannot contain `fetch()`, arrow functions, or method calls** — anything beyond simple property access must be a component registered via `Alpine.data(...)` in `assets/js/extended.js` (loaded before `Alpine.start()`). |
 | CMS | Decap CMS | `static/admin/` — git-backed, GitHub OAuth |
 | Analytics | PostHog | Init via Ryder param, custom events in templates |
-| Email | Buttondown | Via `api/subscribe.js` Vercel function |
 | Contact form | Formspree | `contactForm` Alpine component in `assets/js/extended.js` fetches `https://formspree.io/f/xojgerbg`. Requires `https://formspree.io` in CSP `connect-src` (`[params.csp] connectSrc` in `hugo.toml`). No server-side code or env var. |
+| Email signup | Formspree | `subscribeForm` Alpine component in `assets/js/extended.js` fetches `https://formspree.io/f/mlgqjvro`. Same CSP requirement. Replaced the Buttondown `api/subscribe.js` proxy. |
 | Hosting | Vercel | Auto-deploy from `main`; Hugo build via `vercel.json` |
-| Functions | Vercel (Node.js) | `api/oauth/`, `api/subscribe.js` |
+| Functions | Vercel (Node.js) | `api/oauth/` (Decap CMS OAuth proxy) only |
 
 ---
 
@@ -37,8 +37,7 @@ Understanding the project structure, deciding where a new file belongs, or figur
 ```
 whatisverdezul.com/
 ├── api/                          # Vercel serverless functions
-│   ├── oauth/                    # Decap CMS GitHub OAuth proxy (`auth` + `callback`)
-│   └── subscribe.js              # Email collector → Buttondown
+│   └── oauth/                    # Decap CMS GitHub OAuth proxy (`auth` + `callback`)
 ├── assets/
 │   └── css/
 │       └── extended/

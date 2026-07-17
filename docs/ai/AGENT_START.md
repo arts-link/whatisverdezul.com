@@ -33,9 +33,8 @@ The official website for **Verdèzul**, a Los Angeles-based hip-hop duo. Built a
 - **Alpine.js** — bundled in Ryder, minimal interactivity
 - **Decap CMS** — git-based CMS at `/admin`, GitHub OAuth via Vercel serverless proxy
 - **PostHog** — analytics, init handled by Ryder's `analytics_provider = "posthog"` param
-- **Buttondown** — email subscribers via `api/subscribe.js` Vercel serverless function
-- **Formspree** — contact form delivery; the `contactForm` component in `assets/js/extended.js` fetches `https://formspree.io/f/xojgerbg` (paid Arts-Link account). Needs `https://formspree.io` in CSP `connect-src`. No serverless function.
-- **Vercel Functions** — `api/oauth/` (CMS auth), `api/subscribe.js` (email)
+- **Formspree** — both the contact form and the "Stay in the loop" email signup POST directly to Formspree (paid Arts-Link account). The `contactForm` (`/f/xojgerbg`) and `subscribeForm` (`/f/mlgqjvro`) components live in `assets/js/extended.js`. Needs `https://formspree.io` in CSP `connect-src`. No serverless function. (Replaced the earlier Resend contact endpoint and Buttondown signup proxy.)
+- **Vercel Functions** — `api/oauth/` (CMS auth) only
 
 ---
 

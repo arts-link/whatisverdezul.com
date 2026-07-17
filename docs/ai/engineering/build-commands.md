@@ -72,9 +72,8 @@ Vercel also runs `git submodule update --init --recursive` automatically before 
 | `POSTHOG_KEY` | PostHog analytics | `vercel env add POSTHOG_KEY` |
 | `GITHUB_CLIENT_ID` | Decap CMS OAuth | `vercel env add GITHUB_CLIENT_ID` |
 | `GITHUB_CLIENT_SECRET` | Decap CMS OAuth | `vercel env add GITHUB_CLIENT_SECRET` |
-| `BUTTONDOWN_API_KEY` | Email subscriber form | `vercel env add BUTTONDOWN_API_KEY` |
 
-The contact form needs no env var — it POSTs directly to Formspree (`https://formspree.io/f/xojgerbg`) from the browser.
+The contact form and email signup need no env var — both POST directly to Formspree from the browser (`/f/xojgerbg` and `/f/mlgqjvro`). Recipient addresses are configured in the Formspree dashboard, not in code.
 
 Pull env vars for local dev:
 ```bash

@@ -56,8 +56,8 @@ Use `data-track` attributes on HTML elements. PostHog's autocapture picks these 
 | `music_video_click` | Home page featured video CTA | `video_title` |
 | `merch_click` | Shop item checkout link | `item_name`, `price` |
 | `contact_form_submit` | Contact form submission | (none — just conversion signal) |
-| `email_signup_submit` | Email collector form submit | (none — Buttondown handles subscriber data) |
-| `email_signup_success` | Buttondown API returns 201 | (none) |
+| `email_signup_submit` | "Stay in the loop" form submit | (none — signup data goes to Formspree) |
+| `email_signup_success` | Formspree returns 200 for the signup | (none) |
 | `social_follow_click` | Any social icon in header/footer | `platform` (instagram, tiktok, youtube, spotify) |
 
 ---
