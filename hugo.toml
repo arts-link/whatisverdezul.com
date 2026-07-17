@@ -19,6 +19,7 @@ theme = "ryder"
   frameSrc = "https://www.youtube-nocookie.com https://open.spotify.com"
   imgSrc = "https://img.youtube.com"
   scriptSrc = "'unsafe-inline'"
+  connectSrc = "https://formspree.io"  # contact form submits here via fetch
 
 [security]
   [security.funcs]

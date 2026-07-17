@@ -34,7 +34,8 @@ The official website for **Verdèzul**, a Los Angeles-based hip-hop duo. Built a
 - **Decap CMS** — git-based CMS at `/admin`, GitHub OAuth via Vercel serverless proxy
 - **PostHog** — analytics, init handled by Ryder's `analytics_provider = "posthog"` param
 - **Buttondown** — email subscribers via `api/subscribe.js` Vercel serverless function
-- **Vercel Functions** — `api/oauth/` (CMS auth), `api/contact.js` (contact form), `api/subscribe.js` (email)
+- **Formspree** — contact form delivery; the `contactForm` component in `assets/js/extended.js` fetches `https://formspree.io/f/xojgerbg` (paid Arts-Link account). Needs `https://formspree.io` in CSP `connect-src`. No serverless function.
+- **Vercel Functions** — `api/oauth/` (CMS auth), `api/subscribe.js` (email)
 
 ---
 

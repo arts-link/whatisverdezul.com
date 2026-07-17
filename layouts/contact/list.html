@@ -13,21 +13,7 @@
       {{ .Site.Data.band.email }}
     </a>
 
-<form class="vz-contact-form"
-          x-data="{ name: '', email: '', message: '', subject: 'General', status: '' }"
-          @submit.prevent="
-            status = 'loading';
-            fetch('/api/contact', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ name, email, message, subject })
-            })
-            .then(r => {
-              status = r.ok ? 'success' : 'error';
-              if (r.ok) posthog.capture('contact_form_submit');
-            })
-            .catch(() => { status = 'error' });
-          ">
+<form class="vz-contact-form" x-data="contactForm" @submit.prevent="submit">
 
       <select name="subject" x-model="subject"
               :disabled="status === 'loading' || status === 'success'">
@@ -46,6 +32,10 @@
 
       <textarea name="message" x-model="message" placeholder="Your message" required
                 :disabled="status === 'loading' || status === 'success'"></textarea>
+
+      {{/* Honeypot — hidden from humans; Formspree discards submissions where _gotcha is filled */}}
+      <input type="text" name="_gotcha" x-model="gotcha" tabindex="-1" autocomplete="off"
+             style="position: absolute; left: -9999px;" aria-hidden="true">
 
       <button type="submit" :disabled="status === 'loading' || status === 'success'">
         <span x-show="status !== 'loading' && status !== 'success'">Send Message</span>
