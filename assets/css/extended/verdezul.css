@@ -57,6 +57,25 @@ html {
   background: rgba(28, 6, 50, 0.92);
 }
 
+/* Question box doubles as a link to /about/ — subtle lift + brighten only,
+   so the neon breathing animation (box-shadow) is left untouched */
+a.vz-hero__question-box {
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+a.vz-hero__question-box:hover,
+a.vz-hero__question-box:focus-visible {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+a.vz-hero__question-box:active {
+  transform: translateY(0);
+}
+
 .vz-hero__question {
   font-size: clamp(1.25rem, 4vw, 2.25rem);
   font-weight: 900;
@@ -995,7 +1014,11 @@ body {
     border-radius: 4px;
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
-    position: relative;
+    /* Float at the viewport top on scroll — pinned where the nav padding
+       (2rem 2rem 1.5rem on .vz-nav__inner) already places it */
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
     z-index: 200;
   }
 

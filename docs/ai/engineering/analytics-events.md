@@ -55,6 +55,7 @@ Use `data-track` attributes on HTML elements. PostHog's autocapture picks these 
 | `spotify_play_click` | Spotify embed / release card link | `release_title` |
 | `youtube_play_click` | YouTube embed / video link | `video_title`, `video_id` |
 | `music_video_click` | Home page featured video CTA | `video_title` |
+| `hero_about_click` | Home hero "What is Verdèzul?" box → About page | (none) |
 | `merch_click` | Shop item checkout link | `item_name`, `price` |
 | `contact_form_submit` | Contact form submission | (none — just conversion signal) |
 | `email_signup_submit` | "Stay in the loop" form submit | (none — signup data goes to Formspree) |
