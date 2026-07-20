@@ -3,10 +3,11 @@
 {{/* Hero */}}
 <section class="vz-hero">
   <div class="vz-hero__bg"></div>
-  <div class="vz-hero__center-box">
-    <div class="vz-neon-box--green vz-hero__question-box">
+  <div class="vz-hero__center-box" x-data>
+    <a href="/about/" class="vz-neon-box--green vz-hero__question-box"
+       @click="window.posthog && posthog.capture('hero_about_click')">
       <p class="vz-hero__question">What is Verd&egrave;zul?</p>
-    </div>
+    </a>
   </div>
   <a href="#hero-next" class="vz-hero__scroll-arrow" aria-label="Scroll down">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
