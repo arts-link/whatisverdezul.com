@@ -5,7 +5,8 @@
 
   {{ $merch := .Site.Data.merch.items | default slice }}
   {{ if gt (len $merch) 0 }}
-  <div class="vz-merch-grid">
+  {{/* vzTrack: CSP-safe Alpine can't eval inline capture() — see extended.js */}}
+  <div class="vz-merch-grid" x-data="vzTrack">
     {{ range $merch }}
     {{ $price := printf "%.2f" (float .price) }}
     <div class="vz-merch-item">
@@ -23,7 +24,7 @@
         {{ else if .checkout_url }}
           {{ $merchEvent := dict "item_name" .name "price" .price }}
           <a class="vz-btn-buy" href="{{ .checkout_url }}" target="_blank" rel="noopener"
-             @click="window.posthog && posthog.capture('merch_click', {{ $merchEvent | jsonify }})">Buy Now - ${{ $price }}</a>
+             @click="track" data-track-event="merch_click" data-track-props="{{ $merchEvent | jsonify }}">Buy Now - ${{ $price }}</a>
         {{ else }}
           <span class="vz-badge-sold-out">Coming Soon</span>
         {{ end }}

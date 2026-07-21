@@ -9,8 +9,9 @@
   <div class="vz-press-quote">
     <blockquote>"{{ .quote }}"</blockquote>
     <p class="vz-press-source">
-      {{ if .url }}{{ $pressEvent := dict "source" .source }}<a href="{{ .url }}" target="_blank" rel="noopener"
-         @click="window.posthog && posthog.capture('press_link_click', {{ $pressEvent | jsonify }})">{{ .source }}</a>{{ else }}{{ .source }}{{ end }}
+      {{/* vzTrack: CSP-safe Alpine can't eval inline capture() — see extended.js */}}
+      {{ if .url }}{{ $pressEvent := dict "source" .source }}<a href="{{ .url }}" target="_blank" rel="noopener" x-data="vzTrack"
+         @click="track" data-track-event="press_link_click" data-track-props="{{ $pressEvent | jsonify }}">{{ .source }}</a>{{ else }}{{ .source }}{{ end }}
       {{ with .date }} · {{ . }}{{ end }}
     </p>
   </div>

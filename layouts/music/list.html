@@ -7,7 +7,8 @@
     <a href="/music/streaming/" class="vz-music-subnav__link">Streaming</a>
   </nav>
 
-  <ul class="vz-releases-grid">
+  {{/* vzTrack: CSP-safe Alpine can't eval inline capture() — see extended.js */}}
+  <ul class="vz-releases-grid" x-data="vzTrack">
     {{ range (.Site.Data.releases.items | default slice) }}
     {{ $release := . }}
     {{ $typeLabel := cond (eq .type "ep") "EP" (title .type) }}
@@ -31,7 +32,7 @@
         {{ if .spotify_url }}
         {{ $spotifyEvent := dict "release_title" .title }}
         <a class="vz-release-card__link" href="{{ .spotify_url }}" target="_blank" rel="noopener"
-           @click="window.posthog && posthog.capture('spotify_play_click', {{ $spotifyEvent | jsonify }})">Listen on Spotify</a>
+           @click="track" data-track-event="spotify_play_click" data-track-props="{{ $spotifyEvent | jsonify }}">Listen on Spotify</a>
         {{ end }}
       </div>
     </li>

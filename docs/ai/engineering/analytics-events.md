@@ -4,7 +4,7 @@ description: PostHog analytics setup and all defined event names for Verdèzul
 metadata:
   type: reference
   status: active
-  updated: 2026-05-15
+  updated: 2026-07-21
   tags: [engineering, analytics, posthog, events, tracking]
   related: [engineering/architecture.md, strategy/site-goals.md]
 ---
@@ -34,16 +34,30 @@ Ryder calls `posthog.init()` once globally — do not call it again in custom te
 
 ## Event tracking pattern
 
-Use `data-track` attributes on HTML elements. PostHog's autocapture picks these up, or wire them to `posthog.capture()` calls in Alpine.js `@click` handlers:
+**Use the `vzTrack` Alpine component — never inline `posthog.capture()` in an `@click`.**
+
+This site loads the **CSP-safe Alpine build** (`@alpinejs/csp`), which cannot
+evaluate arbitrary JS in inline directive expressions. An attribute like
+`@click="posthog.capture(...)"` silently does nothing — it parses but never
+fires. (It also requires an enclosing `x-data` scope to bind at all, which the
+footer/contact social blocks did not have.) Both failure modes are invisible:
+the HTML renders fine and no console error appears.
+
+Instead, put the element inside an `x-data="vzTrack"` scope and drive it with
+data attributes. The `vzTrack` component lives in `assets/js/extended.js`:
 
 ```html
-<!-- Declarative (Alpine + PostHog) -->
-<a href="{{ .ticket_url }}"
-   @click="posthog.capture('ticket_link_click', { venue: '{{ .venue }}', date: '{{ .date }}' })"
-   data-track="ticket_link_click">
+<a href="{{ .ticket_url }}" x-data="vzTrack"
+   @click="track"
+   data-track-event="ticket_link_click"
+   data-track-props="{{ (dict "venue" .venue "date" .date) | jsonify }}">
   Get Tickets
 </a>
 ```
+
+`data-track-props` must be a JSON object (use Hugo's `jsonify`); `vzTrack`
+`JSON.parse`s it and passes it as the event properties. A single `x-data="vzTrack"`
+on a parent container also works for many child links (see the footer socials).
 
 ---
 

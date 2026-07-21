@@ -19,8 +19,9 @@
       <span class="vz-btn-sold-out">Sold Out</span>
     {{ else }}
       {{ $ticketEvent := dict "title" .title "venue" .venue "date" .date "city" .city }}
-      <a class="vz-btn-tickets" href="{{ .ticket_url }}" target="_blank" rel="noopener"
-         @click="window.posthog && posthog.capture('ticket_link_click', {{ $ticketEvent | jsonify }})">Tickets</a>
+      {{/* vzTrack: CSP-safe Alpine can't eval inline capture() — see extended.js */}}
+      <a class="vz-btn-tickets" href="{{ .ticket_url }}" target="_blank" rel="noopener" x-data="vzTrack"
+         @click="track" data-track-event="ticket_link_click" data-track-props="{{ $ticketEvent | jsonify }}">Tickets</a>
     {{ end }}
   </div>
   {{ end }}

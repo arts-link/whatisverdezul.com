@@ -1,6 +1,7 @@
 {{ $youtubeEvent := dict "video_id" (.Get "id") "video_title" (.Get "title") }}
-<div class="vz-embed-16x9"
-     @click="window.posthog && posthog.capture('youtube_play_click', {{ $youtubeEvent | jsonify }})">
+{{/* vzTrack: CSP-safe Alpine can't eval inline capture() — see extended.js */}}
+<div class="vz-embed-16x9" x-data="vzTrack"
+     @click="track" data-track-event="youtube_play_click" data-track-props="{{ $youtubeEvent | jsonify }}">
   <iframe
     src="https://www.youtube-nocookie.com/embed/{{ .Get "id" }}"
     title="{{ .Get "title" }}"

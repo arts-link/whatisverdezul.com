@@ -1,6 +1,7 @@
 {{ $spotifyEvent := dict "release_title" (.Get "title") }}
-<div class="vz-spotify-embed"
-     @click="window.posthog && posthog.capture('spotify_play_click', {{ $spotifyEvent | jsonify }})">
+{{/* vzTrack: CSP-safe Alpine can't eval inline capture() — see extended.js */}}
+<div class="vz-spotify-embed" x-data="vzTrack"
+     @click="track" data-track-event="spotify_play_click" data-track-props="{{ $spotifyEvent | jsonify }}">
   <iframe
     src="https://open.spotify.com/embed/{{ .Get "type" | default "artist" }}/{{ .Get "id" }}?utm_source=generator"
     width="100%"

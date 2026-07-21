@@ -63,6 +63,19 @@ document.addEventListener('alpine:init', () => {
     },
   }));
 
+  // Generic PostHog click tracker. The CSP-safe Alpine build cannot evaluate
+  // inline posthog.capture() expressions, so elements use x-data="vzTrack"
+  // with @click="track" and data-track-event / data-track-props attributes.
+  Alpine.data('vzTrack', () => ({
+    track(event) {
+      if (!window.posthog) return;
+      const el = event.currentTarget;
+      let props = {};
+      try { props = JSON.parse(el.dataset.trackProps || '{}'); } catch (e) {}
+      window.posthog.capture(el.dataset.trackEvent, props);
+    },
+  }));
+
   Alpine.data('vzLightbox', () => ({
     activeVideo: null,
     openVideo(event) {
