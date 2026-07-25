@@ -4,7 +4,7 @@ description: Task-based routing table — find which docs to read for any task o
 metadata:
   type: index
   status: active
-  updated: 2026-06-05
+  updated: 2026-07-25
   tags: [index, routing, navigation]
   related: [AGENT_START.md, KNOWLEDGE_GRAPH.md]
 ---
@@ -56,6 +56,10 @@ You know the task but aren't sure which docs apply. Use this as a routing table 
 → [[visual-direction]]
 → [[band-context]] (color palette)
 
+### Working on the Ryder theme itself (not this site)
+→ [[ryder-v0.3-spec]] (upstream change spec derived from this site's overrides)
+→ [[architecture]] (the override rule that still applies here)
+
 ### Finishing any coding task
 → [[coding-agent-checklist]]
 
@@ -91,6 +95,9 @@ You know the task but aren't sure which docs apply. Use this as a routing table 
 ### Checklists
 - [[page-publish-checklist]] — gate before publishing a page
 - [[coding-agent-checklist]] — engineering finish gate
+
+### Specs
+- [[ryder-v0.3-spec]] — upstream Ryder theme changes, derived from this site's overrides
 
 ### Plans
 - [[2026-05-15-initial-site-plan]] — original implementation plan
