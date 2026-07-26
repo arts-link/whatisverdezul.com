@@ -44,9 +44,10 @@ not missing features. They are cases where Ryder fails without saying so.
 
 ### How findings were verified
 
-Read against the theme at its pinned commit `a95ed03` (`v0.2.3`), upstream
-`arts-link/ryder`, cloned separately because `themes/ryder/` is not always checked
-out. Every item cites theme file and line. Where a claim was not directly
+Read against the theme at its pinned commit `a95ed03` — `v0.2.3-3-ga95ed03`, also
+upstream `main` — in a full clone of `arts-link/ryder`, since `themes/ryder/` is
+not always checked out here. Every item cites theme file and line, and history
+claims are checked against the repo's 419 commits. Where a claim was not directly
 verifiable it is marked **PLAUSIBLE**.
 
 ### Release shape
@@ -330,23 +331,43 @@ Consequences for every consumer:
 - Phase 5 defers a *"`-fun` variant suffix rename"* as *"a breaking change for
   existing users"*, which presumes the variants are live
 
-So the theme found this bug, recorded fixing it, and the files are gone again —
-with the log never corrected. Whether they were deleted afterwards or never landed,
-`REWRITE.md` is now wrong about the tree, which matters because it is the theme's
-own account of what was done. A maintainer or coding agent reading it will believe
-those partials exist.
+**The log was accurate when written.** Full history confirms it: `58a9594`
+(2026-03-17, "rewrite phase 2") really did create `footer-fun.html`, exactly as
+line 86 claims, and `header-fun.html` had existed since 2024-09-27. The bug was
+genuinely fixed.
+
+Then **`ea2538c` (2026-03-26, "Refine site frame and simplify footer overrides")
+deleted both** — nine days later, as collateral in an unrelated layout-frame
+refactor. Three details make this the sharpest evidence in the spec:
+
+1. **The dispatch survived its own targets.** `ea2538c` edits `baseof.html` — it is
+   the commit that produced today's `min-h-lvh flex w-full flex-col` wrapper (the
+   one 2.7 is about) — but leaves `{{- partial (printf "header%s.html" $headerType) . }}`
+   untouched. The mechanism stayed; the only shipped variants it could resolve were
+   removed in the same commit.
+2. **`REWRITE.md` was edited in that very commit**, and the `-fun` claims were
+   missed. The diff removes an unrelated `footerLayout = "stacked"` bullet and a
+   trailing newline. The file was open; the five stale references were simply not
+   noticed.
+3. **`templates.Exists` has never appeared in `baseof.html`** across all 419
+   commits. There has never been anything to catch this.
+
+So the theme identified a silent-failure bug, fixed it, and reintroduced it nine
+days later while editing both the dispatch and the log that documented the fix —
+and nothing anywhere reported it. That is not carelessness; it is exactly what
+happens when a template resolves partial names by string concatenation with no
+existence check.
 
 **User-facing impact is low** — `-fun` is not documented in the README or
-`exampleSite`, so nobody is likely to be setting it. The real damage is twofold:
-the log misleads whoever works on the theme next, and this is **direct evidence for
-2.6**. The theme has now shipped the missing-variant-target bug, closed it, and
-regressed it, and nothing caught the regression — precisely because
-`printf "footer%s.html"` has no existence check to fail loudly on.
+`exampleSite`, so nobody is likely to be setting it. The damage is to maintainers:
+`REWRITE.md` is the theme's own account of what was done, and a maintainer or
+coding agent reading it will believe those partials exist.
 
 **Fix.** Implement 2.6's `templates.Exists` guard, which makes this class of bug
-self-reporting. Then either restore the `-fun` variants or delete every reference
-to them from `REWRITE.md` and reword the Phase 5 deferral. Do not leave the log
-asserting files that aren't there.
+self-reporting rather than dependent on someone noticing. Then delete the `-fun`
+references from `REWRITE.md` and reword the Phase 5 deferral, adding a note that
+`ea2538c` removed the variants — the log's value is as a record, so correct it
+rather than silently rewriting history.
 
 This also gates issue **#5** (footer templates) — see *Cross-check against upstream
 issues* below.
@@ -874,9 +895,15 @@ immediately at build, so it is the least dangerous of the four.
 
 The migration only works if the theme side makes it followable:
 
-- **Tag releases.** `v0.2.4`, `v0.2.5`, `v0.3.0` as annotated git tags, so sites
-  can pin to a name. Today a submodule pins to a bare SHA, which tells a reader
-  nothing about compatibility.
+- **Tag releases, and ship from the tag.** The theme already tags — 11 of them
+  through `v0.2.3` — so the gap is not tagging but *release discipline*. This site
+  pins `a95ed03`, which `git describe` resolves to **`v0.2.3-3-ga95ed03`**: three
+  commits past the last tag, on unreleased work. Meanwhile `theme.toml` still
+  reads `version = 'v0.2.3'`, so anything reading it believes the site is on the
+  tagged release when it is not. Cut a tag for what you intend consumers to run,
+  bump `theme.toml` in the same commit, and tell sites to pin tags rather than
+  tips. Making the existing tags annotated rather than lightweight would also let
+  them carry release notes.
 - **Ship a `CHANGELOG.md`** with a `### Breaking` heading per release, and link
   each entry to its item number in this spec.
 - **Write `docs/migration/v0.3.0.md`** in the theme repo — the consumer-facing
@@ -903,8 +930,10 @@ before publishing v0.3.0.
 
 ### Cross-check against upstream issues
 
-Checked against `arts-link/ryder` at `a95ed03` — which is both the commit this
-site pins **and** upstream `main`, so the spec has no version drift to account for.
+Checked against `arts-link/ryder` at `a95ed03` — both the commit this site pins
+**and** upstream `main`, so the spec has no version drift to account for. Note
+that `a95ed03` is `v0.2.3-3-ga95ed03`: this site tracks the branch tip, three
+commits past the last tag, not a released version.
 
 The repo's issue counter reads 7, but that is GitHub's `open_issues_count`, which
 includes pull requests. The real split is **2 open issues and 5 open PRs**, all
