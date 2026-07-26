@@ -833,11 +833,6 @@ a.vz-hero__question-box:active {
 
 /* ─── NAV ─── */
 
-body {
-  background-color: #f5f5f5 !important;
-  color: #0a0a0a !important;
-}
-
 .vz-nav {
   position: relative;
   z-index: 100;

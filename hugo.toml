@@ -3,10 +3,23 @@ languageCode = "en-us"
 title = "Verdèzul"
 theme = "ryder"
 
+[build]
+  writeStats = true
+  [[build.cachebusters]]
+    source = "(postcss|tailwind)\\.config\\.js"
+    target = "css"
+  [[build.cachebusters]]
+    source = "assets/.*\\.(js|ts|jsx|tsx)"
+    target = "js"
+  [[build.cachebusters]]
+    source = "assets/.*\\.(css|scss|sass)"
+    target = "css"
+
 [params]
   description = "Official site for Verdèzul — Los Angeles-based hip-hop duo. Music, shows, merch."
   analytics_provider = "posthog"
   showDarkToggle = false
+  darkMode = "off"
   logo_png = "/images/logo-trans-512.png"
   headerType = "-verdezul"
   footerType = "-verdezul"
