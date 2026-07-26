@@ -56,7 +56,7 @@ breaking minority.
 
 | Release | Contents | Breaking |
 |---|---|---|
-| v0.2.4 | Tier 1 (1.1–1.8) | no |
+| v0.2.4 | Tier 1 (1.1–1.9) | no |
 | v0.2.5 | Tier 2 except 2.2; Tier 4 except 4.3; Tier 5 | no |
 | v0.3.0 | 2.2, Tier 3, 4.3 | yes — see [Migration path](#migration-path-for-existing-ryder-sites) |
 
@@ -312,6 +312,44 @@ Consequences for every consumer:
 
 **Fix.** Move `[build] writeStats` and the cachebuster rules into the theme's own
 `hugo.toml`. Hugo merges theme config into the site's, so consumers inherit them.
+
+### 1.9 The `-fun` variant targets do not exist, and `REWRITE.md` says they do
+
+`layouts/partials/` at `a95ed03` contains exactly three of these files:
+`header.html`, `footer.html`, `menu.html`. There is **no `header-fun.html` and no
+`footer-fun.html`**, and `grep` finds zero `-fun` references anywhere in
+`layouts/`, `exampleSite/config/`, or `README.md`.
+
+`REWRITE.md` states otherwise, in five places and with checked boxes:
+
+- line 45 identifies the bug — *"`footer-fun.html` doesn't exist but `baseof.html`
+  supports `footerType = "-fun"` — will silently fail"*
+- line 86 marks it fixed — *"[x] Created `footer-fun.html` … The `footerType =
+  "-fun"` param in baseof.html now has a real target."*
+- lines 90, 95, 225, and 269 describe *editing* `header-fun.html`
+- Phase 5 defers a *"`-fun` variant suffix rename"* as *"a breaking change for
+  existing users"*, which presumes the variants are live
+
+So the theme found this bug, recorded fixing it, and the files are gone again —
+with the log never corrected. Whether they were deleted afterwards or never landed,
+`REWRITE.md` is now wrong about the tree, which matters because it is the theme's
+own account of what was done. A maintainer or coding agent reading it will believe
+those partials exist.
+
+**User-facing impact is low** — `-fun` is not documented in the README or
+`exampleSite`, so nobody is likely to be setting it. The real damage is twofold:
+the log misleads whoever works on the theme next, and this is **direct evidence for
+2.6**. The theme has now shipped the missing-variant-target bug, closed it, and
+regressed it, and nothing caught the regression — precisely because
+`printf "footer%s.html"` has no existence check to fail loudly on.
+
+**Fix.** Implement 2.6's `templates.Exists` guard, which makes this class of bug
+self-reporting. Then either restore the `-fun` variants or delete every reference
+to them from `REWRITE.md` and reword the Phase 5 deferral. Do not leave the log
+asserting files that aren't there.
+
+This also gates issue **#5** (footer templates) — see *Cross-check against upstream
+issues* below.
 
 ---
 
@@ -844,11 +882,10 @@ The migration only works if the theme side makes it followable:
 - **Write `docs/migration/v0.3.0.md`** in the theme repo — the consumer-facing
   version of this section, since a site upgrading Ryder should not have to read a
   band's internal AI docs to find it.
-- **Cross-check the 7 open issues** on `arts-link/ryder` before publishing; some
-  may already cover items here, and closing them against this spec is free signal
-  that the release addresses real reports.
 - **Update `exampleSite` alongside every change**, so it doubles as the reference
   implementation a migrating site can diff against.
+- **Correct `REWRITE.md`**, which currently describes files that do not exist — see
+  1.9.
 
 ### Which sites this affects
 
@@ -863,6 +900,21 @@ being carried indefinitely for compatibility.
 Note that the author's other sites are older Ryder consumers and may lean on the
 `*-tw` scripts and the committed `style.css` that Tier 3 removes. Audit those
 before publishing v0.3.0.
+
+### Cross-check against upstream issues
+
+Checked against `arts-link/ryder` at `a95ed03` — which is both the commit this
+site pins **and** upstream `main`, so the spec has no version drift to account for.
+
+The repo's issue counter reads 7, but that is GitHub's `open_issues_count`, which
+includes pull requests. The real split is **2 open issues and 5 open PRs**, all
+five PRs being Dependabot bumps (`#46`–`#48` GitHub Actions, `#51`–`#52` npm
+groups). Neither issue duplicates anything in this spec, but both intersect it:
+
+| Issue | Status against this spec |
+|---|---|
+| **#5 — Footer templates** (fat / skinny / minimalist), opened 2024-02-05 | Not covered, and **not started**: `layouts/partials/` contains exactly one `footer.html`. Items 2.5 and 2.6 are prerequisites — a family of footer variants is the same variant-dispatch mechanism, and shipping it on today's unguarded `printf` dispatch would reproduce 1.9. Build 2.6's guard first, then this issue becomes cheap. |
+| **#3 — Configurable Google Fonts**, opened 2024-02-05, poked 2026-01-30 | **Partially covered, and the spec should say so.** Titillium Web is hardcoded in four places: `head/fonts.html:4` (the Google Fonts URL, and `partialCached` so it cannot vary), `baseof.html:6` (`font-titillium` on `<body>`), `tailwind.config.js:26` (the `titillium` key), and `assets/css/main.css:157` (a raw `font-family`). Three are theme files a consumer must not edit, so the only available path — overriding `head/fonts.html` — loads a new font while the body class and `main.css` still name the old one. It half-works. Item 2.7 (`twClasses.body`) and 3.1 (the preset, which owns `fontFamily`) remove two of the four; closing #3 additionally needs a `params.fonts` story covering `head/fonts.html` and `main.css:157`. Worth folding into v0.2.5 while 2.7 is open. |
 
 ---
 
