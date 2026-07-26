@@ -4,7 +4,7 @@ description: Minimum context needed to begin any task on the Verdèzul website p
 metadata:
   type: reference
   status: active
-  updated: 2026-06-05
+  updated: 2026-07-25
   tags: [onboarding, overview, start-here]
   related: [strategy/band-context.md, engineering/architecture.md, AI_INDEX.md]
 ---
@@ -29,7 +29,7 @@ The official website for **Verdèzul**, a Los Angeles-based hip-hop duo. Built a
 
 - **Hugo** 0.146.0+ — static site generator
 - **Ryder theme** — git submodule at `themes/ryder/` (authored by Arts-Link, do not edit theme files directly)
-- **TailwindCSS** — built via `npm run build-tw` (Ryder's npm scripts)
+- **TailwindCSS** v3 — compiled by Hugo itself via `css.PostCSS` in Ryder's `head/css.html`, using this project's root `postcss.config.js` and `tailwind.config.js`. No separate build step; the `*-tw` npm scripts are vestigial (see [[build-commands]]).
 - **Alpine.js** — bundled in Ryder, minimal interactivity
 - **Decap CMS** — git-based CMS at `/admin`, GitHub OAuth via Vercel serverless proxy
 - **PostHog** — analytics, init handled by Ryder's `analytics_provider = "posthog"` param
@@ -49,7 +49,7 @@ The band name is always **Verdèzul** — with the accent on the è. Never "verd
 - **Never edit `themes/ryder/` directly.** Override via `layouts/`, `assets/css/extended/verdezul.css`, and `hugo.toml` params.
 - **All client-editable content lives in `data/*.json`.** List-backed files use an `items` array; templates consume these; Decap CMS edits them.
 - **Press nav is hidden when `data/press.json.items` is empty.** Same conditional pattern applies to any data-driven section with no entries.
-- **Logo is `/images/logo-white-trans.png`** — oversized, flagged for future optimization.
+- **Logo is `/images/logo-trans-512.png`** (set by `logo_png` in `hugo.toml`, served from `static/images/`). Several logo variants in `images/` and `static/images/` are oversized and duplicated — flagged for future optimization.
 - **Repo is `arts-link/whatisverdezul.com`** — not `benstraw/`.
 
 ---
@@ -73,12 +73,13 @@ The band name is always **Verdèzul** — with the accent on the è. Never "verd
 ## Build commands (quick reference)
 
 ```bash
-npm run build-tw          # compile TailwindCSS (run before hugo)
-hugo server               # local dev (no Tailwind watch — run build-tw first or use watch-tw)
-npm run watch-tw          # watch Tailwind in separate terminal during dev
+hugo server               # local dev — compiles Tailwind too, one terminal
 hugo --minify             # production build → public/
-npm run build-tw && hugo --minify   # full production build
 ```
+
+Restart `hugo server` after editing `tailwind.config.js` or `postcss.config.js`;
+no cachebusters are configured, so Hugo won't notice. Fresh clone needs
+`git submodule update --init --recursive && npm install` first.
 
 ## Related knowledge
 

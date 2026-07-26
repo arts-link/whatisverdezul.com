@@ -12,16 +12,16 @@ All project context lives in `docs/ai/`. Start every session with:
 
 **Band name:** Verdèzul (accent on è — always)
 **Repo:** arts-link/whatisverdezul.com
-**Stack:** Hugo + Ryder theme (submodule) + Decap CMS + PostHog + Buttondown + Vercel
+**Stack:** Hugo + Ryder theme (submodule) + Decap CMS + PostHog + Formspree + Vercel
 
 ## Build
 
 ```bash
-npm run watch-tw    # watch Tailwind (separate terminal)
-hugo server         # local dev at localhost:1313
-
-npm run build-tw && hugo --minify   # full production build → public/
+hugo server         # local dev at localhost:1313 — compiles Tailwind too
+hugo --minify       # production build → public/
 ```
+
+Hugo compiles TailwindCSS via `css.PostCSS`; the `*-tw` npm scripts are vestigial.
 
 ## Key rules
 

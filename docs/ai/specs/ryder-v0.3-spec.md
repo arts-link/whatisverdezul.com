@@ -993,13 +993,56 @@ worked.
 
 ---
 
+## Handing this to the theme repo
+
+This document lives in a band's internal AI docs. Two things must change before it
+is useful inside `arts-link/ryder`.
+
+**1. Rewrite the framing, keep the evidence.** The findings are portable; the voice
+is not. When copying to `docs/specs/v0.3.md` in the theme repo:
+
+- Resolve the wikilinks — `[[architecture]]`, `[[build-commands]]`,
+  `[[seo-and-schema]]`, `[[AGENT_START]]`, `[[TODO]]` — they render as literal
+  text outside this repo.
+- Replace "this site" with "whatisverdezul.com", once, up front. The evidence is
+  *stronger* when attributed to a named real consumer than when written in
+  first person.
+- Drop the *Out of scope* items below; they are Verdèzul's problems.
+- Keep every theme file:line citation, every commit SHA, and the deletion-list
+  success metric. Those are the parts a maintainer can act on and verify.
+
+**2. File the tiers as issues.** The spec is the design record; issues are the work
+queue. One issue per item, titled `[v0.2.4] 1.1 …` etc., each linking back to its
+section. Suggested labels: `defect` for Tier 1, `enhancement` for Tiers 2 and 5,
+`breaking` for Tier 3 and 4.3, plus a `v0.2.4` / `v0.2.5` / `v0.3.0` milestone.
+
+Three of them close or advance existing issues — say so in the issue body so the
+history connects:
+
+| Spec item | Existing issue |
+|---|---|
+| 2.5, 2.6 | prerequisites for **#5** (footer templates) |
+| 2.7, 3.1 | partial progress on **#3** (configurable fonts); needs a `params.fonts` story to close |
+
+**Start with 2.6.** It is small, non-breaking, and it makes 1.9's whole class of
+bug self-reporting — which means every later variant-related change in this spec
+lands with a safety net that did not exist for the last one.
+
+Note also that the 5 open Dependabot PRs (`#46`–`#48`, `#51`–`#52`) are unrelated
+to this work and can be merged independently — though `#51`/`#52` touch npm groups
+that Tier 3 reorganizes, so merge them before 3.1 rather than after.
+
+---
+
 ## Out of scope
 
-Two things surfaced during this audit that belong to **this site**, not the theme:
+Two things surfaced during this audit that belong to **whatisverdezul.com**, not
+the theme:
 
 - `layouts/_default/home.html:6-8` reintroduces the exact inline-`@click` pattern
   commit `e7bbfe1` eradicated, so the documented `hero_about_click` event is
-  almost certainly dead. Item 4.4's linter would have caught it.
-- Roughly six drifted passages in `docs/ai/` — the Tailwind output path, the
-  Vercel build command, OAuth URLs, a layout tree that no longer exists, and the
-  prescribed embed-click pattern. Worth a dedicated pass.
+  almost certainly dead. Item 4.4's linter would have caught it. **Still open.**
+- Drifted passages in `docs/ai/` — the Tailwind output path, the Vercel build
+  command, OAuth URLs, a layout tree that no longer existed, the prescribed
+  embed-click pattern, and a stale Buttondown reference. **Fixed**, in the same
+  branch as this spec.

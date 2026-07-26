@@ -47,7 +47,7 @@ You have built a new page or made significant changes to an existing page and ar
 - [ ] No layout breaks when data arrays are empty
 
 ### Build
-- [ ] `npm run build-tw && hugo --minify` completes without errors
+- [ ] `hugo --minify` completes without errors
 - [ ] `hugo server` shows no template errors in console
 
 ## Related knowledge

@@ -4,7 +4,7 @@ description: Engineering finish gate — run before marking any coding task comp
 metadata:
   type: reference
   status: active
-  updated: 2026-06-05
+  updated: 2026-07-25
   tags: [checklist, engineering, coding, finish]
   related: [engineering/architecture.md, engineering/build-commands.md]
 ---
@@ -39,7 +39,7 @@ Finishing any coding task — new feature, layout change, data file update, CMS 
 - [ ] No existing `data-track` attributes or PostHog calls were accidentally removed
 
 ### Build
-- [ ] `npm run build-tw && hugo --minify` passes with no errors
+- [ ] `hugo --minify` passes with no errors (Hugo compiles Tailwind itself — the `*-tw` scripts are vestigial, see [[build-commands]])
 - [ ] `hugo server` shows no template errors or warnings in the console
 - [ ] `public/` output looks correct for changed pages
 

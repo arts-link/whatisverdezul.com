@@ -4,7 +4,7 @@ description: Hugo + Ryder stack, full file structure, path conventions, and over
 metadata:
   type: reference
   status: active
-  updated: 2026-06-05
+  updated: 2026-07-25
   tags: [engineering, stack, structure, hugo, ryder]
   related: [engineering/build-commands.md, engineering/routes-and-menus.md]
 ---
@@ -60,12 +60,13 @@ whatisverdezul.com/
 ├── docs/
 │   └── ai/                       # AI context docs (this directory)
 ├── images/                       # Static images (not in static/ — Hugo processes these)
-│   └── logo-white-trans.png      # Client logo (oversized, optimize later)
+│   └── logo-white-trans.png      # (oversized, optimize later; active logo is
+│                                 #  static/images/logo-trans-512.png per hugo.toml)
 ├── layouts/                      # Hugo layout overrides (safe to edit)
-│   ├── index.html                # Home page layout
 │   ├── _default/
-│   │   └── baseof.html           # Base template override if needed
-│   ├── about/single.html
+│   │   └── home.html             # Home page layout (Hugo 0.146+ resolves the
+│   │                             #  home page here, not layouts/index.html)
+│   ├── about/list.html
 │   ├── shows/list.html
 │   ├── press/list.html
 │   ├── music/list.html
@@ -89,7 +90,9 @@ whatisverdezul.com/
 ├── themes/
 │   └── ryder/                    # Git submodule — NEVER EDIT DIRECTLY
 ├── hugo.toml                     # Site config + Ryder params
-├── package.json                  # npm scripts (TailwindCSS build)
+├── package.json                  # Root deps for Hugo's PostCSS + js.Build pipelines
+├── tailwind.config.js            # Content globs incl. theme + site layouts
+├── postcss.config.js             # tailwindcss + autoprefixer, read by css.PostCSS
 ├── vercel.json                   # Vercel build config
 └── CLAUDE.md                     # Project AI instructions → points here
 ```

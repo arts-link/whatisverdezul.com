@@ -4,7 +4,7 @@ description: Rules for embedding YouTube, Spotify, and other media on the Verdè
 metadata:
   type: reference
   status: active
-  updated: 2026-05-15
+  updated: 2026-07-25
   tags: [content, media, embeds, youtube, spotify]
   related: [engineering/architecture.md, engineering/seo-and-schema.md]
 ---
@@ -35,7 +35,11 @@ Use `youtube-nocookie.com` to reduce tracking cookies and improve privacy compli
 {{< youtube-embed id="Op1oF2qy_ek" title="Taxes Finnah Hit" >}}
 ```
 
-**PostHog tracking:** Fire `youtube_play_click` on the embed container click. Use Alpine.js `@click` on the wrapper div.
+**PostHog tracking:** Fire `youtube_play_click` on the embed container click using
+the `vzTrack` component — **never an inline `@click="posthog.capture(...)"`.** Ryder
+bundles the CSP-safe Alpine build, which cannot evaluate calls in inline
+directives; it fails silently, with rendered HTML and no console error. See
+[[analytics-events]] for the pattern and `assets/js/extended.js` for the component.
 
 ---
 
@@ -54,9 +58,14 @@ For albums or tracks, swap `artist` for `album` or `track` and update the ID.
 
 ## Photo gallery
 
-Ryder includes a `photo-gallery` layout and shortcode with lightbox support. Use it for the Media page photo section.
+**Not currently used.** There is no Media page and no `images/gallery/` directory —
+this section describes an option, not the live site.
 
-Gallery images go in `images/gallery/`. The shortcode pulls from a directory or a list of image paths defined in frontmatter.
+If a photo section is ever added, Ryder ships a `photo-gallery` layout and shortcode
+with lightbox support, pulling from a directory or a frontmatter list of image
+paths. Note that Ryder's lightbox (`imageGallery`) handles **images only**; the
+video lightbox on this site is site-built (`youtube-thumb.html`,
+`youtube-modal.html`, and the `vzLightbox` component).
 
 ---
 

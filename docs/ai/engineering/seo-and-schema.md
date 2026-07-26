@@ -4,7 +4,7 @@ description: OG tags, JSON-LD schema types, canonical URLs, and GEO/LLMsTxt setu
 metadata:
   type: reference
   status: active
-  updated: 2026-07-17
+  updated: 2026-07-25
   tags: [engineering, seo, schema, og, jsonld, geo]
   related: [engineering/architecture.md, engineering/routes-and-menus.md]
 ---
@@ -25,6 +25,21 @@ Ryder's `layouts/partials/head/` already provides:
 - Robots meta
 
 These work out of the box from page `title` and `description` frontmatter. No manual wiring needed.
+
+**What Ryder does *not* give this site: JSON-LD.** The theme's `head/schema.html`
+emits `WebPage` / `BlogPosting`, `Organization`, and `BreadcrumbList` — but this
+site replaces that partial wholesale to emit `MusicGroup` / `MusicEvent` /
+`MusicAlbum`, so none of the theme's blocks are rendered here. The theme partial is
+monolithic with no extension hook, so adding a type means replacing all of them.
+
+Two consequences worth knowing:
+- This site has **no `BreadcrumbList` or `WebPage` schema**, by omission rather than
+  by decision.
+- The theme's version emits JS comments inside `application/ld+json`, which makes
+  it unparseable anyway — so nothing was lost in practice. Item 2.2 of
+  [[ryder-v0.3-spec]] fixes both the parse bug and the missing hook upstream; when
+  it lands, this site's override should be deleted and its additions moved into
+  `head/schema-extra.html`.
 
 ---
 
@@ -99,9 +114,13 @@ Every page's `content/<section>/_index.md` must have a `description` field (100�
 
 ## GEO / LLMs.txt
 
-Ryder already configures the `LLMSTxt` output format in `hugo.toml`. Add it to outputs:
+Ryder's own `hugo.toml` declares **both** the `LLMSTxt` output format and
+`home = ["HTML", "RSS", "LLMSTxt"]`, and Hugo merges theme config into the site's.
+So no config is required here — this site's `[outputs]` block duplicates the theme's
+and could be deleted.
 
 ```toml
+# already inherited from the theme; present in hugo.toml only as a duplicate
 [outputs]
   home = ["HTML", "RSS", "LLMSTxt"]
 ```
@@ -112,7 +131,19 @@ This generates `/llms.txt` at the root — a plain-text summary of the site for 
 
 ## Open Graph image
 
-Ryder generates OG images. Ensure each page has a meaningful `title` and `description` in frontmatter. If a page needs a custom OG image, add `og_image: /images/...` to the frontmatter.
+This site uses **hand-made OG images**, one per page, in `assets/images/og/`.
+Set `og_image: /images/og/og-<page>.png` in the page's frontmatter;
+`og_image_default` in `hugo.toml` is the fallback.
+
+Ryder's own resolver does not support a per-page `og_image` param — it looks for a
+page-bundle resource named `*feature*` / `*cover*` / `*thumbnail*`, then generates a
+text-on-image card. This site overrides
+`layouts/partials/common-partials/opengraph/get-featured-image.html` to read
+`og_image` instead, which is why the theme's OG generator is unused here.
+
+**The images must live under `assets/`, not `static/`** — the resolver uses
+`resources.Get`, which cannot see `static/`. Item 2.3 of [[ryder-v0.3-spec]] adds
+`og_image` support upstream so this override can be deleted.
 
 ---
 

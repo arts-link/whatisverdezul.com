@@ -4,7 +4,7 @@ description: Decap CMS setup, collection definitions, field mappings, and GitHub
 metadata:
   type: reference
   status: active
-  updated: 2026-07-17
+  updated: 2026-07-25
   tags: [engineering, cms, decap, oauth, admin]
   related: [engineering/content-model.md, engineering/architecture.md]
 ---
@@ -51,13 +51,23 @@ backend:
   name: github
   repo: arts-link/whatisverdezul.com
   branch: main
-  base_url: https://whatisverdezul.com/api/oauth
-  auth_endpoint: auth
+  base_url: https://www.whatisverdezul.com
+  auth_endpoint: api/oauth/auth
 ```
 
 The repo is private, so OAuth keeps `scope=repo`.
 
-If Decap CMS auth proves fussy after these routes are verified, consider Sveltia CMS as a later fallback. It can use the same data and collection model.
+`base_url` is the **origin only, with no path** — Decap's popup handshake does a
+strict `===` comparison against it, so appending `/api/oauth` breaks auth. The path
+belongs in `auth_endpoint`. It points at **www**, which is canonical site-wide via
+the `vercel.json` redirect.
+
+This is live and working: CMS saves have been landing on `main` since 2026-07-24
+(commits titled `Update Page Content "…"`). The OAuth App is org-owned under
+`arts-link`, which is what resolved the earlier `OAuth App access restrictions`
+failure — org-owned apps never need per-app approval on a restricted org.
+
+If Decap CMS auth proves fussy in future, consider Sveltia CMS as a fallback. It can use the same data and collection model.
 
 ---
 

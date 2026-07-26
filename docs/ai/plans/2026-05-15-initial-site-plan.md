@@ -1,5 +1,13 @@
 # Verdèzul Website — Implementation Plan
 
+> **Historical record — superseded in places. Do not follow this as instructions.**
+> Kept for the decision rationale, not the current state. Known divergences from
+> what shipped: Buttondown and `api/subscribe.js` (Phase 9) were never adopted —
+> both forms POST to Formspree, see [[architecture]]; the theme is a git submodule,
+> not a subtree; `npm run build-tw` is vestigial and the real build is
+> `hugo --minify`, see [[build-commands]]. For current state start at
+> [[AGENT_START]].
+
 ## Context
 
 Arts-Link is building the official Verdèzul band website per the SOW. The site needs to be fast, mobile-friendly, visually distinctive (wilderness/earthtones aesthetic, Verdèzul identity), and easy for the client to update over time. The deliverable is a static site with a git-based CMS so tour dates, press quotes, merch, and other content can be edited via an admin UI without touching code. Hosting is on Vercel under the Arts-Link account, auto-deployed on git push.
