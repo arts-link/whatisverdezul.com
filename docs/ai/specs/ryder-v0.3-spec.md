@@ -1,11 +1,11 @@
 ---
 name: ryder-v0.3-spec
-description: Upstream change spec for the Ryder Hugo theme, derived from the overrides and workarounds this site was forced into
+description: Upstream change spec for the Ryder Hugo theme, derived from the overrides and workarounds this site was forced into, plus the migration path for existing Ryder sites
 metadata:
   type: spec
   status: proposed
   updated: 2026-07-25
-  tags: [ryder, theme, upstream, spec, csp, schema, tailwind]
+  tags: [ryder, theme, upstream, spec, migration, csp, schema, tailwind]
   related: [engineering/architecture.md, engineering/analytics-events.md, engineering/seo-and-schema.md, engineering/build-commands.md]
 ---
 
@@ -20,6 +20,10 @@ If you are working on this site, you almost certainly want
 [[architecture]] instead. The override rule still stands: **never edit
 `themes/ryder/`.** This spec exists so those overrides can eventually be deleted
 upstream rather than accumulated here.
+
+You also want this doc if you are **upgrading any site's pinned Ryder submodule** —
+including this one. Jump to *Migration path for existing Ryder sites*, and read the
+stale-override warning there before bumping anything.
 
 ---
 
@@ -54,7 +58,11 @@ breaking minority.
 |---|---|---|
 | v0.2.4 | Tier 1 (1.1–1.8) | no |
 | v0.2.5 | Tier 2 except 2.2; Tier 4 except 4.3; Tier 5 | no |
-| v0.3.0 | 2.2, Tier 3, 4.3 | yes — needs a migration guide |
+| v0.3.0 | 2.2, Tier 3, 4.3 | yes — see [Migration path](#migration-path-for-existing-ryder-sites) |
+
+Upgrade one release at a time. See **Migration path for existing Ryder sites**
+below for what each step changes, what breaks, and the pre-upgrade override audit
+that matters more than any individual item.
 
 ---
 
@@ -188,9 +196,25 @@ body {
 And it is *required*: `darkMode: 'class'` compiles to `.dark .dark\:bg-neutral-900`
 at specificity (0,2,0), which beats bare `body` at (0,0,1).
 
-**Fix.** Add `params.darkMode` with values `"toggle"` / `"system"` / `"off"`,
-defaulting from the existing `showDarkToggle` for back-compat. When `"off"`, skip
-`themeBoot.js` entirely and emit the body classes without `dark:` variants.
+**Fix.** Add `params.darkMode` with values `"toggle"` / `"system"` / `"off"`. When
+`"off"`, skip `themeBoot.js` entirely and emit the body classes without `dark:`
+variants.
+
+**Get the default mapping right — the obvious version is a silent regression.**
+Deriving `darkMode` from `showDarkToggle` does not work, because
+`head/js.html:3` defaults `showDarkToggle` to **false**. Most existing sites never
+set it, so a naive mapping would resolve them to `"off"` and strip the
+system-preference dark mode that `themeBoot.js` gives them today — a visual
+change on upgrade, with nothing in the config to explain it. Use instead:
+
+| Site config | Resolved `darkMode` | Behavior vs v0.2.3 |
+|---|---|---|
+| nothing set | `"system"` | unchanged |
+| `showDarkToggle = true` | `"toggle"` | unchanged |
+| `darkMode` set explicitly | as written | opt-in |
+
+So disabling dark mode requires an explicit `darkMode = "off"`. Every existing
+site renders identically until it asks for the change.
 
 **Also fix the docs.** The README says `showDarkToggle = true # Dark mode toggle`
 and `exampleSite` comments "defaults to true", while `head/js.html:3` defaults it
@@ -239,10 +263,35 @@ its own `devDependencies` *plus*:
 "postinstall": "cd themes/ryder && npm install"
 ```
 
-**Fix.** Move them into the theme `package.json` `dependencies`. Document that a
-consuming site must install them **at its own project root** — Hugo's `js.Build`
-resolves modules from the project root, not from the theme directory — and drop
-the nested-install recipe from the README.
+**Fix.** Three parts, and note the important limitation in the middle one:
+
+1. Declare them in the theme's `package.json` `dependencies`, so the authoritative
+   list lives next to the code that imports it instead of having to be
+   reverse-engineered from `main.js`.
+
+2. **Do not present that as the installation mechanism.** A theme consumed as a
+   git submodule (or a Hugo Module) is not an npm package, so a consumer's
+   `npm install` never reads the theme's `package.json`. Hugo's `js.Build` resolves
+   imports from the **project root's** `node_modules`, so the consuming site must
+   install these packages itself regardless. Declaring them in the theme is
+   documentation and serves the theme's own dev loop and `exampleSite` — it is not
+   a fix on its own. The README must state the required root install explicitly:
+
+   ```bash
+   npm i @alpinejs/csp @alpinejs/focus leaflet \
+     @fortawesome/fontawesome-svg-core \
+     @fortawesome/free-solid-svg-icons \
+     @fortawesome/free-regular-svg-icons \
+     @fortawesome/free-brands-svg-icons
+   ```
+
+   This is also why `postinstall: cd themes/ryder && npm install` appeared here at
+   all — it installs into `themes/ryder/node_modules`, which `js.Build` does not
+   consult. It was cargo-culted around the real requirement, not a solution to it.
+
+3. Add a build-time guard so the failure is legible: have `head/js.html` check for
+   a sentinel import and `errorf` naming the missing packages and the install
+   command, rather than surfacing a raw esbuild resolution error.
 
 ### 1.8 `[build] writeStats` and cachebusters live only in `exampleSite`
 
@@ -655,6 +704,165 @@ For 5.4, either add a `logo_wrapperClass` param or drop the wrapper chrome when
 `logo_png` is set. Note also that the theme reads `.Param "logo_png"`
 (page-overridable) while this site reads `.Site.Params.logo_png` (site-only) — a
 divergent contract worth settling.
+
+---
+
+## Migration path for existing Ryder sites
+
+Ryder is consumed as a git submodule pinned to a commit, so **nobody upgrades by
+accident** — a site moves only when someone runs `git submodule update --remote`.
+That makes the upgrade safe to stage, and makes tagged releases essential: sites
+need something to pin to other than a commit SHA.
+
+### The hazard that dominates all others: silent stale overrides
+
+Hugo template overrides do not conflict. A site file at
+`layouts/partials/head/schema.html` **wins silently** over the theme's version
+forever — no warning, no merge marker, no signal that the theme's copy moved on.
+
+So the most likely outcome of this release is not breakage. It is a site upgrading,
+seeing green, and **receiving none of the fixes** because it overrode the exact
+files that got fixed. This site is the worst case: it overrides
+`head/schema.html`, `get-featured-image.html`, and `head/favicon.html` — which is
+to say items 1.2, 1.3, 2.2, 2.3, and 5.5 would all land upstream and change
+nothing here until the overrides are deleted.
+
+**Do this before upgrading anything.** List your overrides and diff each against
+the theme:
+
+```bash
+# every site file that shadows a theme file
+cd layouts && find . -type f | while read -r f; do
+  [ -f "../themes/ryder/layouts/$f" ] && echo "$f"
+done
+```
+
+For each hit, decide: delete the override (the theme now does it), rebase your
+changes onto the theme's new version, or keep it deliberately and record why.
+Anything you keep is a fix you are opting out of — that is fine, but it should be
+a decision rather than an accident.
+
+### Upgrade order
+
+Go one release at a time — `v0.2.3 → v0.2.4 → v0.2.5 → v0.3.0` — building and
+eyeballing the site between each. Jumping straight to v0.3.0 bundles four breaking
+changes with ~25 behavior changes, and if something moves you will not know which
+item caused it. Each step is a separate submodule bump, so each is separately
+revertible:
+
+```bash
+git submodule update --remote themes/ryder   # or: cd themes/ryder && git checkout v0.2.4
+git -C themes/ryder describe --tags
+npm install && hugo --minify
+```
+
+Rollback is a one-liner at any point: `git -C themes/ryder checkout <previous-tag>`
+and commit the gitlink.
+
+### v0.2.4 — no config changes required, but three visible effects
+
+Nothing here is breaking. Two items, though, change what a site *emits*, which is
+worth expecting rather than discovering.
+
+| Item | What a site sees | Action |
+|---|---|---|
+| 1.1 getenv | A new build warning if `PUBLIC_POSTHOG_*` are set without `[security.funcs] getenv`. Adding it means **analytics start working for the first time** — expect a step change in PostHog, not a bug. | Add the `[security]` block, or move to `posthog_key` / `posthog_host` params |
+| 1.2 JSON-LD | Structured data becomes parseable, so search engines start reading it. Search Console may report *new* errors — those are pre-existing problems that were invisible while nothing parsed. | Revalidate at Google's Rich Results Test |
+| 1.5 dark mode | Nothing, by design — see the default-mapping table in 1.5. Sites wanting light-only must now say `darkMode = "off"`. | Set it if you were fighting dark mode in CSS, then delete the CSS workaround |
+| 1.3 OG resolver | A named `errorf` instead of a nil-pointer panic. Same trigger conditions, so no new failures. | none |
+| 1.4 footer guard | Sites without `[params.footer]` stop erroring. | none |
+| 1.6 CSP frame-src | Embed hosts are added automatically. A site that deliberately tightened `frameSrc` may find it **loosened**. | Diff the emitted `<meta http-equiv="Content-Security-Policy">` before and after |
+| 1.7 JS deps | No change to behavior — the required root install was always required. | Optionally delete `postinstall: cd themes/ryder && npm install`, which never did anything useful |
+| 1.8 writeStats | `hugo_stats.json` starts being written at the project root, and cachebusters begin applying in dev. Site config still wins over theme config, so an existing `[build]` block is unaffected. | Add `hugo_stats.json` to `.gitignore`, or track it deliberately |
+
+### v0.2.5 — additive, with one CSS risk
+
+Most of this tier is opt-in: `list-plain.html` needs `listType`, menu `showIf`
+needs a menu param, `navClass` needs setting, `ryderTrack` / `ryderForm` need
+`x-data`. Nothing changes until you reach for it.
+
+Three exceptions:
+
+- **2.7 is the one to test carefully.** Giving `baseof.html`'s wrapper `<div>` a
+  `site-shell` class plus `position: relative` creates a containing block, which
+  can move any absolutely-positioned descendant. And relocating
+  `tw-size-indicator` inside the wrapper changes the `<body>`'s direct children —
+  which breaks selectors written against them. **This site would break**: its
+  `body:has(.vz-nav--home) > div:not(.fixed)` rule exists precisely to navigate
+  that structure. Grep your CSS for `body >` before upgrading.
+- **2.6 turns a hard failure soft.** A typo'd `headerType` currently fails the
+  build; afterwards it warns and renders the base header. That is better, but a
+  site that has been relying on the build to catch a missing variant will now ship
+  a wrong-looking page instead. Watch the build log for the new warning.
+- **2.3 widens the OG chain** to read `og_image` front matter. If you already use
+  an `og_image` field for something else, it will now be picked up.
+
+### v0.3.0 — four breaking changes
+
+Ranked by how likely they are to hurt, worst first.
+
+**1. Tier 3.3 — the `*-tw` scripts are deleted. This breaks build commands, not
+rendering.** Any CI, Vercel, or Netlify command that runs
+`npm run build-tw && hugo --minify` will fail on a missing script. Before
+upgrading: confirm your build works with `hugo --minify` alone, ensure
+`tailwindcss`, `postcss`, `postcss-cli`, and `autoprefixer` are at your project
+root with a `postcss.config.js`, then drop the script from every build command and
+from your docs. Sites also inherit 3.2 — if anything resolves
+`themes/ryder/assets/css/style.css` by hand, remove it.
+
+**2. Tier 4.3 — dropping `'unsafe-inline'` will silently break inline scripts in
+production.** CSP violations do not fail the build; they fail in the visitor's
+browser. Any site with its own inline `<script>` will find it blocked after this
+lands. Before upgrading: grep your templates for `<script>` without a `src`. For
+each, either add its hash to the new `params.csp.scriptSrcHashes`, move it into
+`assets/js/extended.js`, or set `params.csp.scriptSrc = "'unsafe-inline'"`
+explicitly — the point of the change is that widening becomes a decision instead
+of a default. Verify with a production build and a browser console showing zero CSP
+violations, not by reading the config.
+
+**3. Tier 2.2 — JSON-LD output changes shape.** If you override
+`head/schema.html`, this is your cue to delete the override and move your additions
+into the new `head/schema-extra.html`, setting `params.schema.type` for the
+site-wide entity. If you do not override it, revalidate at Google's Rich Results
+Test. Per 1.2 the old output never parsed, so the practical risk is low — but
+verify rather than assume.
+
+**4. Tier 3.1 — the Tailwind config becomes a preset.** Any site whose
+`tailwind.config.js` does `require('./themes/ryder/tailwind.config.js')` must
+switch to the `presets: [...]` form shown in 3.1. This one fails loudly and
+immediately at build, so it is the least dangerous of the four.
+
+### What the theme owes consumers
+
+The migration only works if the theme side makes it followable:
+
+- **Tag releases.** `v0.2.4`, `v0.2.5`, `v0.3.0` as annotated git tags, so sites
+  can pin to a name. Today a submodule pins to a bare SHA, which tells a reader
+  nothing about compatibility.
+- **Ship a `CHANGELOG.md`** with a `### Breaking` heading per release, and link
+  each entry to its item number in this spec.
+- **Write `docs/migration/v0.3.0.md`** in the theme repo — the consumer-facing
+  version of this section, since a site upgrading Ryder should not have to read a
+  band's internal AI docs to find it.
+- **Cross-check the 7 open issues** on `arts-link/ryder` before publishing; some
+  may already cover items here, and closing them against this spec is free signal
+  that the release addresses real reports.
+- **Update `exampleSite` alongside every change**, so it doubles as the reference
+  implementation a migrating site can diff against.
+
+### Which sites this affects
+
+`arts-link/ryder` is public and MIT, with a small consumer set: this site, the
+author's own sites (`REWRITE.md` records affiliate tags for `artslink-20`,
+`benstrawbridge-20`, and `grrquarterly-20`, implying three), and whatever external
+sites exist — the repo shows 1 fork and 2 stars, so likely very few. The blast
+radius is small enough that v0.3.0's breaking changes are worth taking rather than
+deferring, which is why 3.1–3.3 and 4.3 are in this release at all rather than
+being carried indefinitely for compatibility.
+
+Note that the author's other sites are older Ryder consumers and may lean on the
+`*-tw` scripts and the committed `style.css` that Tier 3 removes. Audit those
+before publishing v0.3.0.
 
 ---
 

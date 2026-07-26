@@ -60,6 +60,10 @@ You know the task but aren't sure which docs apply. Use this as a routing table 
 → [[ryder-v0.3-spec]] (upstream change spec derived from this site's overrides)
 → [[architecture]] (the override rule that still applies here)
 
+### Upgrading the pinned Ryder submodule
+→ [[ryder-v0.3-spec]] — "Migration path" section; audit stale overrides first
+→ [[build-commands]] (submodule update and reinstall commands)
+
 ### Finishing any coding task
 → [[coding-agent-checklist]]
 
@@ -97,7 +101,7 @@ You know the task but aren't sure which docs apply. Use this as a routing table 
 - [[coding-agent-checklist]] — engineering finish gate
 
 ### Specs
-- [[ryder-v0.3-spec]] — upstream Ryder theme changes, derived from this site's overrides
+- [[ryder-v0.3-spec]] — upstream Ryder theme changes and the submodule upgrade/migration path
 
 ### Plans
 - [[2026-05-15-initial-site-plan]] — original implementation plan
