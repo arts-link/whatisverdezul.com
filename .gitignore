@@ -9,3 +9,4 @@ resources/
 assets/css/tw-built.css
 .vercel
 .env*
+hugo_stats.json
