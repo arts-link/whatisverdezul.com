@@ -55,7 +55,15 @@ backend:
   auth_endpoint: api/oauth/auth
 ```
 
-The repo is private, so OAuth keeps `scope=repo`.
+OAuth requests `scope=repo`.
+
+> **Stale premise.** This was chosen because the repo was private. It is now
+> **public** (`arts-link/whatisverdezul.com`, `visibility: public`). For a public
+> repo `scope=public_repo` is sufficient and narrower — `repo` also grants access
+> to every *private* repo the authorizing user can reach, which matters because
+> bandmate editors authorize this app against their own accounts (see
+> `docs/for-the-band/inviting-bandmates.md`). Narrowing is a deliberate change
+> with a re-auth cost for existing editors, so it is flagged rather than done.
 
 `base_url` is the **origin only, with no path** — Decap's popup handshake does a
 strict `===` comparison against it, so appending `/api/oauth` breaks auth. The path
