@@ -27,6 +27,20 @@ theme = "ryder"
   showHomeFeed = false
   showBreadCrumbs = false
   og_image_default = "/images/og/og-home.png"
+  
+[params.favicon]
+    ico            = "/favicon.ico"
+    version        = ""
+    svg            = ""
+    appleTouchIcon = "/apple-touch-icon.png"
+    webmanifest    = "/site.webmanifest"
+
+  [[params.favicon.icons]]
+    size = "32x32"
+    href = "/favicon-32x32.png"
+  [[params.favicon.icons]]
+    size = "16x16"
+    href = "/favicon-16x16.png"
 
 [params.csp]
   frameSrc = "https://www.youtube-nocookie.com https://open.spotify.com"

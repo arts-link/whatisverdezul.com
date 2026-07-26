@@ -1067,10 +1067,6 @@ a.vz-hero__question-box:active {
   right: 0;
 }
 
-body:has(.vz-nav--home) > div:not(.fixed) {
-  position: relative;
-}
-
 /* Nav pill — all navs */
 .vz-nav__links--pill {
   backdrop-filter: blur(14px);
