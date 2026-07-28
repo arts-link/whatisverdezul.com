@@ -1,0 +1,14 @@
+{{- /* Site-specific JSON-LD the theme does not model. Additive: head/schema.html
+       still runs, so WebPage / BlogPosting / MusicGroup / BreadcrumbList all
+       survive. Overriding head/schema.html instead would silently drop them.
+       `| safeJS` is required — without it Go escapes the JSON as a quoted
+       string, which parses as a string rather than an object. */ -}}
+{{- if .IsHome -}}
+  {{- $album := dict
+        "@context" "https://schema.org"
+        "@type" "MusicAlbum"
+        "name" "Verdèzul"
+        "byArtist" (dict "@type" "MusicGroup" "name" site.Title)
+  -}}
+  <script type="application/ld+json">{{ $album | jsonify | safeJS }}</script>
+{{- end -}}

@@ -42,10 +42,13 @@ theme = "ryder"
     size = "16x16"
     href = "/favicon-16x16.png"
 
+[params.schema]
+  type = "MusicGroup"
+
 [params.csp]
   frameSrc = "https://www.youtube-nocookie.com https://open.spotify.com"
   imgSrc = "https://img.youtube.com"
-  scriptSrc = "'unsafe-inline'"
+    scriptSrcHashes = ["sha256-gIirzZwKgl/5Zp3caTrb8Q0bQtvKmxH8pbyqwmtSoUk="]
   connectSrc = "https://formspree.io"  # contact form submits here via fetch
 
 [security]
