@@ -1,10 +1,7 @@
-const themeConfig = require('./themes/ryder/tailwind.config.js');
-
 module.exports = {
-  ...themeConfig,
+  presets: [require('./themes/ryder/tailwind.preset.js')],
   content: [
     './themes/ryder/layouts/**/*.html',
-    './themes/ryder/exampleSite/hugo_stats.json',
     './layouts/**/*.html',
     './content/**/*.md',
     './hugo_stats.json',
