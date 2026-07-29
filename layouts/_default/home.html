@@ -3,9 +3,10 @@
 {{/* Hero */}}
 <section class="vz-hero">
   <div class="vz-hero__bg"></div>
-  <div class="vz-hero__center-box" x-data>
-    <a href="/about/" class="vz-neon-box--green vz-hero__question-box"
-       @click="window.posthog && posthog.capture('hero_about_click')">
+  <div class="vz-hero__center-box">
+    {{/* vzTrack: CSP-safe Alpine can't eval inline capture() — see extended.js */}}
+    <a href="/about/" class="vz-neon-box--green vz-hero__question-box" x-data="vzTrack"
+       @click="track" data-track-event="hero_about_click">
       <p class="vz-hero__question">What is Verd&egrave;zul?</p>
     </a>
   </div>
