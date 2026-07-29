@@ -4,7 +4,7 @@ description: Engineering finish gate — run before marking any coding task comp
 metadata:
   type: reference
   status: active
-  updated: 2026-06-05
+  updated: 2026-07-29
   tags: [checklist, engineering, coding, finish]
   related: [engineering/architecture.md, engineering/build-commands.md]
 ---
@@ -39,8 +39,10 @@ Finishing any coding task — new feature, layout change, data file update, CMS 
 - [ ] No existing `data-track` attributes or PostHog calls were accidentally removed
 
 ### Build
-- [ ] `npm run build-tw && hugo --minify` passes with no errors
+- [ ] `hugo --minify` passes with no errors
 - [ ] `hugo server` shows no template errors or warnings in the console
+- [ ] `hugo server` console shows no `[ryder:csp-lint]` warnings — those mean an
+      Alpine directive silently does nothing (see [[build-commands]])
 - [ ] `public/` output looks correct for changed pages
 
 ### Serverless functions (`api/`)
