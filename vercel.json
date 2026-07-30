@@ -1,6 +1,6 @@
 {
   "framework": "hugo",
-  "buildCommand": "[ -n \"$VERCEL_URL\" ] && hugo --minify --baseURL \"https://$VERCEL_URL\" || hugo --minify",
+  "buildCommand": "if [ \"$VERCEL_ENV\" = \"production\" ]; then hugo --minify; else hugo --minify --baseURL \"https://$VERCEL_URL\"; fi",
   "outputDirectory": "public",
   "installCommand": "git submodule update --init --recursive && npm install",
   "redirects": [

@@ -6,8 +6,7 @@ date: 2026-07-30
 ---
 
 This site is run by Verdèzul, a band based in Los Angeles. This page explains what
-information the site collects, why, and how to get it removed. It is written to be
-read, not to be skimmed past.
+information the site collects, why, and how to get it removed.
 
 ## The short version
 
@@ -72,13 +71,11 @@ anything the embedded YouTube and Spotify players set once you interact with the
 
 ## Your choices
 
-Write to us at **verdezulofficial@gmail.com** and we will:
+Email **verdezulofficial@gmail.com** and we'll:
 
-- tell you what we hold about you,
-- remove you from the mailing list,
-- or delete your contact form messages.
-
-No particular form of words is needed — just ask.
+- tell you what we have about you
+- take you off the mailing list
+- delete your messages
 
 ## Children
 

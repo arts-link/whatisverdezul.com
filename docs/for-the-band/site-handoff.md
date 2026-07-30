@@ -14,31 +14,45 @@ Two companion guides cover their topics in more depth:
 
 ## 1. What you own, and what runs on someone else's account
 
-Your site is held together by six accounts. Some are yours, some are Arts-Link's. This
+Your site is held together by seven accounts. Some are yours, some are Arts-Link's. This
 is the part people skip and regret later, so here it is up front.
 
 | What | Whose account | What it does | If it goes away |
 |---|---|---|---|
 | **Domain** (whatisverdezul.com) | **Yours** | The address itself | Site goes dark. See §11 |
-| **Google Sheet** | **Yours** | Holds your mailing list | You lose the list |
-| **PostHog** | **Yours** | Website statistics | You lose your stats history |
-| **GitHub OAuth app** | **Yours** | What makes the `/admin` login work | Nobody can log in to edit |
 | **Vercel** | Arts-Link | Publishes the site | Site goes dark |
 | **GitHub org** (`arts-link`) | Arts-Link | Stores the site's files and your editor accounts | Nobody can edit |
+| **GitHub OAuth app** | Arts-Link | What makes the `/admin` login work | Nobody can log in to edit |
 | **Formspree** (paid) | Arts-Link | Runs your contact form **and** newsletter signup | Both forms stop working |
+| **Google Sheet** | Arts-Link | Holds your mailing list | You lose the list |
+| **PostHog** | Arts-Link | Website statistics | You lose the stats history |
+| **Google Search Console** | Arts-Link | Shows what people searched to find you | You lose search reporting; the site itself is fine |
 
-**Two dependencies worth saying out loud.**
+**Read that table again, because the short version is blunt:** the only thing on it in
+your name today is the domain. Everything else runs on Arts-Link accounts. That's a
+normal way to start, and none of it is a problem right now — but it's the reason to keep
+Ben's number, and it's worth revisiting as the band grows.
+
+**Three of those are worth saying out loud.**
 
 Your site's design lives in a private component owned by the `arts-link` GitHub
 organization, and it gets pulled in fresh every single time the site republishes. If
 that access ever went away, the site would stop being able to publish — not because of
 anything you did to your content.
 
-And Formspree runs *both* your forms on Arts-Link's paid account. If that account ever
+Formspree runs *both* your forms on Arts-Link's paid account. If that account ever
 lapsed, your contact form and your newsletter signup would both stop silently — no
 error message, no bounce, they'd just quietly stop arriving.
 
-Neither is a problem today. Both are reasons to keep Ben's number.
+The **`/admin` login** can't simply be moved to your name. It's a GitHub app that has to
+be owned by the `arts-link` organization — that's the only configuration GitHub's
+security settings allow here, and getting it wrong is what stopped the editor from
+saving at all during the build.
+
+**Two of these are already planned to change.** Ben will set the band up with your own
+**PostHog** account, so the site statistics become yours. And the **mailing list**, which
+is the one asset you'd least want to be renting, is worth moving into your own hands
+early — [email-list-and-newsletter.md](email-list-and-newsletter.md) covers how.
 
 ---
 
@@ -221,6 +235,11 @@ to things you actually care about:
 
 The free tier is generous — a band site won't come close to the limit.
 
+**It's running on Arts-Link's PostHog account for now**, so ask Ben when you want to see
+the numbers. Collecting the data is the part that had to start early — statistics only
+exist from the day they're switched on, so it's already building up a history. Ben will
+set you up with your own account.
+
 The most useful habit isn't watching a dashboard. It's checking, after a show
 announcement or a drop, whether ticket and merch clicks actually moved. That tells you
 whether the announcement worked.
@@ -238,14 +257,19 @@ Structured data telling Google you're a band, preview images for when links get 
 a sitemap, an `llms.txt` file for AI crawlers, and proper page descriptions. You don't
 need to maintain any of it.
 
-### Set up once — an hour, total
+### Search Console — already done
 
-Add your site to **Google Search Console** and **Bing Webmaster Tools**. Both free. They
-show you what people searched to find you, and warn you if something breaks.
+**Google Search Console is set up.** It's the free tool that shows what people actually
+typed into Google to find you, which pages they landed on, and warns you if something
+breaks. It's set up as a *domain* property, so it covers the whole site — every page,
+with or without the `www`.
 
-**One trap:** add the address **with the `www`** — `https://www.whatisverdezul.com`.
-That's the official version of your site. Add it without the `www` and your reports will
-look permanently empty, and you'll assume nobody's visiting.
+It lives on Arts-Link's Google account (see §1), so **ask Ben when you want to see the
+search numbers.** He can pull a report or walk you through it.
+
+The one thing still worth doing, free and about twenty minutes: add the site to **Bing
+Webmaster Tools** as well. Bing is a smaller slice of traffic, but it also feeds
+ChatGPT's web results — so it's worth more than its search share suggests.
 
 ### The part that actually moves the needle
 
@@ -305,11 +329,14 @@ your first send, not after.
 
 | Item | Cost |
 |---|---|
-| Domain name | **~$24/year** |
-| Hosting (Vercel) | Free at your traffic |
+| Domain name | **~$24/year — the only bill in your name** |
+| Hosting (Vercel) | Free tier — on Arts-Link's account |
 | GitHub | Free, unlimited editors |
-| PostHog | Free at your traffic |
+| PostHog | Free tier — on Arts-Link's account |
 | Formspree | Paid — on Arts-Link's account |
+
+So the site costs you about **$24 a year** today. Formspree is the only paid piece, and
+it sits on Arts-Link's account (§1).
 
 **Turn on auto-renew for the domain, and make sure the card on file is one that won't
 expire.** A lapsed domain takes your entire site down — and worse, an expired music

@@ -56,15 +56,43 @@ pipeline concern now. `package.json` carries dependencies only.
 ```json
 {
   "framework": "hugo",
-  "buildCommand": "[ -n \"$VERCEL_URL\" ] && hugo --minify --baseURL \"https://$VERCEL_URL\" || hugo --minify",
+  "buildCommand": "if [ \"$VERCEL_ENV\" = \"production\" ]; then hugo --minify; else hugo --minify --baseURL \"https://$VERCEL_URL\"; fi",
   "outputDirectory": "public",
   "installCommand": "git submodule update --init --recursive && npm install"
 }
 ```
 
-The `buildCommand` overrides `baseURL` on preview deploys so preview URLs
-resolve against themselves instead of the production domain. The
-`installCommand` checks out the Ryder submodule before installing.
+The `buildCommand` overrides `baseURL` on preview deploys so preview URLs resolve
+against themselves instead of the production domain. Production falls through to
+`hugo.toml`'s `baseURL`, which stays the single source of truth for the canonical host.
+The `installCommand` checks out the Ryder submodule before installing.
+
+**Two traps this shape exists to avoid — both were live bugs.**
+
+**Branch on `VERCEL_ENV`, never on `VERCEL_URL`.** Vercel sets `VERCEL_URL` on *every*
+deployment, production included, and it is always the deployment-specific
+`*.vercel.app` hostname — never the custom domain. An earlier `[ -n "$VERCEL_URL" ]`
+guard was therefore always true, so **production built with a `*.vercel.app` baseURL**:
+canonical tags, `sitemap.xml`, the `Sitemap:` line in `robots.txt`, `og:url`, `og:image`,
+the JSON-LD URLs, `llms.txt` and RSS were all wrong on the live site. `VERCEL_ENV`
+(`production` | `preview` | `development`) is the distinction actually wanted.
+
+**Use `if/else`, not `A && B || C`.** In the old shape a *failing* preview build fell
+through to the `||` fallback, which succeeded — so a broken build deployed green, with
+the wrong baseURL. `if/else` lets a failure stay a failure.
+
+Neither bug is reproducible locally, because a bare `hugo` reads `hugo.toml` and looks
+correct. To test a change here, run the exact command string with the variable set:
+
+```bash
+# Should print the www host
+VERCEL_ENV=production VERCEL_URL=deploy-abc.vercel.app sh -c "$(python3 -c "import json;print(json.load(open('vercel.json'))['buildCommand'])")"
+grep -o '<loc>[^<]*</loc>' public/sitemap.xml | head -1
+
+# Should print the preview host
+VERCEL_ENV=preview VERCEL_URL=deploy-abc.vercel.app sh -c "$(python3 -c "import json;print(json.load(open('vercel.json'))['buildCommand'])")"
+grep -o '<loc>[^<]*</loc>' public/sitemap.xml | head -1
+```
 
 ---
 
