@@ -68,6 +68,7 @@ If Decap CMS auth proves fussy after these routes are verified, consider Sveltia
 | Band Info | single file | `data/band.json` |
 | Social Links | single file | `data/social.json` |
 | Shows | file with `items` list | `data/shows.json` |
+| Streaming Page | file with `items` list + one scalar | `data/streaming.json` |
 | Press Quotes | file with `items` list | `data/press.json` |
 | Releases | file with `items` list | `data/releases.json` |
 | Shop / Merch | file with `items` list | `data/merch.json` |
@@ -102,6 +103,16 @@ List-backed collections must be Decap file collections with a list field named `
 - `items[].apple_music_url` — optional
 - `items[].cover_image` — optional image
 - `items[].featured` — boolean
+
+### Streaming Page
+
+`data/streaming.json` — the only collection mixing a scalar field with an `items` list:
+- `spotify_embed_url` — optional string, `pattern: ^https://open\.spotify\.com/embed/`. Blank hides the Listen section.
+- `items[].title` — video title
+- `items[].youtube_id` — string, `pattern: ^[A-Za-z0-9_-]{11}$`
+- `items[].thumbnail` — optional image override; falls back to YouTube's `maxresdefault.jpg`
+
+Both `pattern` rules exist because the predictable editor mistake is pasting a full URL where an ID or embed link belongs. Decap rejects it in the form with the second array element as the message, instead of shipping a broken page. Keep that behavior if these fields are ever restructured.
 
 ### Press
 

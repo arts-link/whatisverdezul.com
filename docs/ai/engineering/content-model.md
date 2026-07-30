@@ -109,6 +109,31 @@ Fields:
 - `song_count` — positive integer, shown on music cards
 - `featured` — boolean; featured releases appear in music schema and any featured modules
 
+### `data/streaming.json`
+
+Drives `/music/streaming/` — the YouTube video grid and the Spotify embed below it. Both sections are individually guarded: an empty `items` array hides the Videos heading and grid, and a blank `spotify_embed_url` hides the Listen heading and iframe.
+
+```json
+{
+  "spotify_embed_url": "https://open.spotify.com/embed/artist/1zf7vVM2XaoaTD3hXWR1If?utm_source=generator",
+  "items": [
+    {
+      "title": "Taxes Finnah Hit",
+      "youtube_id": "Op1oF2qy_ek",
+      "thumbnail": "/images/uploads/custom-art.jpg"
+    }
+  ]
+}
+```
+
+Fields:
+- `youtube_id` — the bare 11-character video ID, **not** a full URL. The CMS enforces `^[A-Za-z0-9_-]{11}$`, because pasting a watch URL is the predictable failure.
+- `title` — used as the caption, the `alt` text, and the PostHog `youtube_play_click` `video_title` property.
+- `thumbnail` — optional override. Omit it and `youtube-thumb.html` falls back to `https://img.youtube.com/vi/<id>/maxresdefault.jpg`. That image only exists for videos uploaded at 720p+; YouTube serves a grey placeholder rather than a 404 for the rest, so it cannot be detected in CSS and an inline `onerror` fallback would be blocked by the CSP. The override is the escape hatch.
+- `spotify_embed_url` — must be an `open.spotify.com/embed/…` link (CMS-enforced), not a normal share link. Works for artist, album, or playlist embeds.
+
+`layouts/music/streaming.html` passes each item to the partial as a dict, so `youtube-thumb.html` keeps its existing `id` / `title` / `thumbnail` contract while the CMS field stays the client-legible `youtube_id`.
+
 ### `data/press.json`
 
 Starts as an empty list wrapper. When `items` is empty, Press nav and page content stay hidden/empty.
