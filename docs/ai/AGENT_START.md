@@ -49,7 +49,7 @@ The band name is always **Verdèzul** — with the accent on the è. Never "verd
 - **Never edit `themes/ryder/` directly.** Override via `layouts/`, `assets/css/extended/verdezul.css`, and `hugo.toml` params.
 - **All client-editable content lives in `data/*.json`.** List-backed files use an `items` array; templates consume these; Decap CMS edits them.
 - **Press nav is hidden when `data/press.json.items` is empty.** Same conditional pattern applies to any data-driven section with no entries.
-- **Logo is `/images/logo-white-trans.png`** — oversized, flagged for future optimization.
+- **Logo is `/images/logo-trans-512.png`** (set as `logo_png` in `hugo.toml`).
 - **Repo is `arts-link/whatisverdezul.com`** — not `benstraw/`.
 
 ---
