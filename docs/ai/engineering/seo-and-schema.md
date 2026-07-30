@@ -130,6 +130,18 @@ Generated from **`layouts/home.robots.txt`**. Two things about that are easy to 
 
 The file's real payload is the `Sitemap:` line, built with `absURL` so it carries the canonical `www` host.
 
+### Preview deploys serve a different robots.txt
+
+The template branches on `getenv "VERCEL_ENV"`. An explicitly non-production value emits `User-agent: * / Disallow: /`, so branch and PR deployments can't be indexed and compete with the live domain. Preview URLs are unguessable, but they leak through pull request links and chat unfurls, which is enough.
+
+**Polarity is deliberate: unset means permissive.** A local `hugo` has no `VERCEL_ENV` and must keep producing exactly what production does, otherwise the file can't be checked locally. Only an explicit non-production value flips it.
+
+This needs `'^VERCEL_'` in `[security.funcs] getenv` in `hugo.toml`. **Removing it does not degrade gracefully** — every build fails with `access denied: "VERCEL_ENV" is not whitelisted in policy "security.funcs.getenv"`. That is the desired direction: a robots.txt silently reverting to permissive on previews would be worse than a red build.
+
+**Don't reach for `hugo --environment preview` instead.** It looks tidier, but `themes/ryder/layouts/partials/head/css.html` gates minification, fingerprinting and SRI on `hugo.Environment == "production"` — previews would stop resembling production, which is the entire point of having them.
+
+Vercel may also send `X-Robots-Tag: noindex` on preview deployments. If it does, this is belt and braces; the template keeps the intent visible in the repo rather than resting on undocumented platform behaviour.
+
 **`/admin/` is deliberately not disallowed.** It already serves `<meta name="robots" content="noindex">`. Blocking the path in robots.txt would stop crawlers fetching it, so they would never read that noindex — and a robots-blocked URL can still be indexed URL-only from an external link, with nothing left to suppress it. Allowing the crawl is what makes the noindex enforceable. Don't "fix" this.
 
 **AI crawlers are unblocked on purpose**, to match the GEO goal above and the `llms.txt` the site already ships. No per-bot rules: the `User-agent: *` wildcard covers them and a list of redundant `Allow:` blocks would only go stale.

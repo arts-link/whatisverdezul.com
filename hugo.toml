@@ -64,7 +64,11 @@ disableKinds = ["taxonomy", "term"]
 
 [security]
   [security.funcs]
-    getenv = ['^HUGO_', '^CI$', '^PUBLIC_']
+    # ^VERCEL_ lets layouts/home.robots.txt read VERCEL_ENV so preview deploys
+    # emit Disallow: /. Removing it does not degrade gracefully — every build
+    # fails with "access denied: VERCEL_ENV is not whitelisted". Fails loud on
+    # purpose: robots.txt quietly reverting to permissive would be worse.
+    getenv = ['^HUGO_', '^CI$', '^PUBLIC_', '^VERCEL_']
 
 [outputs]
   home = ["HTML", "RSS", "LLMSTxt", "ROBOTS"]
