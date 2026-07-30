@@ -51,9 +51,11 @@ backend:
   name: github
   repo: arts-link/whatisverdezul.com
   branch: main
-  base_url: https://whatisverdezul.com/api/oauth
-  auth_endpoint: auth
+  base_url: https://www.whatisverdezul.com
+  auth_endpoint: api/oauth/auth
 ```
+
+`base_url` is the **origin only, with no path** — Decap's popup handshake does a strict `===` comparison against it, so appending `/api/oauth` breaks login. The path goes in `auth_endpoint` instead. It is `www` because `www` is canonical (`hugo.toml` `baseURL` plus the apex→www redirect in `vercel.json`).
 
 The repo is private, so OAuth keeps `scope=repo`.
 

@@ -4,7 +4,7 @@ description: Hugo + Ryder stack, full file structure, path conventions, and over
 metadata:
   type: reference
   status: active
-  updated: 2026-06-05
+  updated: 2026-07-30
   tags: [engineering, stack, structure, hugo, ryder]
   related: [engineering/build-commands.md, engineering/routes-and-menus.md]
 ---
@@ -49,35 +49,40 @@ whatisverdezul.com/
 │   ├── press/_index.md
 │   ├── music/_index.md
 │   ├── shop/_index.md
-│   └── contact/_index.md
+│   ├── contact/_index.md
+│   └── privacy/_index.md
 ├── data/
 │   ├── band.json                 # Name, email, bio, location
 │   ├── social.json               # Social platform URLs
 │   ├── shows.json                # Shows list wrapper with `items`
 │   ├── releases.json             # Discography list wrapper with `items`
 │   ├── press.json                # Press quotes list wrapper with `items`
-│   └── merch.json                # Shop items list wrapper with `items`
+│   ├── merch.json                # Shop items list wrapper with `items`
+│   └── streaming.json            # Streaming page: Spotify embed + video `items`
 ├── docs/
 │   └── ai/                       # AI context docs (this directory)
-├── images/                       # Static images (not in static/ — Hugo processes these)
-│   └── logo-white-trans.png      # Client logo (oversized, optimize later)
+├── images/                       # NOT a Hugo directory — nothing here is published
+│   └── (near-duplicate of static/images/ — not published, see TODO.md P3)
 ├── layouts/                      # Hugo layout overrides (safe to edit)
-│   ├── index.html                # Home page layout
-│   ├── _default/
-│   │   └── baseof.html           # Base template override if needed
-│   ├── about/single.html
+│   ├── _default/home.html        # Home page layout (Ryder requires this path)
+│   ├── about/list.html
 │   ├── shows/list.html
 │   ├── press/list.html
 │   ├── music/list.html
+│   ├── music/streaming.html      # Videos + Spotify, driven by data/streaming.json
 │   ├── shop/list.html
 │   ├── contact/list.html
+│   ├── privacy/list.html         # Prose-only layout for the privacy policy
 │   ├── partials/
 │   │   ├── header-verdezul.html  # Overrides Ryder header (set by headerType param)
+│   │   ├── header-home.html      # Homepage variant (headerType "-home")
+│   │   ├── header-dark.html      # Contact variant (headerType "-dark")
 │   │   ├── footer-verdezul.html  # Overrides Ryder footer
 │   │   ├── menu-verdezul.html    # Overrides Ryder nav
+│   │   ├── extend_head.html      # Ryder hook — viewport meta
 │   │   ├── head/
-│   │   │   └── schema.html       # MusicGroup / MusicEvent / MusicAlbum JSON-LD
-│   │   └── youtube / menu / schema partials
+│   │   │   └── schema-extra.html # ADDITIVE JSON-LD hook (never override schema.html)
+│   │   └── show-card / youtube-thumb / youtube-modal / youtube-embed
 │   └── shortcodes/
 │       ├── spotify-embed.html
 │       └── youtube-embed.html
@@ -89,7 +94,7 @@ whatisverdezul.com/
 ├── themes/
 │   └── ryder/                    # Git submodule — NEVER EDIT DIRECTLY
 ├── hugo.toml                     # Site config + Ryder params
-├── package.json                  # npm scripts (TailwindCSS build)
+├── package.json                  # devDependencies only — `scripts` is empty; Hugo compiles Tailwind via css.PostCSS
 ├── vercel.json                   # Vercel build config
 └── CLAUDE.md                     # Project AI instructions → points here
 ```

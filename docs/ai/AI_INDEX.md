@@ -4,7 +4,7 @@ description: Task-based routing table — find which docs to read for any task o
 metadata:
   type: index
   status: active
-  updated: 2026-06-05
+  updated: 2026-07-30
   tags: [index, routing, navigation]
   related: [AGENT_START.md, KNOWLEDGE_GRAPH.md]
 ---
@@ -62,6 +62,10 @@ You know the task but aren't sure which docs apply. Use this as a routing table 
 ### Publishing a new page
 → [[page-publish-checklist]]
 
+### Writing or updating anything the band reads
+→ `docs/for-the-band/` (plain English, no jargon, ends with a Bottom line and Ben's email)
+→ [[writing-guide]]
+
 ---
 
 ## All docs
@@ -94,3 +98,13 @@ You know the task but aren't sure which docs apply. Use this as a routing table 
 
 ### Plans
 - [[2026-05-15-initial-site-plan]] — original implementation plan
+
+### Band-facing (`docs/for-the-band/`)
+Written for the band, not for agents. Plain English, no jargon. Keep them accurate when
+the thing they describe changes — they are what the band actually relies on.
+- `site-handoff.md` — the master reference: account ownership, editing every section, SEO/GEO, costs, support
+- `inviting-bandmates.md` — adding and removing editors via the GitHub `Band` team
+- `email-list-and-newsletter.md` — the Google Sheet list and how to send to it
+
+### Internal (`docs/internal/`)
+- `handoff-meeting-agenda.md` — Arts-Link run-sheet for the client handoff meeting

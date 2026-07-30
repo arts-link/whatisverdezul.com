@@ -30,7 +30,12 @@
 
   <div class="vz-footer__bar">
     <div class="vz-footer__bar-inner">
-      <span class="vz-footer__copy">© {{ now.Year }} Verdèzul</span>
+      {{/* Copyright and Privacy stack as one column so the bar keeps three
+           flex children and the social icons stay centred. */}}
+      <div class="vz-footer__legal">
+        <span class="vz-footer__copy">© {{ now.Year }} Verdèzul</span>
+        <a href="/privacy/" class="vz-footer__contact">Privacy</a>
+      </div>
 
       {{ $social := .Site.Data.social }}
       {{ if $social }}

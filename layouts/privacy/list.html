@@ -1,0 +1,17 @@
+{{/* Prose styling comes from @tailwindcss/typography, pulled in via the Ryder
+     preset. No dark: variants here — .vz-section--music hardcodes a light
+     background regardless of theme, same as the About page. */}}
+{{ define "main" }}
+<div class="vz-section--music">
+  <article class="max-w-2xl mx-auto p-12">
+    <span class="vz-section-label">Legal</span>
+    <h1 class="text-4xl md:text-5xl font-black mb-8">{{ .Title }}</h1>
+    <div class="prose max-w-none text-neutral-900">
+      {{ .Content }}
+    </div>
+    {{ with .Date }}
+    <p class="mt-8 text-sm opacity-50">Last updated {{ dateFormat "January 2, 2006" . }}</p>
+    {{ end }}
+  </article>
+</div>
+{{ end }}

@@ -54,9 +54,9 @@ For albums or tracks, swap `artist` for `album` or `track` and update the ID.
 
 ## Photo gallery
 
-Ryder includes a `photo-gallery` layout and shortcode with lightbox support. Use it for the Media page photo section.
+Ryder includes a `photo-gallery` layout and shortcode with lightbox support. **Nothing on this site uses it** — there is no Media page and no `images/gallery/` directory. It is noted here only as an available option if a photo section is ever added; the shortcode pulls from a directory or a list of image paths defined in frontmatter.
 
-Gallery images go in `images/gallery/`. The shortcode pulls from a directory or a list of image paths defined in frontmatter.
+For the video grid on `/music/streaming/`, see `layouts/music/streaming.html` and `data/streaming.json` — that uses the site's own `vzLightbox` component, not Ryder's gallery.
 
 ---
 
