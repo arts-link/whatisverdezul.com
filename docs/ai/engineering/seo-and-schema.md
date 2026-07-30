@@ -30,16 +30,20 @@ These work out of the box from page `title` and `description` frontmatter. No ma
 
 ## Schema JSON-LD (site-specific)
 
-Override `layouts/partials/head/schema.html` to inject band-specific structured data.
+Add band-specific structured data through
+`layouts/partials/head/schema-extra.html`. This is Ryder's additive hook: its
+core `head/schema.html` still renders first, and the site-level extra partial
+adds Verdèzul-specific entities without editing the theme submodule.
 
-### MusicGroup (all pages)
+### Organization / MusicGroup (homepage)
 
 ```json
 {
   "@context": "https://schema.org",
-  "@type": "MusicGroup",
+  "@type": ["Organization", "MusicGroup"],
+  "@id": "https://www.whatisverdezul.com/#organization",
   "name": "Verdèzul",
-  "url": "https://whatisverdezul.com",
+  "url": "https://www.whatisverdezul.com/",
   "email": "verdezulofficial@gmail.com",
   "genre": ["Hip-Hop", "Rap"],
   "foundingLocation": {
@@ -50,10 +54,27 @@ Override `layouts/partials/head/schema.html` to inject band-specific structured 
     "https://www.instagram.com/bluepill.greenpill",
     "https://www.tiktok.com/@bluepill.greenpill",
     "https://www.youtube.com/@Verdezul",
-    "https://open.spotify.com/artist/1zf7vVM2XaoaTD3hXWR1If"
+    "https://open.spotify.com/artist/1zf7vVM2XaoaTD3hXWR1If",
+    "https://music.apple.com/us/artist/verd%C3%A8zul/1692039373",
+    "https://tidal.com/artist/40000977",
+    "https://music.youtube.com/@Verdezul"
   ]
 }
 ```
+
+`Organization` is explicit because Google supports it in the Rich Results Test.
+JSON-LD permits one entity to have multiple types, so `MusicGroup` retains the
+more precise Schema.org meaning without creating a duplicate band entity. The
+`sameAs` array is built from every non-empty value in `data/social.json`; the same
+sorted array is also used by each `MusicEvent` performer.
+
+### WebSite (homepage)
+
+The homepage also emits a `WebSite` entity with `name`, `url`, and `inLanguage`.
+Its `publisher` and `about` fields reference the organization through the stable
+`https://www.whatisverdezul.com/#organization` ID. Google uses `WebSite` for its
+site-name system, but does not report site-name markup in the Rich Results Test;
+validate it with Schema.org Validator and Search Console URL Inspection instead.
 
 ### MusicEvent (Shows page, per show)
 
@@ -90,10 +111,11 @@ Field behavior worth preserving if this is ever rewritten:
 {
   "@context": "https://schema.org",
   "@type": "MusicAlbum",
-  "name": "ETASOBAG",
-  "byArtist": { "@type": "MusicGroup", "name": "Verdèzul" },
+  "name": "Earthtones & Shades of Blue and Green",
+  "byArtist": { "@id": "https://www.whatisverdezul.com/#organization" },
   "datePublished": "2025",
-  "url": "https://open.spotify.com/artist/1zf7vVM2XaoaTD3hXWR1If"
+  "numTracks": 6,
+  "url": "https://open.spotify.com/album/41MixYv9THV7OBZcxUv1Qj"
 }
 ```
 

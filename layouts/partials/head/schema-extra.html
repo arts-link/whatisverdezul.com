@@ -4,14 +4,68 @@
        `| safeJS` is required — without it Go escapes the JSON as a quoted
        string, which parses as a string rather than an object. */ -}}
 
+{{- /* One canonical social-profile list is shared by the homepage entity and
+       MusicEvent performers. Sorting keeps generated JSON deterministic. */ -}}
+{{- $sameAs := slice -}}
+{{- range $key, $url := .Site.Data.social -}}
+  {{- with $url -}}{{- $sameAs = $sameAs | append . -}}{{- end -}}
+{{- end -}}
+{{- $sameAs = sort $sameAs -}}
+
 {{- if .IsHome -}}
-  {{- $album := dict
+  {{- $bandID := printf "%s#organization" site.BaseURL -}}
+  {{- $websiteID := printf "%s#website" site.BaseURL -}}
+  {{- $band := .Site.Data.band -}}
+
+  {{- /* Organization is explicit because that is the type Google's Rich
+       Results Test supports. JSON-LD permits multiple types on one entity, so
+       MusicGroup preserves the more precise Schema.org meaning. */ -}}
+  {{- $organization := dict
         "@context" "https://schema.org"
-        "@type" "MusicAlbum"
-        "name" "Verdèzul"
-        "byArtist" (dict "@type" "MusicGroup" "name" site.Title)
+        "@type" (slice "Organization" "MusicGroup")
+        "@id" $bandID
+        "name" $band.name
+        "url" site.BaseURL
+        "logo" (absURL site.Params.logo_png)
+        "description" $band.bio
+        "email" $band.email
+        "genre" (slice "Hip-Hop" "Rap")
+        "foundingLocation" (dict "@type" "Place" "name" $band.location)
   -}}
-  <script type="application/ld+json">{{ $album | jsonify | safeJS }}</script>
+  {{- if gt (len $sameAs) 0 -}}
+    {{- $organization = merge $organization (dict "sameAs" $sameAs) -}}
+  {{- end -}}
+  <script type="application/ld+json">{{ $organization | jsonify | safeJS }}</script>
+
+  {{- $website := dict
+        "@context" "https://schema.org"
+        "@type" "WebSite"
+        "@id" $websiteID
+        "name" site.Title
+        "url" site.BaseURL
+        "inLanguage" site.LanguageCode
+        "publisher" (dict "@id" $bandID)
+        "about" (dict "@id" $bandID)
+  -}}
+  <script type="application/ld+json">{{ $website | jsonify | safeJS }}</script>
+
+  {{- $featured := where (.Site.Data.releases.items | default slice) "featured" true -}}
+  {{- if gt (len $featured) 0 -}}
+    {{- $release := index $featured 0 -}}
+    {{- $album := dict
+          "@context" "https://schema.org"
+          "@type" "MusicAlbum"
+          "name" $release.title
+          "byArtist" (dict "@id" $bandID)
+          "datePublished" (string $release.year)
+          "image" (absURL $release.cover_image)
+          "numTracks" $release.song_count
+    -}}
+    {{- with $release.spotify_url -}}
+      {{- $album = merge $album (dict "url" .) -}}
+    {{- end -}}
+    <script type="application/ld+json">{{ $album | jsonify | safeJS }}</script>
+  {{- end -}}
 {{- end -}}
 
 {{- /* MusicEvent, one block per upcoming show. This is what feeds Google's
@@ -28,15 +82,10 @@
   {{- $shows := .Site.Data.shows.items | default slice -}}
   {{- $upcoming := sort (where $shows "date" "ge" $today) "date" "asc" -}}
 
-  {{- /* Performer is shared by every event; build it once. */ -}}
-  {{- $social := .Site.Data.social -}}
-  {{- $sameAs := slice -}}
-  {{- range $key, $url := $social -}}
-    {{- with $url -}}{{- $sameAs = $sameAs | append . -}}{{- end -}}
-  {{- end -}}
+  {{- /* Performer uses the same canonical profile list as the homepage. */ -}}
   {{- $performer := dict "@type" "MusicGroup" "name" .Site.Data.band.name "url" site.BaseURL -}}
   {{- if gt (len $sameAs) 0 -}}
-    {{- $performer = merge $performer (dict "sameAs" (sort $sameAs)) -}}
+    {{- $performer = merge $performer (dict "sameAs" $sameAs) -}}
   {{- end -}}
 
   {{- range $upcoming -}}
