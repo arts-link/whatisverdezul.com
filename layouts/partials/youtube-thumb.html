@@ -1,9 +1,13 @@
+{{/* maxresdefault only exists for videos uploaded at 720p+; YouTube serves a grey
+     placeholder (not a 404) for the rest, so it can't be detected in CSS and an
+     inline onerror fallback is blocked by the CSP. Hence the optional override. */}}
+{{ $thumb := .thumbnail | default (printf "https://img.youtube.com/vi/%s/maxresdefault.jpg" .id) }}
 <button class="vz-video-thumb"
         data-video-id="{{ .id }}"
         data-video-title="{{ .title }}"
         @click="openVideo"
         aria-label="Play {{ .title }}">
-  <img src="https://img.youtube.com/vi/{{ .id }}/maxresdefault.jpg"
+  <img src="{{ $thumb }}"
        alt="{{ .title }}" loading="lazy">
   <div class="vz-video-thumb__overlay">
     <svg class="vz-video-thumb__play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

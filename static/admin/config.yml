@@ -79,6 +79,37 @@ collections:
               - { name: cover_image, label: Cover Image, widget: image, required: false }
               - { name: featured, label: Featured on Home, widget: boolean, default: false }
 
+  - name: streaming
+    label: Streaming Page
+    files:
+      - name: streaming
+        label: Streaming Page
+        file: data/streaming.json
+        format: json
+        fields:
+          - name: spotify_embed_url
+            label: Spotify Embed URL
+            widget: string
+            hint: "In Spotify: Share -> Embed -> copy the src link. Leave blank to hide the Listen section."
+            required: false
+            pattern: ['^https://open\.spotify\.com/embed/', "Must be a Spotify embed link (open.spotify.com/embed/...), not a normal share link"]
+          - label: Videos
+            name: items
+            widget: list
+            label_singular: Video
+            fields:
+              - { name: title, label: Video Title, widget: string }
+              - name: youtube_id
+                label: YouTube Video ID
+                widget: string
+                hint: "Just the 11-character ID - the part after v= in the URL. For youtu.be links it is the bit after the slash."
+                pattern: ['^[A-Za-z0-9_-]{11}$', "Paste only the 11-character ID, not the whole YouTube link"]
+              - name: thumbnail
+                label: Thumbnail (optional)
+                widget: image
+                required: false
+                hint: "Leave blank to use YouTube's own image. Upload one only if that image looks grey or blank (happens on low-resolution uploads). 16:9, around 1280x720."
+
   - name: press
     label: Press Quotes
     files:
