@@ -7,7 +7,7 @@
       "venue": "the slipper clutch",
       "description": "This was a really fun show. We will be posting a gallery from it soon.",
       "ticket_url": "https://www.foo.com",
-      "sold_out": false
+      "sold_out": true
     },
     {
       "title": "Wave District Records Hot Dog Fest 2026",
