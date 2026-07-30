@@ -64,7 +64,7 @@ list written out before the call so this doesn't become fifteen unplanned minute
 | **8–18** | Live demo, screen shared. Add a show → Publish → refresh → it's live. Then: a press quote (watch Press appear in the nav), a merch item with an image, a YouTube video (**say the ID-not-URL rule out loud**), and a meta description edit |
 | **18–23** | Where things land: contact form → inbox, signups → the Sheet, stats → PostHog. Walk the ownership table in §1 — who holds what |
 | **23–27** | Getting found: the three off-site things only they can do — Bandsintown, Spotify for Artists, same bio everywhere. Plus the accent |
-| **27–30** | Costs, domain auto-renew, what to do when something breaks, support terms. Questions |
+| **27–30** | Costs, domain auto-renew, what to do when something breaks. Support terms — **$100/hr, 30-min minimum, replies within 2 business days, site-down same day** — and that broken-things-we-built are free. Questions |
 
 If you're running long, cut the 23–27 block — it's the one that survives being read
 later. Never cut 3–8.
@@ -92,8 +92,6 @@ Four things that don't land in writing:
 - Send the recording and the doc the same day
 - Transfer the four agreed credentials
 - Confirm Search Console is set up on the **www** property, not the apex
-- Fill in the `$[RATE]` / `[MINIMUM]` / `[N] business days` placeholders in §13 of the
-  band's doc before sending it — it ships with them unfilled
 - Log anything from the parking lot that they actually want
 
 ---

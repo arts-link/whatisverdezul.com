@@ -351,8 +351,11 @@ background.
 - Content entry — writing your copy or loading in your shows
 - Anything involving a third party you've chosen to add
 
-Rate: **$[RATE]/hour**, `[MINIMUM]` minimum, quoted before any work starts.
-Response: **within [N] business days.** Site down or forms not arriving: **same day.**
+Rate: **$100/hour**, with a **30-minute minimum** — so the smallest job comes to $50.
+Anything larger gets quoted before work starts, so you'll never be surprised by an
+invoice.
+
+Response: **within 2 business days.** Site down or forms not arriving: **same day.**
 
 Contact: **ben@benstrawbridge.com**
 
