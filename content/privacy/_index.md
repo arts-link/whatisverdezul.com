@@ -19,37 +19,36 @@ anyone beyond the services listed below that make the site work.
 
 We use **PostHog** to understand how people find and move through the site — which
 pages get visited, which links get clicked, roughly where in the world visitors are.
-This tells us where to play and what people actually want to see.
+This can help us decide where we might want to book shows and what people actually want to see.
 
-This is aggregate, behavioural data. We do not use it to identify you personally, we
+This is aggregate, behavioural data. We do not use it to identify you personally.  We
 have not connected it to any advertising network, and no advertising or
-cross-site-tracking cookies are set. PostHog stores a first-party identifier in your
-browser so repeat visits aren't counted as new people.
+cross-site-tracking cookies are set. PostHog stores a first-party identifier cookie in your browser so repeat visits aren't counted as new people.
 
 If you'd rather not be counted, most browsers offer a "Do Not Track" setting or an
 extension that blocks analytics, and either will work here.
 
-## Contact form
+## Contact Form
 
-When you send a message through the contact page, the name, email address, subject
+When you send a message through the Contact page, the name, email address, subject
 and message you enter are delivered to the band's inbox by **Formspree**, a form
-service. We keep those messages the way anyone keeps email — so we can reply, and so
+service. We keep those messages so we can reply, and so
 we have a record of a booking or press conversation.
 
 We use what you send us to answer you. We don't add contact form submissions to the
 mailing list.
 
-## Mailing list
+## Mailing List
 
-If you enter your email address in the "Stay in the loop" box, it is passed through
+If you enter your email address in the Stay in the Loop box, it is passed through
 Formspree and stored in a private spreadsheet that only the band can see. We use it
 to tell you about shows, releases and merch. That's all.
 
 We will never sell or rent the list. If we start sending through a dedicated
 newsletter service later, every email will carry a one-click unsubscribe link. Until
-then, email us and we'll take you off it.
+then, email us and we'll take you off of it.
 
-## Embedded content
+## Embedded Content
 
 Some pages embed videos from **YouTube** and players from **Spotify**. When one of
 those loads, the service on the other end can see that a request came from your
@@ -69,7 +68,7 @@ We set no advertising cookies and no cross-site tracking cookies. The only brows
 storage in use is PostHog's first-party analytics identifier described above, plus
 anything the embedded YouTube and Spotify players set once you interact with them.
 
-## Your choices
+## Your Choices
 
 Email **verdezulofficial@gmail.com** and we'll:
 
@@ -89,4 +88,4 @@ noted on the site rather than made quietly.
 
 ## Contact
 
-Questions about anything on this page: **verdezulofficial@gmail.com**
+If you have questions about anything on this page, contact: **verdezulofficial@gmail.com**
