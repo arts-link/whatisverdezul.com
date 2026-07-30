@@ -1,0 +1,24 @@
+# robots.txt for whatisverdezul.com
+#
+# Nothing is blocked. Two decisions below look like oversights, so they are
+# written down rather than left to be "helpfully" corrected later.
+#
+# 1. /admin/ is NOT disallowed, on purpose.
+#    static/admin/index.html already carries <meta name="robots" content="noindex">.
+#    Disallowing the path would stop crawlers FETCHING it, which means they
+#    would never read that noindex — and a robots-blocked URL can still be
+#    indexed URL-only from an external link, with no way left to suppress it.
+#    Allowing the crawl is what makes the noindex enforceable. Crawl budget is
+#    irrelevant on a site this size.
+#
+# 2. AI crawlers are deliberately unblocked.
+#    Being cited by ChatGPT, Perplexity and AI Overviews is an explicit goal
+#    (see docs/for-the-band/site-handoff.md, "Getting found"), and the site
+#    ships an llms.txt for exactly that. No per-bot Allow: rules — the
+#    wildcard below already permits them and a list of redundant blocks would
+#    only rot.
+
+User-agent: *
+Allow: /
+
+Sitemap: {{ "sitemap.xml" | absURL }}
