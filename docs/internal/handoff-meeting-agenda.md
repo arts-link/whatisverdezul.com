@@ -91,7 +91,8 @@ Four things that don't land in writing:
 
 - Send the recording and the doc the same day
 - Transfer the four agreed credentials
-- Confirm Search Console is set up on the **www** property, not the apex
+- Offer to pull a Search Console report once there's a month of data — it's on the
+  Arts-Link account, so they can't self-serve it
 - Log anything from the parking lot that they actually want
 
 ---

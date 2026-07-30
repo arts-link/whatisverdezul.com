@@ -14,7 +14,7 @@ Two companion guides cover their topics in more depth:
 
 ## 1. What you own, and what runs on someone else's account
 
-Your site is held together by six accounts. Some are yours, some are Arts-Link's. This
+Your site is held together by seven accounts. Some are yours, some are Arts-Link's. This
 is the part people skip and regret later, so here it is up front.
 
 | What | Whose account | What it does | If it goes away |
@@ -26,6 +26,7 @@ is the part people skip and regret later, so here it is up front.
 | **Vercel** | Arts-Link | Publishes the site | Site goes dark |
 | **GitHub org** (`arts-link`) | Arts-Link | Stores the site's files and your editor accounts | Nobody can edit |
 | **Formspree** (paid) | Arts-Link | Runs your contact form **and** newsletter signup | Both forms stop working |
+| **Google Search Console** | Arts-Link | Shows what people searched to find you | You lose search reporting; the site itself is fine |
 
 **Two dependencies worth saying out loud.**
 
@@ -238,14 +239,19 @@ Structured data telling Google you're a band, preview images for when links get 
 a sitemap, an `llms.txt` file for AI crawlers, and proper page descriptions. You don't
 need to maintain any of it.
 
-### Set up once — an hour, total
+### Search Console — already done
 
-Add your site to **Google Search Console** and **Bing Webmaster Tools**. Both free. They
-show you what people searched to find you, and warn you if something breaks.
+**Google Search Console is set up.** It's the free tool that shows what people actually
+typed into Google to find you, which pages they landed on, and warns you if something
+breaks. It's set up as a *domain* property, so it covers the whole site — every page,
+with or without the `www`.
 
-**One trap:** add the address **with the `www`** — `https://www.whatisverdezul.com`.
-That's the official version of your site. Add it without the `www` and your reports will
-look permanently empty, and you'll assume nobody's visiting.
+It lives on Arts-Link's Google account (see §1), so **ask Ben when you want to see the
+search numbers.** He can pull a report or walk you through it.
+
+The one thing still worth doing, free and about twenty minutes: add the site to **Bing
+Webmaster Tools** as well. Bing is a smaller slice of traffic, but it also feeds
+ChatGPT's web results — so it's worth more than its search share suggests.
 
 ### The part that actually moves the needle
 

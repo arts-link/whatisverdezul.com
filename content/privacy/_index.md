@@ -77,8 +77,6 @@ Email **verdezulofficial@gmail.com** and we'll:
 - take you off the mailing list
 - delete your messages
 
-Just ask — no special wording needed.
-
 ## Children
 
 This site isn't directed at children under 13, and we don't knowingly collect their
@@ -88,3 +86,7 @@ information.
 
 If this policy changes, the date below changes with it. Material changes will be
 noted on the site rather than made quietly.
+
+## Contact
+
+Questions about anything on this page: **verdezulofficial@gmail.com**
