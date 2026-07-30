@@ -8,7 +8,9 @@ No technical background needed.
 
 **You're already collecting email addresses — nothing to set up.**
 
-The "Stay in the loop" signup box at the bottom of whatisverdezul.com is live. Every time a fan enters their email, it's automatically saved to a **Google Sheet** in your Drive. That sheet is your email list, and it grows on its own. You don't have to do anything to keep it running.
+The "Stay in the loop" signup box at the bottom of whatisverdezul.com is live. Every time a fan enters their email, it's automatically saved to a **Google Sheet**. That sheet is your email list, and it grows on its own. You don't have to do anything to keep it running.
+
+**One thing to know:** the sheet currently sits in Arts-Link's Google Drive, because the form service that feeds it is on Arts-Link's account. Ask Ben to share it with you — there's no reason you shouldn't be able to open it whenever you like. Longer term, moving to a newsletter tool in your own name (below) is what actually puts the list in your hands.
 
 So today, your only job is to let the list grow. When you've got a good number of people on it *and* something worth saying (a show, a drop, a release), that's when you send your first email blast.
 
@@ -67,7 +69,7 @@ If you just want to email a **small handful** of people — think 20 to 50 folks
 
 ## Bottom line
 
-- **Right now:** do nothing — the list is quietly filling up in your Google Sheet. 
+- **Right now:** do nothing — the list is quietly filling up in the signup sheet. Ask Ben to share it with you if he hasn't already. 
 - **For a quick note to a few dozen people you know:** the Gmail + Bcc method is okay in a pinch, as long as you use Bcc and add an unsubscribe line.
 - **For anything that's actually a newsletter to a real, growing list:** take the 20 minutes to set up a free newsletter tool when the time comes. It protects your fans' privacy, keeps you out of spam, keeps you on the right side of the law, and keeps your personal Gmail safe.
 

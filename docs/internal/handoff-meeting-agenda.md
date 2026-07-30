@@ -36,6 +36,9 @@ where already checked.
 | Newsletter signup end-to-end — submit, confirm the row lands in the Sheet | ☐ |
 | Domain auto-renew is ON; note the expiry date | ☐ |
 | **Every bandmate's GitHub invite is accepted** — not just sent | ☐ |
+| **Share the mailing-list Google Sheet** with the band's Google account | ☐ — of everything on the Arts-Link side this is the one they'd most reasonably expect to hold, and sharing it costs nothing |
+| Live `sitemap.xml` and `robots.txt` show `www.whatisverdezul.com`, **not** a `*.vercel.app` host | ☐ — production was building with the deploy URL as its baseURL until the `vercel.json` fix; verify after it deploys |
+| **Re-submit the sitemap in GSC** once the above checks out | ☐ — the version submitted before the fix was full of `*.vercel.app` URLs, which GSC rejects as outside the property |
 | A real save through `/admin` since the CMS config changed (dead fields removed, Streaming collection added) | ☐ |
 
 That last one matters: the Decap admin UI couldn't be exercised in the build
@@ -45,13 +48,19 @@ clicked through. Do one real save first.
 
 ### Credential handover — stage this before the call
 
-Transferring to the band: **domain/DNS**, the **Google Sheet**, **PostHog**, the
-**GitHub OAuth app**.
+Transferring to the band: **domain/DNS**. That's the whole list.
 
-Staying with Arts-Link: **Vercel**, the **`arts-link` GitHub org**, **Formspree** (paid).
+Staying with Arts-Link: **Vercel**, the **`arts-link` GitHub org**, the **GitHub OAuth
+app**, **Formspree** (paid), the **mailing-list Google Sheet**, **PostHog**, **Search
+Console**.
 
-Move them through a password manager or in person. **Not over email or Slack.** Have the
-list written out before the call so this doesn't become fifteen unplanned minutes.
+So this is a two-minute item, not the fifteen it looks like. Move the domain credentials
+through a password manager or in person — **not over email or Slack**.
+
+**Be straight about the asymmetry rather than letting them notice it later.** The domain
+is the only thing in their name, and §1 of their doc now says so plainly. Two of the
+Arts-Link items are already earmarked to move — PostHog, and the mailing list — and
+saying that unprompted is what keeps this from reading as lock-in.
 
 ---
 
@@ -105,6 +114,10 @@ Known open items. Mention if asked, don't volunteer mid-demo.
   `/shows/` currently reads "No shows scheduled" and the new event schema has nothing to
   emit. Not a bug, but it is the single highest-value thing they could fix in the CMS —
   and it's worth asking on the call whether dates exist that nobody has entered
+- **Move PostHog to a band-owned account.** Promised in their doc with no date, so it
+  needs an actual one. Check first whether PostHog can transfer a project between
+  organisations or whether the history stays behind — if history doesn't follow, do it
+  now while there's barely any to strand, not in a year
 - **Apple Music links empty on all six releases** — pure content, they can fix it
   themselves in ten minutes, and it's free reach. Good first CMS homework
 - **Bandsintown means double entry** for shows. Be straight about it rather than letting
