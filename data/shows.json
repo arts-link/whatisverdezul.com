@@ -3,11 +3,11 @@
     {
       "title": "Soulstice Sounds",
       "date": "2026-07-21",
-      "city": "Lost Angeles, CA",
+      "city": "Los Angeles, CA",
       "venue": "the slipper clutch",
-      "description": "This was a really fun show. We will be posting a gallery from it soon.",
-      "ticket_url": "https://www.foo.com",
-      "sold_out": true
+      "description": "",
+      "ticket_url": "",
+      "sold_out": false
     },
     {
       "title": "Wave District Records Hot Dog Fest 2026",
