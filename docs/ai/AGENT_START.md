@@ -4,7 +4,7 @@ description: Minimum context needed to begin any task on the Verdèzul website p
 metadata:
   type: reference
   status: active
-  updated: 2026-06-05
+  updated: 2026-07-29
   tags: [onboarding, overview, start-here]
   related: [strategy/band-context.md, engineering/architecture.md, AI_INDEX.md]
 ---
@@ -29,7 +29,7 @@ The official website for **Verdèzul**, a Los Angeles-based hip-hop duo. Built a
 
 - **Hugo** 0.146.0+ — static site generator
 - **Ryder theme** — git submodule at `themes/ryder/` (authored by Arts-Link, do not edit theme files directly)
-- **TailwindCSS** — built via `npm run build-tw` (Ryder's npm scripts)
+- **TailwindCSS** — compiled by Hugo through `css.PostCSS` (Ryder's `head/css.html`); no npm build step
 - **Alpine.js** — bundled in Ryder, minimal interactivity
 - **Decap CMS** — git-based CMS at `/admin`, GitHub OAuth via Vercel serverless proxy
 - **PostHog** — analytics, init handled by Ryder's `analytics_provider = "posthog"` param
@@ -73,12 +73,13 @@ The band name is always **Verdèzul** — with the accent on the è. Never "verd
 ## Build commands (quick reference)
 
 ```bash
-npm run build-tw          # compile TailwindCSS (run before hugo)
-hugo server               # local dev (no Tailwind watch — run build-tw first or use watch-tw)
-npm run watch-tw          # watch Tailwind in separate terminal during dev
+npm install               # once, and after any dependency change
+hugo server               # local dev at localhost:1313 (compiles CSS on save)
 hugo --minify             # production build → public/
-npm run build-tw && hugo --minify   # full production build
 ```
+
+Hugo compiles TailwindCSS itself via `css.PostCSS`, so there is no separate CSS
+step and `package.json` has no scripts.
 
 ## Related knowledge
 

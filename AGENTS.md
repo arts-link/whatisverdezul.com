@@ -17,11 +17,14 @@ All project context lives in `docs/ai/`. Start every session with:
 ## Build
 
 ```bash
-npm run watch-tw    # watch Tailwind (separate terminal)
+npm install         # once, and after any dependency change
 hugo server         # local dev at localhost:1313
 
-npm run build-tw && hugo --minify   # full production build → public/
+hugo --minify       # full production build → public/
 ```
+
+Hugo compiles TailwindCSS itself via `css.PostCSS` — there is no separate CSS
+step and no npm scripts.
 
 ## Key rules
 

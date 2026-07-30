@@ -4,7 +4,7 @@ description: All build, dev, and deploy commands for the Verdèzul Hugo project
 metadata:
   type: reference
   status: active
-  updated: 2026-05-15
+  updated: 2026-07-29
   tags: [engineering, build, commands, npm, hugo, vercel]
   related: [engineering/architecture.md]
 ---
@@ -18,34 +18,36 @@ Running the project locally, building for production, or debugging the build pip
 ## Local development
 
 ```bash
-# Terminal 1 — watch and compile TailwindCSS
-npm run watch-tw
-
-# Terminal 2 — Hugo dev server
+npm install     # once, and after any dependency change
 hugo server
 ```
 
-Hugo's dev server runs at `http://localhost:1313` with live reload. TailwindCSS must be compiled separately — `hugo server` alone won't rebuild CSS.
+Hugo's dev server runs at `http://localhost:1313` with live reload. There is no
+separate CSS step: Ryder's `head/css.html` pipes the stylesheets through
+`css.PostCSS`, so Hugo compiles TailwindCSS itself on every build and rebuild,
+using the root `postcss.config.js` and `tailwind.config.js`.
+
+`npm install` is still required — Hugo resolves `tailwindcss`, `postcss`,
+`@alpinejs/*` and the Font Awesome packages from the project root's
+`node_modules/`.
 
 ---
 
 ## Production build
 
 ```bash
-npm run build-tw && hugo --minify
+hugo --minify
 ```
 
 Output goes to `public/`. This is what Vercel runs.
 
 ---
 
-## All npm scripts (from Ryder's `package.json`)
+## npm scripts
 
-| Command | What it does |
-|---------|-------------|
-| `npm run build-tw` | Compile TailwindCSS → `themes/ryder/assets/css/style.css` |
-| `npm run watch-tw` | Watch and recompile TailwindCSS on changes |
-| `npm run deploy-tw` | Build + minify TailwindCSS for production |
+There are none, by design. Ryder v0.3.0 deleted `build-tw`, `watch-tw` and
+`deploy-tw`, and deleted `assets/css/style.css` along with them; CSS is a Hugo
+pipeline concern now. `package.json` carries dependencies only.
 
 ---
 
@@ -53,13 +55,16 @@ Output goes to `public/`. This is what Vercel runs.
 
 ```json
 {
-  "buildCommand": "npm run build-tw && hugo --minify",
+  "framework": "hugo",
+  "buildCommand": "[ -n \"$VERCEL_URL\" ] && hugo --minify --baseURL \"https://$VERCEL_URL\" || hugo --minify",
   "outputDirectory": "public",
-  "installCommand": "npm install"
+  "installCommand": "git submodule update --init --recursive && npm install"
 }
 ```
 
-Vercel also runs `git submodule update --init --recursive` automatically before the build.
+The `buildCommand` overrides `baseURL` on preview deploys so preview URLs
+resolve against themselves instead of the production domain. The
+`installCommand` checks out the Ryder submodule before installing.
 
 ---
 
@@ -85,9 +90,9 @@ vercel env pull .env.local
 
 | Situation | Command |
 |-----------|---------|
-| Starting local dev | `npm run watch-tw` + `hugo server` |
-| Before committing CSS changes | `npm run build-tw` |
-| Full production check locally | `npm run build-tw && hugo --minify && cd public && python3 -m http.server 8080` |
+| Starting local dev | `hugo server` |
+| Before committing CSS changes | nothing extra — `hugo server` recompiles CSS on save |
+| Full production check locally | `hugo --minify && cd public && python3 -m http.server 8080` |
 | After pulling new Ryder changes | `git submodule update --remote themes/ryder` then `npm install` |
 
 ## Related knowledge

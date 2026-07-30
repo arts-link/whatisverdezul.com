@@ -4,7 +4,7 @@ description: Gate checklist before any new page on the Verdèzul site is conside
 metadata:
   type: reference
   status: active
-  updated: 2026-05-15
+  updated: 2026-07-29
   tags: [checklist, publishing, pages, seo]
   related: [engineering/routes-and-menus.md, engineering/seo-and-schema.md]
 ---
@@ -47,7 +47,7 @@ You have built a new page or made significant changes to an existing page and ar
 - [ ] No layout breaks when data arrays are empty
 
 ### Build
-- [ ] `npm run build-tw && hugo --minify` completes without errors
+- [ ] `hugo --minify` completes without errors
 - [ ] `hugo server` shows no template errors in console
 
 ## Related knowledge

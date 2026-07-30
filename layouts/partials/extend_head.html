@@ -1,0 +1,9 @@
+{{/* Ryder's head.html emits <meta name="viewport" content="width=device-width">
+     with no initial-scale, which leaves iOS Safari free to choose its own
+     initial zoom (most visibly when returning from a landscape rotation).
+     A later viewport meta overrides an earlier one, so this re-declares it
+     instead of shadowing head.html wholesale — that partial also carries the
+     dark-mode boot script, canonical, title, robots and every head sub-partial,
+     and copying it here would silently freeze all of them at this theme
+     version. Drop this once Ryder emits initial-scale itself. */}}
+<meta name="viewport" content="width=device-width, initial-scale=1" />
