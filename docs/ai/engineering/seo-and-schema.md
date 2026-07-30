@@ -99,6 +99,23 @@ Field behavior worth preserving if this is ever rewritten:
 
 ---
 
+## robots.txt
+
+Generated from **`layouts/home.robots.txt`**. Two things about that are easy to get wrong:
+
+1. **`enableRobotsTXT = true` is not sufficient on its own.** `"ROBOTS"` must also appear in `[outputs] home` — an explicit `[outputs]` block replaces Hugo's defaults instead of merging with them, the same trap that requires `LLMSTxt` to be named by hand (documented at length in `themes/ryder/hugo.toml`).
+2. **The filename is `home.robots.txt`, not `robots.txt`.** Under Hugo's template system (0.146+) a root-level `layouts/robots.txt` is *not* picked up, and the lookup instead falls through to the theme's `_default/home.llmstxt.txt` — which silently writes the **llms.txt content into robots.txt**. Verified by hitting exactly that. If `public/robots.txt` ever comes out looking like a site summary, this is why.
+
+The file's real payload is the `Sitemap:` line, built with `absURL` so it carries the canonical `www` host.
+
+**`/admin/` is deliberately not disallowed.** It already serves `<meta name="robots" content="noindex">`. Blocking the path in robots.txt would stop crawlers fetching it, so they would never read that noindex — and a robots-blocked URL can still be indexed URL-only from an external link, with nothing left to suppress it. Allowing the crawl is what makes the noindex enforceable. Don't "fix" this.
+
+**AI crawlers are unblocked on purpose**, to match the GEO goal above and the `llms.txt` the site already ships. No per-bot rules: the `User-agent: *` wildcard covers them and a list of redundant `Allow:` blocks would only go stale.
+
+Related: `disableKinds = ["taxonomy", "term"]` in `hugo.toml`. The band uses neither, and leaving them on put empty `/categories/` and `/tags/` pages in the sitemap.
+
+---
+
 ## Page meta descriptions
 
 Every page's `content/<section>/_index.md` must have a `description` field (100–160 characters). This feeds both the HTML meta description and OG description via Ryder.
