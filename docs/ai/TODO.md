@@ -15,8 +15,6 @@ Use this as the running backlog for audit follow-up work. Keep statuses current 
 
 | Status | Priority | Item | Notes |
 |---|---:|---|---|
-| Open | P2 | Emit `MusicEvent` JSON-LD on `/shows/` | Listed under Recently Completed below, but `MusicEvent` appears **nowhere** in a production build. `/shows/` emits only `WebPage`, `BlogPosting`, `BreadcrumbList`, `ListItem`, `Organization` and `Person`. Either it regressed or it never landed. (The rest of the schema stack is healthy — `MusicGroup` comes from `[params.schema] type` and `MusicAlbum` from `schema-extra.html`, both confirmed on the home page. This gap is `MusicEvent` specifically.) It is the schema that puts shows into Google's event listings, so it bears on the booking goal in `strategy/site-goals.md`. Verify against `public/shows/index.html`, not against this file. |
-| Open | P3 | Decide on `robots.txt` | Hugo emits none (`enableRobotsTXT` is unset in `hugo.toml`), so there is no `public/robots.txt` and nothing points crawlers at `/sitemap.xml`. Absence is permissive, not blocking, but a one-line sitemap reference is the usual practice. |
 | Done | P1 | Finish www production cutover for Decap OAuth | **Resolved 2026-07-30.** Decap commits land on `main` (the `Update Shows "shows"` / `Update Page Content "home"` runs), which proves OAuth, the org restriction and the www cutover all work end to end. For reference, the working configuration: `static/admin/config.yml` `backend.base_url` = `https://www.whatisverdezul.com` (origin only — Decap's popup handshake does a strict `===` check against `base_url`, so no path) with `auth_endpoint: api/oauth/auth`; `hugo.toml` `baseURL` plus the `vercel.json` non-www→www redirect make **www canonical everywhere**; `api/oauth/auth.js` and `callback.js` derive `redirect_uri` from the request host. The GitHub OAuth App is owned by the `arts-link` org (org-owned apps bypass the "Access restricted" third-party policy that was blocking saves) with callback URL exactly `https://www.whatisverdezul.com/api/oauth/callback`. The `whatisverdezul-com.vercel.app` dev OAuth App was only for pre-DNS testing and can be retired. |
 | Open | P3 | Reduce static asset duplication | `images/` and `static/images/` contain many duplicate binaries. Decide whether assets should be Hugo-processed or served directly, then remove the redundant copy. |
 | Open | P3 | Simplify CSS/layout structure | Move repeated inline styles into `assets/css/extended/verdezul.css`, reuse partials for social icons and embeds, and keep active layouts small. |
@@ -31,7 +29,7 @@ Use this as the running backlog for audit follow-up work. Keep statuses current 
 - Fixed Decap OAuth routing with `/api/oauth/auth` and `/api/oauth/callback`.
 - Normalized merch checkout to `checkout_url` and release fields to lowercase `type` plus `song_count`.
 - Updated core AI engineering docs to match active routes and CMS data shape.
-- ~~Fixed Shows `MusicEvent` schema to emit on `/shows/`.~~ **Not actually true** — reopened as a P2 above after checking the built output.
+- ~~Fixed Shows `MusicEvent` schema to emit on `/shows/`.~~ **Was not actually true** — the built output emitted no `MusicEvent` at all. Genuinely landed later; see PR #18.
 - Converted site-specific JSON-LD to Hugo dictionaries plus `jsonify`.
 - Removed duplicate/dead `single.html` section templates that drifted from active `_index.md` list templates while keeping the required home override.
 - Hardened active template JS event payloads with `jsonify` for CMS/data-derived values.

@@ -29,8 +29,8 @@ where already checked.
 | OG images resolve on live pages | ✅ Confirmed — Ryder pipes them from `assets/`, `/images/og/og-*.png` build correctly |
 | `/llms.txt` and `/sitemap.xml` render | ✅ Confirmed in build output |
 | `/privacy/` is live and linked in the footer | ✅ Shipped, in sitemap |
-| `MusicEvent` JSON-LD on `/shows/` | ❌ **Absent.** `TODO.md` claimed it was done; the built page emits only `WebPage`/`BlogPosting`/`BreadcrumbList`/`Organization`/`Person`. Reopened as P2. **Decide before the meeting:** fix it first, or raise it in the parking lot |
-| `robots.txt` | ❌ None emitted (`enableRobotsTXT` unset). Nothing points crawlers at the sitemap. Filed P3 |
+| `MusicEvent` JSON-LD on `/shows/` | ✅ Fixed in PR #18. Was genuinely absent despite `TODO.md` claiming otherwise. **Note:** it emits for *upcoming* shows only, and every show in `data/shows.json` is currently in the past — so it correctly outputs nothing until a future date is added. Don't check the live page and conclude it's broken |
+| `robots.txt` | ✅ Added in PR #18, with the `Sitemap:` reference that was the actual gap. Empty `/categories/` and `/tags/` pages dropped from the sitemap at the same time |
 | Contact form end-to-end — submit, confirm the band receives it | ☐ |
 | Confirm the Formspree recipient address is the one they want | ☐ |
 | Newsletter signup end-to-end — submit, confirm the row lands in the Sheet | ☐ |
@@ -102,10 +102,10 @@ Four things that don't land in writing:
 
 Known open items. Mention if asked, don't volunteer mid-demo.
 
-- **`MusicEvent` schema missing on `/shows/`** — the schema that feeds Google's event
-  listings, so it bears directly on the booking goal in `strategy/site-goals.md`. Filed
-  P2. Best candidate for the first piece of paid follow-up work
-- **No `robots.txt`** — filed P3
+- **No upcoming shows at all.** All 15 entries in `data/shows.json` are in the past, so
+  `/shows/` currently reads "No shows scheduled" and the new event schema has nothing to
+  emit. Not a bug, but it is the single highest-value thing they could fix in the CMS —
+  and it's worth asking on the call whether dates exist that nobody has entered
 - **Apple Music links empty on all six releases** — pure content, they can fix it
   themselves in ten minutes, and it's free reach. Good first CMS homework
 - **Bandsintown means double entry** for shows. Be straight about it rather than letting
