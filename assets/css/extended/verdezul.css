@@ -1304,6 +1304,15 @@ a.vz-hero__question-box:active {
   margin: 0 auto;
 }
 
+/* Copyright + Privacy stacked, so .vz-footer__bar-inner keeps exactly three
+   flex children and the social icons stay optically centred. */
+.vz-footer__legal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
+}
+
 .vz-footer__copy {
   font-size: 0.6rem;
   letter-spacing: 0.22em;
@@ -1359,6 +1368,10 @@ a.vz-hero__question-box:active {
     gap: 1.25rem;
     padding: 1.5rem;
     text-align: center;
+  }
+
+  .vz-footer__legal {
+    align-items: center;
   }
 }
 
