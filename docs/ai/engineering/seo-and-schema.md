@@ -73,8 +73,16 @@ Override `layouts/partials/head/schema.html` to inject band-specific structured 
 }
 ```
 
-Rendered inside `{{ range (.Site.Data.shows.items | default slice) }}` in the shows page schema partial.
-The event location includes `city` as its address even when the optional venue is empty.
+Emitted from `layouts/partials/head/schema-extra.html`, one `<script>` block per show, gated on `eq .RelPermalink "/shows/"`.
+
+**Upcoming shows only.** The partial reuses the same build-time split as `layouts/shows/list.html` (`where $shows "date" "ge" $today`). Past shows stay visible on the page as history but are deliberately not marked up — they can't be acted on, and emitting them would park a permanent set of expired events in front of crawlers. When every show is in the past the block correctly emits nothing, which is the current state of `data/shows.json`.
+
+Field behavior worth preserving if this is ever rewritten:
+
+- `location.name` falls back to `city` when `venue` is empty; `city` is split on `", "` into `addressLocality` + `addressRegion`, and a city with no comma yields locality only.
+- No `addressCountry`. It's recommended by Google, but asserting `"US"` would be silently wrong the first time they play abroad.
+- `offers` is emitted **only** when `ticket_url` is set, with `availability` switching to `https://schema.org/SoldOut` on `sold_out`. With no ticket link there's no button on the page either, so `url` falls back to the shows page.
+- `startDate` is date-only because the CMS has no time field. Valid ISO 8601; Google prefers a time but accepts it.
 
 ### MusicAlbum (Music/Home release cards)
 

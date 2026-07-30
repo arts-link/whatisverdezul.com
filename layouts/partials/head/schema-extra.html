@@ -3,6 +3,7 @@
        survive. Overriding head/schema.html instead would silently drop them.
        `| safeJS` is required — without it Go escapes the JSON as a quoted
        string, which parses as a string rather than an object. */ -}}
+
 {{- if .IsHome -}}
   {{- $album := dict
         "@context" "https://schema.org"
@@ -11,4 +12,80 @@
         "byArtist" (dict "@type" "MusicGroup" "name" site.Title)
   -}}
   <script type="application/ld+json">{{ $album | jsonify | safeJS }}</script>
+{{- end -}}
+
+{{- /* MusicEvent, one block per upcoming show. This is what feeds Google's
+       event listings and the "when is X playing" answers, so it maps directly
+       to the booking goal in strategy/site-goals.md.
+
+       Upcoming only, using the same build-time split as layouts/shows/list.html.
+       Past shows stay on the page as history but are deliberately not marked up:
+       they cannot be acted on, and emitting them would put a permanent set of
+       expired events in front of crawlers. When every show is in the past this
+       block correctly emits nothing. */ -}}
+{{- if eq .RelPermalink "/shows/" -}}
+  {{- $today := now.Format "2006-01-02" -}}
+  {{- $shows := .Site.Data.shows.items | default slice -}}
+  {{- $upcoming := sort (where $shows "date" "ge" $today) "date" "asc" -}}
+
+  {{- /* Performer is shared by every event; build it once. */ -}}
+  {{- $social := .Site.Data.social -}}
+  {{- $sameAs := slice -}}
+  {{- range $key, $url := $social -}}
+    {{- with $url -}}{{- $sameAs = $sameAs | append . -}}{{- end -}}
+  {{- end -}}
+  {{- $performer := dict "@type" "MusicGroup" "name" .Site.Data.band.name "url" site.BaseURL -}}
+  {{- if gt (len $sameAs) 0 -}}
+    {{- $performer = merge $performer (dict "sameAs" (sort $sameAs)) -}}
+  {{- end -}}
+
+  {{- range $upcoming -}}
+    {{- /* "Los Angeles, CA" -> locality + region. No addressCountry: every show
+           so far is domestic, but asserting "US" would silently be wrong the
+           first time they play abroad. It is recommended, not required. */ -}}
+    {{- $parts := split .city ", " -}}
+    {{- $addr := dict "@type" "PostalAddress" "addressLocality" (index $parts 0) -}}
+    {{- if gt (len $parts) 1 -}}
+      {{- $addr = merge $addr (dict "addressRegion" (index $parts 1)) -}}
+    {{- end -}}
+
+    {{- $event := dict
+          "@context" "https://schema.org"
+          "@type" "MusicEvent"
+          "name" .title
+          "startDate" .date
+          "eventStatus" "https://schema.org/EventScheduled"
+          "eventAttendanceMode" "https://schema.org/OfflineEventAttendanceMode"
+          "performer" $performer
+          "image" (slice (absURL "/images/og/og-shows.png"))
+          "location" (dict
+            "@type" "Place"
+            "name" (default .city .venue)
+            "address" $addr)
+    -}}
+
+    {{- with .description -}}
+      {{- $event = merge $event (dict "description" .) -}}
+    {{- end -}}
+
+    {{- /* Ticket link doubles as the event URL. With no link there is no button
+           on the page either (see show-card.html), so there is nothing to point
+           at but the shows page itself. */ -}}
+    {{- if .ticket_url -}}
+      {{- $availability := "https://schema.org/InStock" -}}
+      {{- if eq .sold_out true -}}
+        {{- $availability = "https://schema.org/SoldOut" -}}
+      {{- end -}}
+      {{- $event = merge $event (dict
+            "url" .ticket_url
+            "offers" (dict
+              "@type" "Offer"
+              "url" .ticket_url
+              "availability" $availability)) -}}
+    {{- else -}}
+      {{- $event = merge $event (dict "url" (absURL "/shows/")) -}}
+    {{- end -}}
+
+    <script type="application/ld+json">{{ $event | jsonify | safeJS }}</script>
+  {{- end -}}
 {{- end -}}

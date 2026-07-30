@@ -29,7 +29,7 @@ Use this as the running backlog for audit follow-up work. Keep statuses current 
 - Fixed Decap OAuth routing with `/api/oauth/auth` and `/api/oauth/callback`.
 - Normalized merch checkout to `checkout_url` and release fields to lowercase `type` plus `song_count`.
 - Updated core AI engineering docs to match active routes and CMS data shape.
-- Fixed Shows `MusicEvent` schema to emit on `/shows/`.
+- Emitted `MusicEvent` JSON-LD per upcoming show on `/shows/` from `head/schema-extra.html`.
 - Converted site-specific JSON-LD to Hugo dictionaries plus `jsonify`.
 - Removed duplicate/dead `single.html` section templates that drifted from active `_index.md` list templates while keeping the required home override.
 - Hardened active template JS event payloads with `jsonify` for CMS/data-derived values.
