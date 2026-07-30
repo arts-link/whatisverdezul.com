@@ -1,0 +1,124 @@
+# {{ site.Data.band.name }}
+{{ with site.Params.description }}
+> {{ . }}
+{{ end }}
+
+## About
+
+{{ site.Data.band.bio }}
+
+Location: {{ site.Data.band.location }}
+Contact: {{ site.Data.band.email }}
+
+## Music
+
+{{- range (site.Data.releases.items | default slice) }}
+{{- $typeLabel := cond (eq .type "ep") "EP" (.type | title) }}
+
+### {{ .title }}
+
+- Type: {{ $typeLabel }}
+- Released: {{ .year }}
+{{- with .song_count }}
+- Tracks: {{ . }}
+{{- end }}
+{{- with .description }}
+- Description: {{ . }}
+{{- end }}
+{{- with .spotify_url }}
+- Listen on Spotify: {{ . }}
+{{- end }}
+{{- with .apple_music_url }}
+- Listen on Apple Music: {{ . }}
+{{- end }}
+{{- end }}
+
+{{- $videos := site.Data.streaming.items | default slice }}
+{{- if gt (len $videos) 0 }}
+
+### Music videos
+
+{{ range $videos -}}
+- [{{ .title }}](https://www.youtube.com/watch?v={{ .youtube_id }})
+{{ end }}
+{{- end }}
+
+## Shows
+
+{{- $shows := site.Data.shows.items | default slice }}
+{{- if gt (len $shows) 0 }}
+{{- $today := now.Format "2006-01-02" }}
+{{- $upcoming := sort (where $shows "date" "ge" $today) "date" "asc" }}
+{{- $past := sort (where $shows "date" "lt" $today) "date" "desc" }}
+
+### Upcoming shows
+
+{{- if gt (len $upcoming) 0 }}
+{{ range $upcoming -}}
+- {{ .date }} — {{ .title }}{{ with .venue }} at {{ . }}{{ end }}{{ with .city }}, {{ . }}{{ end }}{{ if .sold_out }} (sold out){{ end }}{{ with .description }}: {{ . }}{{ end }}{{ with .ticket_url }} — [Tickets]({{ . }}){{ end }}
+{{ end }}
+{{- else }}
+No upcoming shows are currently listed.
+{{- end }}
+{{- if gt (len $past) 0 }}
+
+### Previous shows
+
+{{ range $past -}}
+- {{ .date }} — {{ .title }}{{ with .venue }} at {{ . }}{{ end }}{{ with .city }}, {{ . }}{{ end }}{{ with .description }}: {{ . }}{{ end }}
+{{ end }}
+{{- end }}
+{{- else }}
+No shows are currently listed.
+{{- end }}
+
+{{- $press := site.Data.press.items | default slice }}
+{{- if gt (len $press) 0 }}
+
+## Press
+
+{{ range $press -}}
+- "{{ .quote }}" — {{ if .url }}[{{ .source }}]({{ .url }}){{ else }}{{ .source }}{{ end }}{{ with .date }}, {{ . }}{{ end }}
+{{ end }}
+{{- end }}
+
+{{- $merch := site.Data.merch.items | default slice }}
+{{- if gt (len $merch) 0 }}
+
+## Merchandise
+
+{{ range $merch -}}
+- {{ .name }} — ${{ printf "%.2f" (float .price) }}{{ if .sold_out }} (sold out){{ else if .checkout_url }} — [Buy]({{ .checkout_url }}){{ else }} (coming soon){{ end }}{{ with .description }}: {{ . }}{{ end }}
+{{ end }}
+{{- end }}
+
+## Official links
+
+{{ with site.Data.social -}}
+{{ with .instagram }}- Instagram: {{ . }}
+{{ end -}}
+{{ with .tiktok }}- TikTok: {{ . }}
+{{ end -}}
+{{ with .youtube }}- YouTube: {{ . }}
+{{ end -}}
+{{ with .spotify }}- Spotify: {{ . }}
+{{ end -}}
+{{ with .apple_music }}- Apple Music: {{ . }}
+{{ end -}}
+{{ with .tidal }}- Tidal: {{ . }}
+{{ end -}}
+{{ with .youtube_music }}- YouTube Music: {{ . }}
+{{ end -}}
+{{ end }}
+
+## Site pages
+
+- [Home]({{ "/" | absURL }}): {{ site.Home.Description }}
+{{- range site.Sections.ByTitle }}
+{{- if or (ne .Section "press") (gt (len $press) 0) }}
+- [{{ .Title }}]({{ .RelPermalink | absURL }}){{ with .Description }}: {{ . }}{{ end }}
+{{- end }}
+{{- range .Pages.ByTitle }}
+- [{{ .Title }}]({{ .RelPermalink | absURL }}){{ with .Description }}: {{ . }}{{ end }}
+{{- end }}
+{{- end }}

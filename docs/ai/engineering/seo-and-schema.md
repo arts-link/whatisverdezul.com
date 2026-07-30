@@ -124,14 +124,20 @@ Every page's `content/<section>/_index.md` must have a `description` field (100�
 
 ## GEO / LLMs.txt
 
-Ryder already configures the `LLMSTxt` output format in `hugo.toml`. Add it to outputs:
+Ryder configures the `LLMSTxt` output format in `hugo.toml`. The site enables it
+as a home output:
 
 ```toml
 [outputs]
-  home = ["HTML", "RSS", "LLMSTxt"]
+  home = ["HTML", "RSS", "LLMSTxt", "ROBOTS"]
 ```
 
-This generates `/llms.txt` at the root — a plain-text summary of the site for AI crawlers, improving inclusion in AI-generated search responses.
+This generates `/llms.txt` at the root. Verdèzul overrides Ryder's generic page
+index at `layouts/_default/home.llmstxt.txt` so the file contains substantive,
+CMS-driven facts: the band bio, releases, videos, shows, contact details, official
+links, and any populated press or merchandise. It also retains a short page index.
+Keep those facts sourced from `data/*.json` so CMS edits automatically reach both
+the human-facing pages and `llms.txt`.
 
 ---
 

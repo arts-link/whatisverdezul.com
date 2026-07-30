@@ -65,6 +65,7 @@ whatisverdezul.com/
 │   └── (near-duplicate of static/images/ — not published, see TODO.md P3)
 ├── layouts/                      # Hugo layout overrides (safe to edit)
 │   ├── _default/home.html        # Home page layout (Ryder requires this path)
+│   ├── _default/home.llmstxt.txt # CMS-driven /llms.txt content
 │   ├── about/list.html
 │   ├── shows/list.html
 │   ├── press/list.html
