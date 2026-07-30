@@ -29,7 +29,8 @@ Use this as the running backlog for audit follow-up work. Keep statuses current 
 - Fixed Decap OAuth routing with `/api/oauth/auth` and `/api/oauth/callback`.
 - Normalized merch checkout to `checkout_url` and release fields to lowercase `type` plus `song_count`.
 - Updated core AI engineering docs to match active routes and CMS data shape.
-- ~~Fixed Shows `MusicEvent` schema to emit on `/shows/`.~~ **Was not actually true** — the built output emitted no `MusicEvent` at all. Genuinely landed later; see PR #18.
+- Emitted `MusicEvent` JSON-LD per upcoming show on `/shows/` from `head/schema-extra.html` (PR #18). **An earlier version of this list claimed this was already done while the built output emitted no `MusicEvent` at all** — verify entries here against `public/`, not against this file.
+- Added `robots.txt` (`layouts/home.robots.txt`) with a `Sitemap:` reference, and disabled the unused `taxonomy`/`term` kinds so empty `/categories/` and `/tags/` pages left the sitemap.
 - Converted site-specific JSON-LD to Hugo dictionaries plus `jsonify`.
 - Removed duplicate/dead `single.html` section templates that drifted from active `_index.md` list templates while keeping the required home override.
 - Hardened active template JS event payloads with `jsonify` for CMS/data-derived values.

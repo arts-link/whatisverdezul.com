@@ -3,6 +3,17 @@ languageCode = "en-us"
 title = "Verdèzul"
 theme = "ryder"
 
+# Emits /robots.txt from layouts/robots.txt. "ROBOTS" must ALSO be listed in
+# [outputs] home below — an explicit [outputs] block replaces Hugo's defaults
+# rather than merging with them, which is the same trap that requires LLMSTxt
+# to be named by hand (see themes/ryder/hugo.toml).
+enableRobotsTXT = true
+
+# The band uses neither taxonomy. Left on, Hugo generates empty /categories/
+# and /tags/ pages and lists both in sitemap.xml — thin content pointed at
+# crawlers for no benefit.
+disableKinds = ["taxonomy", "term"]
+
 [build]
   writeStats = true
   [[build.cachebusters]]
@@ -56,7 +67,7 @@ theme = "ryder"
     getenv = ['^HUGO_', '^CI$', '^PUBLIC_']
 
 [outputs]
-  home = ["HTML", "RSS", "LLMSTxt"]
+  home = ["HTML", "RSS", "LLMSTxt", "ROBOTS"]
 
 [[menus.main]]
   name = "Music"
