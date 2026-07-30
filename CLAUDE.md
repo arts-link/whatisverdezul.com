@@ -12,7 +12,7 @@ All project context lives in `docs/ai/`. Start every session with:
 
 **Band name:** Verdèzul (accent on è — always)
 **Repo:** arts-link/whatisverdezul.com
-**Stack:** Hugo + Ryder theme (submodule) + Decap CMS + PostHog + Buttondown + Vercel
+**Stack:** Hugo + Ryder theme (submodule) + Decap CMS + PostHog + Formspree + Vercel
 
 ## Build
 

@@ -77,7 +77,6 @@ collections:
               - { name: spotify_url, label: Spotify URL, widget: string, required: false }
               - { name: apple_music_url, label: Apple Music URL, widget: string, required: false }
               - { name: cover_image, label: Cover Image, widget: image, required: false }
-              - { name: featured, label: Featured on Home, widget: boolean, default: false }
 
   - name: streaming
     label: Streaming Page
@@ -157,8 +156,6 @@ collections:
         fields:
           - { name: title, label: Title, widget: string }
           - { name: description, label: Meta Description, widget: text }
-          - { name: hero_headline, label: Hero Headline, widget: string, required: false }
-          - { name: hero_subline, label: Hero Subline, widget: string, required: false }
       - name: about
         label: About Page
         file: content/about/_index.md
