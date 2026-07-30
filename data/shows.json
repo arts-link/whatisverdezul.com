@@ -134,6 +134,15 @@
       "description": "",
       "ticket_url": "",
       "sold_out": false
+    },
+    {
+      "city": "Los Angeles, CA",
+      "sold_out": false,
+      "title": "Fun fest",
+      "date": "2026-07-31",
+      "venue": "The Forum",
+      "ticket_url": "https://www.theforum.com/",
+      "description": "The house built by champions."
     }
   ]
 }
