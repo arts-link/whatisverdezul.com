@@ -4,7 +4,7 @@ description: Task-based routing table — find which docs to read for any task o
 metadata:
   type: index
   status: active
-  updated: 2026-07-30
+  updated: 2026-07-31
   tags: [index, routing, navigation]
   related: [AGENT_START.md, KNOWLEDGE_GRAPH.md]
 ---
@@ -37,6 +37,7 @@ You know the task but aren't sure which docs apply. Use this as a routing table 
 ### CMS changes (Decap CMS collections, fields, auth)
 → [[cms-config]]
 → [[content-model]]
+→ [[cms-risks]] (before changing auth, media, or publish behaviour)
 
 ### Adding media embeds (YouTube, Spotify, gallery)
 → [[media-embed-rules]]
@@ -83,6 +84,7 @@ You know the task but aren't sure which docs apply. Use this as a routing table 
 - [[architecture]] — stack, file structure, override rules
 - [[content-model]] — data file shapes, frontmatter schemas
 - [[cms-config]] — Decap CMS collections and auth
+- [[cms-risks]] — Decap CMS risk register: exposure, cost, mitigation
 - [[routes-and-menus]] — URL structure, Hugo menu config
 - [[seo-and-schema]] — OG, JSON-LD, GEO/LLMsTxt
 - [[analytics-events]] — PostHog event definitions

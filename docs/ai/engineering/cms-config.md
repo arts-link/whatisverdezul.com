@@ -4,9 +4,9 @@ description: Decap CMS setup, collection definitions, field mappings, and GitHub
 metadata:
   type: reference
   status: active
-  updated: 2026-07-17
+  updated: 2026-07-31
   tags: [engineering, cms, decap, oauth, admin]
-  related: [engineering/content-model.md, engineering/architecture.md]
+  related: [engineering/content-model.md, engineering/architecture.md, engineering/cms-risks.md]
 ---
 
 ## Use this when
@@ -36,9 +36,15 @@ Decap CMS is served from `/admin`. Editors authenticate with GitHub OAuth, edit 
 
 Decap CMS uses a GitHub OAuth app through Vercel serverless functions so the GitHub client secret is never exposed in the browser.
 
+The OAuth App is owned by the **`arts-link` organization** — org-owned apps bypass the
+third-party access restriction that otherwise blocks saves.
+
 **GitHub OAuth App settings:**
-- Authorization callback URL: `https://whatisverdezul.com/api/oauth/callback`
-- Homepage URL: `https://whatisverdezul.com`
+- Authorization callback URL: `https://www.whatisverdezul.com/api/oauth/callback`
+- Homepage URL: `https://www.whatisverdezul.com`
+
+Both use `www`, because `www` is canonical (see `base_url` below). The apex form does not
+work — the redirect to `www` breaks the callback.
 
 **Vercel env vars required:**
 - `GITHUB_CLIENT_ID`
@@ -57,9 +63,13 @@ backend:
 
 `base_url` is the **origin only, with no path** — Decap's popup handshake does a strict `===` comparison against it, so appending `/api/oauth` breaks login. The path goes in `auth_endpoint` instead. It is `www` because `www` is canonical (`hugo.toml` `baseURL` plus the apex→www redirect in `vercel.json`).
 
-The repo is private, so OAuth keeps `scope=repo`.
+`api/oauth/auth.js` currently requests `scope=repo`. **The repo is public, so this is wider
+than it needs to be** — `public_repo` is sufficient, and `repo` grants write access to every
+private repo the editor can reach, including `arts-link/ryder`. An earlier version of this
+doc justified the wide scope by claiming the repo was private; it never was. Tracked as
+[[cms-risks]] S2.
 
-If Decap CMS auth proves fussy after these routes are verified, consider Sveltia CMS as a later fallback. It can use the same data and collection model.
+If Decap CMS auth proves fussy after these routes are verified, consider Sveltia CMS as a later fallback. It can use the same data and collection model — which stays true only while this config avoids Decap-only features.
 
 ---
 
@@ -104,7 +114,6 @@ List-backed collections must be Decap file collections with a list field named `
 - `items[].spotify_url` — optional
 - `items[].apple_music_url` — optional
 - `items[].cover_image` — optional image
-- `items[].featured` — boolean
 
 ### Streaming Page
 
@@ -145,6 +154,10 @@ public_folder: /images/uploads
 
 Decap writes uploaded media into Hugo's `static/` tree, and templates reference the public URL under `/images/uploads`.
 
+Note that **Hugo does not process anything under `static/`** — uploads are copied
+byte-for-byte, at whatever size the editor chose, and stay in git history permanently. See
+[[cms-risks]] S6 before adding new image fields.
+
 ---
 
 ## Adding a new editable field
@@ -157,5 +170,6 @@ Decap writes uploaded media into Hugo's `static/` tree, and templates reference 
 
 ## Related knowledge
 
+- [[cms-risks]] — what this setup exposes, and the mitigation for each risk
 - [[content-model]] — the data shapes that CMS collections write to
 - [[architecture]] — where these files live

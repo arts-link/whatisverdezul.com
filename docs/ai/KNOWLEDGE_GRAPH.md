@@ -4,7 +4,7 @@ description: Dependency chains showing how docs relate — use to find upstream 
 metadata:
   type: index
   status: active
-  updated: 2026-05-15
+  updated: 2026-07-31
   tags: [index, dependencies, graph]
   related: [AI_INDEX.md, AGENT_START.md]
 ---
@@ -60,6 +60,8 @@ page-publish-checklist     ← gate before a new page is done
 
 ```
 cms-config                 ← Decap CMS field definitions
+  ├── cms-risks            ← what that setup exposes; read before changing auth,
+  │                          media handling, or publish behaviour
   └── content-model        ← the data shapes those fields write to
         └── architecture   ← where the files live, how templates access them
 ```
