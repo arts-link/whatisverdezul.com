@@ -134,13 +134,6 @@
       "description": "",
       "ticket_url": "",
       "sold_out": false
-    },
-    {
-      "city": "Los Angeles, CA",
-      "sold_out": false,
-      "title": "Ben's test show",
-      "date": "2026-07-31",
-      "ticket_url": "https://www.forum.com/"
     }
   ]
 }
