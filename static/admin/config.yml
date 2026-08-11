@@ -1,3 +1,9 @@
+# branch is absolute: EVERY deployment's /admin, Vercel previews included, reads
+# and writes this branch. A preview serving a newer config.yml against main's
+# older data shows empty lists and "item has no 'X' property" errors — expected
+# mid-migration, and it clears on merge. Do NOT save from a preview admin while
+# those errors show: an empty list widget commits {"items": []} and deletes the
+# live data. See docs/ai/engineering/cms-config.md.
 backend:
   name: github
   repo: arts-link/whatisverdezul.com

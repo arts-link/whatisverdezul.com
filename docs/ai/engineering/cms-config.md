@@ -61,6 +61,45 @@ The repo is private, so OAuth keeps `scope=repo`.
 
 If Decap CMS auth proves fussy after these routes are verified, consider Sveltia CMS as a later fallback. It can use the same data and collection model.
 
+### `branch` is absolute — previews edit `main` too
+
+`backend.branch: main` has nothing to do with which deployment served the admin
+UI. **Every** `/admin` — production and every Vercel preview — reads and writes
+`main`. Loading the admin from a preview URL does not point it at that preview's
+branch.
+
+That matters during a schema migration, because a preview serves the **new**
+`config.yml` against `main`'s **old** data. Decap then renders honest mismatch
+errors that look like a broken config but are not:
+
+| Symptom in the admin | What it actually means |
+|---|---|
+| A list shows `0 items` | The field was renamed or newly added; `main`'s data has no such key yet |
+| `Error: item has no '<key>' property` | A variable-type list's `typeKey` is missing from `main`'s existing rows |
+
+Both self-resolve on merge. This happened for real on
+`claude/footer-streaming-admin-b1el31`: the preview admin showed "0 social links"
+and three `item has no 'platform' property` rows, purely because `data/social.json`
+was still the flat object and `data/streaming.json` had no `platform` keys on `main`.
+
+> **Never save from a preview admin while those errors are showing.** An empty
+> list widget commits `{"items": []}`, which *deletes the live data on `main`*.
+> In the case above, one save on the Social Links collection would have wiped all
+> seven social links from the production footer, the JSON-LD `sameAs` array, and
+> `llms.txt`. Nothing in the UI warns you — an empty list looks like an empty list.
+> Decap's "CHANGES SAVED" header is its local draft autosave, not a commit, so
+> closing the tab without saving is safe.
+
+Two rules follow:
+
+1. **Ship the migrated `data/*.json` and the `config.yml` change in the same commit.** Then the merge is atomic and there is never a window where `main` holds one without the other.
+2. **A CMS schema change cannot be validated before it reaches `main`.** Review it by reading the diff; the admin UI is only trustworthy post-merge. If a genuine pre-merge click-through is ever needed, the fix is to generate `config.yml` at build time with `branch` from `VERCEL_GIT_COMMIT_REF` — considered and declined as not worth the risk, but that is the route.
+
+Right after merging, expect the same mismatch **inverted** for a minute or two:
+production still serves the previous build's old `config.yml` against the new
+data until Vercel finishes redeploying. Reload once the deploy completes before
+concluding anything is wrong.
+
 ---
 
 ## Collection overview
