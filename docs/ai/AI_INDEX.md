@@ -49,6 +49,10 @@ You know the task but aren't sure which docs apply. Use this as a routing table 
 → [[analytics-events]]
 → [[site-goals]] (why we track what we track)
 
+### Building or auditing the PostHog dashboard
+→ [[posthog-dashboard]] (tile-by-tile build sheet)
+→ [[analytics-events]] (event names the tiles depend on)
+
 ### Build, deploy, or environment variables
 → [[build-commands]]
 
@@ -86,6 +90,7 @@ You know the task but aren't sure which docs apply. Use this as a routing table 
 - [[routes-and-menus]] — URL structure, Hugo menu config
 - [[seo-and-schema]] — OG, JSON-LD, GEO/LLMsTxt
 - [[analytics-events]] — PostHog event definitions
+- [[posthog-dashboard]] — PostHog dashboard build sheet (proposed, not yet built)
 - [[build-commands]] — npm, Hugo, Vercel commands
 
 ### Content

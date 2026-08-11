@@ -68,7 +68,7 @@ on a parent container also works for many child links (see the footer socials).
 | `ticket_link_click` | Tour page ticket CTA | `venue`, `date`, `city` |
 | `spotify_play_click` | Spotify embed / release card link | `release_title` |
 | `youtube_play_click` | YouTube embed / video link | `video_title`, `video_id` |
-| `music_video_click` | Home page featured video CTA | `video_title` |
+| `music_video_click` | **Not emitted.** No template or script fires this — the home page featured video is covered by `youtube_play_click` from the embed partial. Wire it up or drop it. | `video_title` |
 | `hero_about_click` | Home hero "What is Verdèzul?" box → About page | (none) |
 | `merch_click` | Shop item checkout link | `item_name`, `price` |
 | `contact_form_submit` | Contact form submission | (none — just conversion signal) |
