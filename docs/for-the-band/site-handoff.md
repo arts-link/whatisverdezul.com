@@ -198,9 +198,10 @@ logo for it, ask us and we'll add one.)
 **Blank out a social URL and that icon disappears** from the footer — which is the
 clean way to drop a platform you've stopped using without losing the row.
 
-Heads up: the three icons on the **Contact** page are deliberately only Instagram,
-TikTok and YouTube — the "come follow us" ones. Everything else you add shows in
-the footer, which is where the streaming services live.
+Your links show up in two places — the footer at the bottom of every page, and
+the **Contact** page — and both show the same list in the same order. Add one and
+it appears in both automatically. On a phone the icons wrap onto a second line
+rather than running off the edge, so there's no limit to how many you add.
 
 ---
 

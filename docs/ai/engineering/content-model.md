@@ -69,9 +69,16 @@ rather than rendering nothing — but the icon will be generic until all three
 are done.
 
 Four consumers read this file, and all four must stay in step:
-`layouts/partials/footer-verdezul.html`, `layouts/contact/list.html` (filtered
-to Instagram/TikTok/YouTube only), `layouts/partials/head/schema-extra.html`
-(the JSON-LD `sameAs` array), and `layouts/_default/home.llmstxt.txt`.
+`layouts/partials/footer-verdezul.html`, `layouts/contact/list.html`,
+`layouts/partials/head/schema-extra.html` (the JSON-LD `sameAs` array), and
+`layouts/_default/home.llmstxt.txt`.
+
+The footer and the contact page render the **same list in the same order** —
+neither filters by platform. A link that showed up in one place but not the
+other would be indistinguishable from a broken save, so keep them identical.
+Both rows are `flex-wrap: wrap`, because the list is band-editable and has no
+upper bound; at 375px the contact row has 263px and already wraps at eight
+20px icons.
 
 ### `data/shows.json`
 

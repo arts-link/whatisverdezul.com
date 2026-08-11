@@ -54,16 +54,17 @@
 
     </form>
 
-    {{/* Contact deliberately shows only the three "follow us" socials, not every
-         streaming service — those live in the footer. Filtering by platform keeps
-         that intent even as the band adds links in /admin. */}}
-    {{ $follow := where (.Site.Data.social.items | default slice) "platform" "in" (slice "instagram" "tiktok" "youtube") }}
-    {{ if gt (len $follow) 0 }}
+    {{/* Same list as the footer, same order — a link the band adds in /admin has
+         to show up in both places. Do not filter this by platform: a platform
+         that appears in one place and not the other is indistinguishable from a
+         broken save. The row wraps (see .vz-social-icons), so length is safe. */}}
+    {{ $socials := (.Site.Data.social.items | default slice) }}
+    {{ if gt (len $socials) 0 }}
     <div class="vz-contact-social">
       <span class="vz-contact-social__label">Follow</span>
       {{/* vzTrack: CSP-safe Alpine can't eval inline capture() — see extended.js */}}
       <div class="vz-social-icons" x-data="vzTrack">
-        {{ range $follow }}
+        {{ range $socials }}
         {{ partial "social-link.html" (dict "item" . "size" 20) }}
         {{ end }}
       </div>
