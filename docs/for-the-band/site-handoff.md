@@ -121,11 +121,20 @@ Heads up: **every release is currently missing its Apple Music link**, so no App
 links show anywhere on the site. Fill in the Apple Music URL field on each release when
 you have a spare ten minutes — it's free reach you're leaving on the table.
 
-### Streaming (videos and Spotify)
+### Streaming (videos and players)
 
-Add and remove the YouTube videos on the Streaming page, and swap the Spotify player.
+Everything on the Streaming page lives in **one list**, whatever it is. Click
+**Add Embed** and pick the kind you want:
 
-**Paste the video ID, not the whole link.** A YouTube URL looks like
+- **YouTube Video** — shows as a clickable thumbnail that opens the video.
+- **Spotify Player**
+- **SoundCloud Player**
+
+**You can put them in any order, and they do not have to be grouped.** Drag a
+SoundCloud player so it sits between two videos and that is exactly how the page
+will look. The order in this list is the order on the page, always.
+
+**For YouTube, paste the video ID, not the whole link.** A YouTube URL looks like
 `youtube.com/watch?v=Op1oF2qy_ek` — the part you want is just `Op1oF2qy_ek`, the
 11 characters after `v=`. The editor will stop you if you paste the whole thing.
 
@@ -133,8 +142,17 @@ If a video's thumbnail looks grey or blank, that video was uploaded to YouTube i
 resolution and YouTube has no good image for it. Upload your own image in the
 **Thumbnail** field to fix it.
 
-For Spotify, use **Share → Embed** and copy that link — a normal share link won't work,
-and the editor will tell you so.
+**For Spotify**, use **Share → Embed** and copy that link — a normal share link won't
+work, and the editor will tell you so.
+
+**For SoundCloud**, just copy the link out of your browser's address bar — a track,
+a playlist, or your whole profile page. No embed code needed. Then pick a
+**Player Size**: *Large* shows a scrolling list of tracks (best for a profile or
+playlist), *Compact* is a single slim bar (best for one track).
+
+The **Label** field on the two players isn't printed on the page — it names the
+player for screen readers and shows up in your analytics, so write something you'll
+recognise, like "Verdèzul on SoundCloud".
 
 ### Merch
 
@@ -165,9 +183,24 @@ Aim for one clear sentence, 100–160 characters, describing what's actually on 
 
 ### Band Info and Social Links
 
-Your contact email and every social icon on the site come from here. **Blank out a
-social URL and that icon disappears** from the footer — which is the clean way to drop
-a platform you've stopped using.
+Your contact email and every social icon on the site come from here.
+
+**Social Links is a list, so you can add a platform yourself.** Click **Add Social
+Link**, choose the **Platform** from the dropdown, and paste the URL. The icon
+appears in the footer automatically. Drag the rows to change the order the icons
+appear in — top of the list is leftmost in the footer.
+
+If the platform you want isn't in the dropdown, choose **other** and fill in
+**Custom Label** with its name. You'll get a plain link icon instead of that
+platform's logo, but the link works exactly the same. (If you'd like a proper
+logo for it, ask us and we'll add one.)
+
+**Blank out a social URL and that icon disappears** from the footer — which is the
+clean way to drop a platform you've stopped using without losing the row.
+
+Heads up: the three icons on the **Contact** page are deliberately only Instagram,
+TikTok and YouTube — the "come follow us" ones. Everything else you add shows in
+the footer, which is where the streaming services live.
 
 ---
 

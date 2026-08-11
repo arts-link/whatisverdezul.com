@@ -1,0 +1,31 @@
+{{- /*
+  Display name for one social platform: "apple_music" -> "Apple Music".
+
+  Single source of truth, shared by social-link.html (screen-reader label) and
+  home.llmstxt.txt (the Official links list), so the two can never drift.
+  A platform with no entry here — i.e. "other" — falls back to the item's own
+  label field, which is exactly why the CMS asks for one on that option.
+
+  Call with the social item itself: {{ partial "social-name.html" $item }}
+*/ -}}
+{{- $labels := dict
+  "instagram"      "Instagram"
+  "tiktok"         "TikTok"
+  "youtube"        "YouTube"
+  "spotify"        "Spotify"
+  "apple_music"    "Apple Music"
+  "tidal"          "Tidal"
+  "youtube_music"  "YouTube Music"
+  "soundcloud"     "SoundCloud"
+  "bandcamp"       "Bandcamp"
+  "facebook"       "Facebook"
+  "x"              "X"
+  "threads"        "Threads"
+  "amazon_music"   "Amazon Music"
+  "audiomack"      "Audiomack"
+  "patreon"        "Patreon"
+  "discord"        "Discord"
+-}}
+{{- $name := index $labels (.platform | default "other") -}}
+{{- if not $name }}{{ $name = .label | default "Link" }}{{ end -}}
+{{- $name -}}

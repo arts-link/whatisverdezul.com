@@ -22,18 +22,50 @@ collections:
           - { name: email, label: Contact Email, widget: string }
           - { name: location, label: City, widget: string }
           - { name: bio, label: Bio, widget: text }
+      # A list, not fixed fields, so the band can add a platform without a code
+      # change and drag the icons into the order they want. List order IS footer
+      # order — see layouts/partials/footer-verdezul.html.
       - name: social
         label: Social Links
         file: data/social.json
         format: json
         fields:
-          - { name: instagram, label: Instagram URL, widget: string, required: false }
-          - { name: tiktok, label: TikTok URL, widget: string, required: false }
-          - { name: youtube, label: YouTube URL, widget: string, required: false }
-          - { name: spotify, label: Spotify URL, widget: string, required: false }
-          - { name: apple_music, label: Apple Music URL, widget: string, required: false }
-          - { name: tidal, label: Tidal URL, widget: string, required: false }
-          - { name: youtube_music, label: YouTube Music URL, widget: string, required: false }
+          - label: Social Links
+            name: items
+            widget: list
+            label_singular: Social Link
+            fields:
+              - name: platform
+                label: Platform
+                widget: select
+                hint: "Picks the icon. Choose 'other' for anything not listed and fill in Custom Label."
+                options:
+                  - instagram
+                  - tiktok
+                  - youtube
+                  - spotify
+                  - apple_music
+                  - tidal
+                  - youtube_music
+                  - soundcloud
+                  - bandcamp
+                  - audiomack
+                  - amazon_music
+                  - facebook
+                  - x
+                  - threads
+                  - patreon
+                  - discord
+                  - other
+              - name: label
+                label: Custom Label
+                widget: string
+                required: false
+                hint: "Only needed when Platform is 'other'. Names the link for screen readers."
+              - name: url
+                label: URL
+                widget: string
+                pattern: ['^https?://', "Must be a full link starting with https://"]
 
   - name: shows
     label: Shows
@@ -77,6 +109,10 @@ collections:
               - { name: spotify_url, label: Spotify URL, widget: string, required: false }
               - { name: apple_music_url, label: Apple Music URL, widget: string, required: false }
               - { name: cover_image, label: Cover Image, widget: image, required: false }
+              # Must stay present: schema-extra.html reads `featured` to emit the
+              # MusicAlbum JSON-LD. Without a widget here Decap drops the key from
+              # every release the moment an editor saves this collection.
+              - { name: featured, label: Featured Release, widget: boolean, default: false }
 
   - name: streaming
     label: Streaming Page
@@ -86,28 +122,54 @@ collections:
         file: data/streaming.json
         format: json
         fields:
-          - name: spotify_embed_url
-            label: Spotify Embed URL
-            widget: string
-            hint: "In Spotify: Share -> Embed -> copy the src link. Leave blank to hide the Listen section."
-            required: false
-            pattern: ['^https://open\.spotify\.com/embed/', "Must be a Spotify embed link (open.spotify.com/embed/...), not a normal share link"]
-          - label: Videos
+          # One list holding every embed, whatever the platform. "Add Embed" is a
+          # dropdown (types below), and the list drags freely — so a SoundCloud
+          # player can sit between two videos. Nothing has to be grouped by
+          # platform, and this order is exactly the page order.
+          - label: Embeds
             name: items
             widget: list
-            label_singular: Video
-            fields:
-              - { name: title, label: Video Title, widget: string }
-              - name: youtube_id
-                label: YouTube Video ID
-                widget: string
-                hint: "Just the 11-character ID - the part after v= in the URL. For youtu.be links it is the bit after the slash."
-                pattern: ['^[A-Za-z0-9_-]{11}$', "Paste only the 11-character ID, not the whole YouTube link"]
-              - name: thumbnail
-                label: Thumbnail (optional)
-                widget: image
-                required: false
-                hint: "Leave blank to use YouTube's own image. Upload one only if that image looks grey or blank (happens on low-resolution uploads). 16:9, around 1280x720."
+            label_singular: Embed
+            typeKey: platform
+            types:
+              - name: youtube
+                label: YouTube Video
+                fields:
+                  - { name: title, label: Video Title, widget: string }
+                  - name: youtube_id
+                    label: YouTube Video ID
+                    widget: string
+                    hint: "Just the 11-character ID - the part after v= in the URL. For youtu.be links it is the bit after the slash."
+                    pattern: ['^[A-Za-z0-9_-]{11}$', "Paste only the 11-character ID, not the whole YouTube link"]
+                  - name: thumbnail
+                    label: Thumbnail (optional)
+                    widget: image
+                    required: false
+                    hint: "Leave blank to use YouTube's own image. Upload one only if that image looks grey or blank (happens on low-resolution uploads). 16:9, around 1280x720."
+              - name: spotify
+                label: Spotify Player
+                fields:
+                  - { name: title, label: Label, widget: string, hint: "Not shown on the page - used for the player's accessible name and in analytics." }
+                  - name: spotify_embed_url
+                    label: Spotify Embed URL
+                    widget: string
+                    hint: "In Spotify: Share -> Embed -> copy the src link."
+                    pattern: ['^https://open\.spotify\.com/embed/', "Must be a Spotify embed link (open.spotify.com/embed/...), not a normal share link"]
+              - name: soundcloud
+                label: SoundCloud Player
+                fields:
+                  - { name: title, label: Label, widget: string, hint: "Not shown on the page - used for the player's accessible name and in analytics." }
+                  - name: soundcloud_url
+                    label: SoundCloud Link
+                    widget: string
+                    hint: "The normal soundcloud.com link to the track, playlist, or profile - straight from the address bar. No embed code needed."
+                    pattern: ['^https://soundcloud\.com/', "Paste the soundcloud.com link from the address bar, not the embed code"]
+                  - name: player_size
+                    label: Player Size
+                    widget: select
+                    default: compact
+                    hint: "Large shows a scrolling track list - best for a profile or playlist. Compact suits a single track."
+                    options: [compact, large]
 
   - name: press
     label: Press Quotes

@@ -94,20 +94,9 @@ No shows are currently listed.
 
 ## Official links
 
-{{ with site.Data.social -}}
-{{ with .instagram }}- Instagram: {{ . }}
-{{ end -}}
-{{ with .tiktok }}- TikTok: {{ . }}
-{{ end -}}
-{{ with .youtube }}- YouTube: {{ . }}
-{{ end -}}
-{{ with .spotify }}- Spotify: {{ . }}
-{{ end -}}
-{{ with .apple_music }}- Apple Music: {{ . }}
-{{ end -}}
-{{ with .tidal }}- Tidal: {{ . }}
-{{ end -}}
-{{ with .youtube_music }}- YouTube Music: {{ . }}
+{{ range (site.Data.social.items | default slice) -}}
+{{ $item := . -}}
+{{ with .url }}- {{ partial "social-name.html" $item }}: {{ . }}
 {{ end -}}
 {{ end }}
 

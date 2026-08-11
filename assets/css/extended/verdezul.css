@@ -405,8 +405,21 @@ a.vz-hero__question-box:active {
   color: #fff;
 }
 
-.vz-spotify-wrap {
-  margin-bottom: 4rem;
+/* Audio players (Spotify, SoundCloud) inside the streaming grid.
+
+   .vz-embed-wide spans the full row, so a player can sit between two video
+   thumbnails without breaking the grid — this is what makes the streaming page
+   freely orderable rather than grouped by platform. The grid's own `gap`
+   handles spacing, so these carry no margin of their own. */
+.vz-video-grid > .vz-embed-wide {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.vz-audio-embed iframe {
+  display: block;
+  width: 100%;
+  border: 0;
 }
 
 .vz-shows-heading {

@@ -58,7 +58,7 @@ Referencing any band detail — name spelling, contact info, social links, brand
 
 **Streaming:**
 - Spotify artist: `1zf7vVM2XaoaTD3hXWR1If`
-- SoundCloud: N/A
+- SoundCloud: https://soundcloud.com/verdezul — the band uploads music here; it is in the footer and embedded on /music/streaming/
 - Apple Music: TBD (not provided by client yet)
 
 ---
