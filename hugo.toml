@@ -57,7 +57,10 @@ disableKinds = ["taxonomy", "term"]
   type = "MusicGroup"
 
 [params.csp]
-  frameSrc = "https://www.youtube-nocookie.com https://open.spotify.com"
+  # w.soundcloud.com is the player host the SoundCloud embed iframe points at —
+  # NOT soundcloud.com, which is only where the band copies the link from. Get
+  # this wrong and the player fails silently as a blank box.
+  frameSrc = "https://www.youtube-nocookie.com https://open.spotify.com https://w.soundcloud.com"
   imgSrc = "https://img.youtube.com"
     scriptSrcHashes = ["sha256-gIirzZwKgl/5Zp3caTrb8Q0bQtvKmxH8pbyqwmtSoUk="]
   connectSrc = "https://formspree.io"  # contact form submits here via fetch

@@ -1,17 +1,30 @@
 {
-  "spotify_embed_url": "https://open.spotify.com/embed/artist/1zf7vVM2XaoaTD3hXWR1If?utm_source=generator",
   "items": [
     {
+      "platform": "youtube",
       "title": "Taxes Finnah Hit",
       "youtube_id": "Op1oF2qy_ek"
     },
     {
+      "platform": "youtube",
       "title": "I Tell Ya",
       "youtube_id": "VcY5WYEnxH8"
     },
     {
+      "platform": "youtube",
       "title": "EPC",
       "youtube_id": "3a-wVidRpUU"
+    },
+    {
+      "platform": "spotify",
+      "title": "Verdèzul on Spotify",
+      "spotify_embed_url": "https://open.spotify.com/embed/artist/1zf7vVM2XaoaTD3hXWR1If?utm_source=generator"
+    },
+    {
+      "platform": "soundcloud",
+      "title": "Verdèzul on SoundCloud",
+      "soundcloud_url": "https://soundcloud.com/verdezul",
+      "player_size": "large"
     }
   ]
 }

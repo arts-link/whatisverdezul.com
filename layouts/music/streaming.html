@@ -7,33 +7,66 @@
     <a href="/music/streaming/" class="vz-music-subnav__link is-active">Streaming</a>
   </nav>
 
-  {{ $streaming := .Site.Data.streaming }}
-  {{ $videos := (and $streaming $streaming.items) | default slice }}
+  {{/* One ordered list, mixed platforms. Videos and players are NOT grouped —
+       the band drags them into any order in /admin and the page follows exactly,
+       so nothing below may sort, filter, or partition by platform. Audio players
+       carry .vz-embed-wide, which spans the full grid row (see verdezul.css);
+       that is what lets a player sit between two videos without breaking the
+       grid. Do not add grid-auto-flow:dense to .vz-video-grid — it would reorder
+       items to fill gaps and defeat the whole point. */}}
+  {{ $items := (.Site.Data.streaming.items | default slice) }}
 
-  {{ if gt (len $videos) 0 }}
-  <h2 class="vz-music-section-label">Videos</h2>
-
+  {{ if gt (len $items) 0 }}
   <div class="vz-video-grid"
        x-data="vzLightbox()"
        @keydown.escape.window="close()">
-    {{ range $videos }}
-      {{ partial "youtube-thumb.html" (dict "id" .youtube_id "title" .title "thumbnail" .thumbnail) }}
-    {{ end }}
-    {{ partial "youtube-modal.html" . }}
-  </div>
-  {{ end }}
+    {{ range $items }}
+      {{/* $ is the Page inside this range, so the item is captured by name. */}}
+      {{ $item := . }}
 
-  {{ with (and $streaming $streaming.spotify_embed_url) }}
-  <h2 class="vz-music-section-label">Listen</h2>
-  {{ $spotifyEvent := dict "release_title" "ETASOBAG" }}
-  {{/* vzTrack: CSP-safe Alpine can't eval inline capture() — see extended.js */}}
-  <div class="vz-spotify-wrap" x-data="vzTrack"
-       @click="track" data-track-event="spotify_play_click" data-track-props="{{ $spotifyEvent | jsonify }}">
-    <iframe
-      src="{{ . }}"
-      width="100%" height="352" loading="lazy"
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-    </iframe>
+      {{ if eq $item.platform "youtube" }}
+        {{ partial "youtube-thumb.html" (dict "id" $item.youtube_id "title" $item.title "thumbnail" $item.thumbnail) }}
+
+      {{ else if eq $item.platform "spotify" }}
+        {{ with $item.spotify_embed_url }}
+        {{/* vzTrack: CSP-safe Alpine can't eval inline capture() — see extended.js */}}
+        <div class="vz-embed-wide vz-audio-embed" x-data="vzTrack"
+             @click="track" data-track-event="spotify_play_click"
+             data-track-props='{{ (dict "title" $item.title) | jsonify }}'>
+          <iframe
+            src="{{ . }}"
+            title="{{ $item.title | default "Spotify player" }}"
+            width="100%" height="352" loading="lazy"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+          </iframe>
+        </div>
+        {{ end }}
+
+      {{ else if eq $item.platform "soundcloud" }}
+        {{ with $item.soundcloud_url }}
+        {{/* Built from the plain soundcloud.com link the band pastes, so nobody
+             has to go find embed code. "large" (450px) shows a track list, which
+             is what a profile or playlist URL wants; "compact" (166px) suits a
+             single track. %%23 is a literal "#" for the &color= value. */}}
+        {{ $height := cond (eq $item.player_size "large") 450 166 }}
+        {{ $src := printf "https://w.soundcloud.com/player/?url=%s&color=%%23000000&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_teaser=false" (urlquery .) }}
+        <div class="vz-embed-wide vz-audio-embed" x-data="vzTrack"
+             @click="track" data-track-event="soundcloud_play_click"
+             data-track-props='{{ (dict "title" $item.title) | jsonify }}'>
+          <iframe
+            src="{{ $src }}"
+            title="{{ $item.title | default "SoundCloud player" }}"
+            width="100%" height="{{ $height }}" loading="lazy"
+            scrolling="no" frameborder="no" allow="autoplay">
+          </iframe>
+        </div>
+        {{ end }}
+      {{ end }}
+    {{ end }}
+
+    {{/* One modal serves every video thumbnail; it must stay inside the grid so
+         it shares the vzLightbox Alpine scope. */}}
+    {{ partial "youtube-modal.html" . }}
   </div>
   {{ end }}
 </section>

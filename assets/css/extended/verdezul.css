@@ -405,8 +405,21 @@ a.vz-hero__question-box:active {
   color: #fff;
 }
 
-.vz-spotify-wrap {
-  margin-bottom: 4rem;
+/* Audio players (Spotify, SoundCloud) inside the streaming grid.
+
+   .vz-embed-wide spans the full row, so a player can sit between two video
+   thumbnails without breaking the grid — this is what makes the streaming page
+   freely orderable rather than grouped by platform. The grid's own `gap`
+   handles spacing, so these carry no margin of their own. */
+.vz-video-grid > .vz-embed-wide {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.vz-audio-embed iframe {
+  display: block;
+  width: 100%;
+  border: 0;
 }
 
 .vz-shows-heading {
@@ -1324,6 +1337,13 @@ a.vz-hero__question-box:active {
   display: flex;
   align-items: center;
   gap: 1.1rem;
+  /* Same reason as .vz-social-icons: the list is band-editable and unbounded.
+     Eight icons still fit on one line at 375px, so this changes nothing today —
+     it stops the row from overflowing once they add a tenth. Centred so a
+     wrapped second row sits under the first, matching the centred mobile bar. */
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 0.9rem;
 }
 
 .vz-footer__socials a {
@@ -1380,6 +1400,12 @@ a.vz-hero__question-box:active {
   display: flex;
   gap: 1.25rem;
   align-items: center;
+  /* Wraps because the band adds social links from /admin and this row has no
+     fixed length. At 375px the contact page gives it 263px; eight 20px icons
+     plus gaps already need 300px, so without this the row overflows its box
+     and forces horizontal page scroll. */
+  flex-wrap: wrap;
+  row-gap: 1rem;
 }
 
 .vz-social-icons a {

@@ -1,0 +1,22 @@
+{{- /*
+  One social link — anchor, brand icon, and PostHog tracking.
+
+  Shared by the footer and the contact page so the markup and the
+  social_follow_click event stay identical in both places; only the icon size
+  differs. The caller owns the wrapper and must put x-data="vzTrack" on it —
+  Ryder bundles @alpinejs/csp, so @click can only name a component method,
+  never evaluate an inline posthog.capture().
+
+  An item with no url renders nothing, which is what keeps a half-filled CMS
+  entry from emitting a dead link.
+
+  Call with: (dict "item" $item "size" 18)
+*/ -}}
+{{- $item := .item -}}
+{{- $platform := $item.platform | default "other" -}}
+{{- with $item.url -}}
+<a href="{{ . }}" target="_blank" rel="noopener" aria-label="{{ partial "social-name.html" $item }}"
+   @click="track" data-track-event="social_follow_click" data-track-props='{{ (dict "platform" $platform) | jsonify }}'>
+  {{ partial "social-icon.html" (dict "platform" $platform "size" ($.size | default 18)) }}
+</a>
+{{- end -}}

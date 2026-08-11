@@ -66,7 +66,8 @@ on a parent container also works for many child links (see the footer socials).
 | Event name | Trigger | Key properties |
 |-----------|---------|----------------|
 | `ticket_link_click` | Tour page ticket CTA | `venue`, `date`, `city` |
-| `spotify_play_click` | Spotify embed / release card link | `release_title` |
+| `spotify_play_click` | Spotify embed / release card link | `release_title` (release cards) or `title` (streaming-page embeds) |
+| `soundcloud_play_click` | SoundCloud player on the streaming page | `title` |
 | `youtube_play_click` | YouTube embed / video link | `video_title`, `video_id` |
 | `music_video_click` | Home page featured video CTA | `video_title` |
 | `hero_about_click` | Home hero "What is Verdèzul?" box → About page | (none) |
@@ -74,8 +75,21 @@ on a parent container also works for many child links (see the footer socials).
 | `contact_form_submit` | Contact form submission | (none — just conversion signal) |
 | `email_signup_submit` | "Stay in the loop" form submit | (none — signup data goes to Formspree) |
 | `email_signup_success` | Formspree returns 200 for the signup | (none) |
-| `social_follow_click` | Any social icon in contact/footer | `platform` (instagram, tiktok, youtube, spotify, apple_music, tidal, youtube_music) |
+| `social_follow_click` | Any social icon in contact/footer | `platform` — whatever is set on the `data/social.json` item |
 | `press_link_click` | Press coverage source link | `source` |
+
+
+`social_follow_click`'s `platform` is no longer a fixed enum. The band adds
+social links from `/admin`, so the value is any key from the `platform` select
+in `static/admin/config.yml` — currently `instagram`, `tiktok`, `youtube`,
+`spotify`, `apple_music`, `tidal`, `youtube_music`, `soundcloud`, `bandcamp`,
+`audiomack`, `amazon_music`, `facebook`, `x`, `threads`, `patreon`, `discord`,
+or `other`. Treat any PostHog breakdown on it as open-ended rather than fixed.
+
+Streaming-page embeds send `title` (the item's CMS label) rather than
+`release_title`. The page's Spotify embed is an *artist* embed, so the old
+hardcoded `release_title: "ETASOBAG"` was simply wrong; the per-item label
+replaced it.
 
 ---
 

@@ -7,10 +7,10 @@
 {{- /* One canonical social-profile list is shared by the homepage entity and
        MusicEvent performers. Sorting keeps generated JSON deterministic. */ -}}
 {{- $sameAs := slice -}}
-{{- range $key, $url := .Site.Data.social -}}
-  {{- with $url -}}{{- $sameAs = $sameAs | append . -}}{{- end -}}
+{{- range (.Site.Data.social.items | default slice) -}}
+  {{- with .url -}}{{- $sameAs = $sameAs | append . -}}{{- end -}}
 {{- end -}}
-{{- $sameAs = sort $sameAs -}}
+{{- $sameAs = sort (uniq $sameAs) -}}
 
 {{- if .IsHome -}}
   {{- $bandID := printf "%s#organization" site.BaseURL -}}

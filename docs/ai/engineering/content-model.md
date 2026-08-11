@@ -41,17 +41,44 @@ List-backed editor files use an object wrapper with an `items` array. This keeps
 
 ### `data/social.json`
 
+An ordered `items` list, **not** a flat map of fixed platform keys. It became a
+list so the band can add a platform from `/admin` without a code change, and so
+they control the footer icon order by dragging. **List order is footer order** —
+no consumer may sort or re-group it.
+
 ```json
 {
-  "instagram": "https://www.instagram.com/bluepill.greenpill",
-  "tiktok": "https://www.tiktok.com/@bluepill.greenpill",
-  "youtube": "https://www.youtube.com/@Verdezul",
-  "spotify": "https://open.spotify.com/artist/1zf7vVM2XaoaTD3hXWR1If",
-  "apple_music": "https://music.apple.com/us/artist/verd%C3%A8zul/1692039373",
-  "tidal": "https://tidal.com/artist/40000977",
-  "youtube_music": "https://music.youtube.com/@Verdezul"
+  "items": [
+    { "platform": "instagram", "url": "https://www.instagram.com/bluepill.greenpill" },
+    { "platform": "soundcloud", "url": "https://soundcloud.com/verdezul" },
+    { "platform": "other", "label": "Verdèzul Newsletter", "url": "https://example.com/news" }
+  ]
 }
 ```
+
+Fields:
+- `platform` — selects the brand icon from `layouts/partials/social-icon.html`. Known values: `instagram`, `tiktok`, `youtube`, `spotify`, `apple_music`, `tidal`, `youtube_music`, `soundcloud`, `bandcamp`, `audiomack`, `amazon_music`, `facebook`, `x`, `threads`, `patreon`, `discord`, `other`.
+- `label` — only meaningful when `platform` is `other`; supplies the screen-reader name. Ignored otherwise, because `social-name.html` owns the display name for every known platform.
+- `url` — full link. An item with a blank `url` renders nothing, so a half-filled CMS row can never emit a dead link.
+
+**Adding a new platform with a real icon** means adding a path to
+`social-icon.html`, a display name to `social-name.html`, and the key to the
+`platform` options in `static/admin/config.yml`. Skipping any of the three is
+survivable — an unknown platform falls back to the neutral `other` link glyph
+rather than rendering nothing — but the icon will be generic until all three
+are done.
+
+Four consumers read this file, and all four must stay in step:
+`layouts/partials/footer-verdezul.html`, `layouts/contact/list.html`,
+`layouts/partials/head/schema-extra.html` (the JSON-LD `sameAs` array), and
+`layouts/_default/home.llmstxt.txt`.
+
+The footer and the contact page render the **same list in the same order** —
+neither filters by platform. A link that showed up in one place but not the
+other would be indistinguishable from a broken save, so keep them identical.
+Both rows are `flex-wrap: wrap`, because the list is band-editable and has no
+upper bound; at 375px the contact row has 263px and already wraps at eight
+20px icons.
 
 ### `data/shows.json`
 
@@ -111,28 +138,43 @@ Fields:
 
 ### `data/streaming.json`
 
-Drives `/music/streaming/` — the YouTube video grid and the Spotify embed below it. Both sections are individually guarded: an empty `items` array hides the Videos heading and grid, and a blank `spotify_embed_url` hides the Listen heading and iframe.
+Drives `/music/streaming/`. **One ordered `items` list holding every embed,
+whatever the platform** — there is no per-platform grouping and no separate
+scalar field. The band drags embeds into any order in `/admin` and the page
+follows exactly, so a SoundCloud player can sit between two videos.
 
 ```json
 {
-  "spotify_embed_url": "https://open.spotify.com/embed/artist/1zf7vVM2XaoaTD3hXWR1If?utm_source=generator",
   "items": [
-    {
-      "title": "Taxes Finnah Hit",
-      "youtube_id": "Op1oF2qy_ek",
-      "thumbnail": "/images/uploads/custom-art.jpg"
-    }
+    { "platform": "youtube", "title": "Taxes Finnah Hit", "youtube_id": "Op1oF2qy_ek",
+      "thumbnail": "/images/uploads/custom-art.jpg" },
+    { "platform": "spotify", "title": "Verdèzul on Spotify",
+      "spotify_embed_url": "https://open.spotify.com/embed/artist/1zf7vVM2XaoaTD3hXWR1If?utm_source=generator" },
+    { "platform": "soundcloud", "title": "Verdèzul on SoundCloud",
+      "soundcloud_url": "https://soundcloud.com/verdezul", "player_size": "large" }
   ]
 }
 ```
 
-Fields:
-- `youtube_id` — the bare 11-character video ID, **not** a full URL. The CMS enforces `^[A-Za-z0-9_-]{11}$`, because pasting a watch URL is the predictable failure.
-- `title` — used as the caption, the `alt` text, and the PostHog `youtube_play_click` `video_title` property.
-- `thumbnail` — optional override. Omit it and `youtube-thumb.html` falls back to `https://img.youtube.com/vi/<id>/maxresdefault.jpg`. That image only exists for videos uploaded at 720p+; YouTube serves a grey placeholder rather than a 404 for the rest, so it cannot be detected in CSS and an inline `onerror` fallback would be blocked by the CSP. The override is the escape hatch.
-- `spotify_embed_url` — must be an `open.spotify.com/embed/…` link (CMS-enforced), not a normal share link. Works for artist, album, or playlist embeds.
+`platform` is required on every item and is the discriminator: it is Decap's
+`typeKey` for the variable-type list, and the branch key in
+`layouts/music/streaming.html`. An item with an unrecognised `platform` renders
+nothing rather than breaking the build.
 
-`layouts/music/streaming.html` passes each item to the partial as a dict, so `youtube-thumb.html` keeps its existing `id` / `title` / `thumbnail` contract while the CMS field stays the client-legible `youtube_id`.
+Per-platform fields:
+- **`youtube`** — `youtube_id` is the bare 11-character video ID, **not** a full URL. The CMS enforces `^[A-Za-z0-9_-]{11}$`, because pasting a watch URL is the predictable failure. `title` is the caption, the `alt` text, and the PostHog `youtube_play_click` `video_title` property. `thumbnail` is an optional override; omit it and `youtube-thumb.html` falls back to `https://img.youtube.com/vi/<id>/maxresdefault.jpg`. That image only exists for videos uploaded at 720p+; YouTube serves a grey placeholder rather than a 404 for the rest, so it cannot be detected in CSS and an inline `onerror` fallback would be blocked by the CSP. The override is the escape hatch.
+- **`spotify`** — `spotify_embed_url` must be an `open.spotify.com/embed/…` link (CMS-enforced), not a normal share link. Works for artist, album, or playlist embeds. Fixed 352px tall.
+- **`soundcloud`** — `soundcloud_url` is the ordinary `soundcloud.com/…` page link, straight from the address bar; the template URL-encodes it into the `w.soundcloud.com/player/` embed, so the band never handles embed code. `player_size` is `large` (450px, shows a scrolling track list — right for a profile or playlist) or `compact` (166px, right for one track).
+
+On both players `title` is not printed on the page; it supplies the iframe's
+accessible name and the PostHog event property.
+
+Layout: every item is a child of one `.vz-video-grid`. YouTube thumbs take one
+column each; players carry `.vz-embed-wide`, which is `grid-column: 1 / -1` and
+so breaks the row full-width. **Never add `grid-auto-flow: dense` to that grid**
+— it would reorder items to backfill gaps and destroy the ordering guarantee.
+
+`layouts/music/streaming.html` passes each YouTube item to the partial as a dict, so `youtube-thumb.html` keeps its existing `id` / `title` / `thumbnail` contract while the CMS field stays the client-legible `youtube_id`.
 
 ### `data/press.json`
 
