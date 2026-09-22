@@ -1,3 +1,30 @@
+{{- /* Preview deploys must not be crawlable. Vercel sets VERCEL_ENV to
+       "preview" on branch/PR deployments and "production" on the real one, so
+       an explicitly non-production value blocks everything.
+
+       Polarity matters: UNSET means permissive. A local `hugo` has no
+       VERCEL_ENV and must keep producing the same robots.txt production does,
+       otherwise the file can't be checked locally. Only an explicit
+       non-production Vercel value flips it.
+
+       Requires '^VERCEL_' in [security.funcs] getenv in hugo.toml. Remove it and
+       the build FAILS outright — "access denied: VERCEL_ENV is not whitelisted"
+       — rather than quietly guessing. That hard coupling is deliberate: the two
+       files cannot drift apart without someone noticing. */ -}}
+{{- $vercelEnv := getenv "VERCEL_ENV" -}}
+{{- if and $vercelEnv (ne $vercelEnv "production") -}}
+# Preview deployment ({{ $vercelEnv }}) — not the live site.
+#
+# Blocked so preview copies can't be indexed and compete with
+# www.whatisverdezul.com. Preview URLs are unguessable but they leak through
+# pull request links and chat unfurls, which is enough.
+#
+# The production build of this same file is permissive — see
+# layouts/home.robots.txt.
+
+User-agent: *
+Disallow: /
+{{ else -}}
 # robots.txt for whatisverdezul.com
 #
 # Nothing is blocked. Two decisions below look like oversights, so they are
@@ -22,3 +49,4 @@ User-agent: *
 Allow: /
 
 Sitemap: {{ "sitemap.xml" | absURL }}
+{{ end -}}
