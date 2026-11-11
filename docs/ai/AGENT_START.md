@@ -51,6 +51,7 @@ The band name is always **Verdèzul** — with the accent on the è. Never "verd
 - **Press nav is hidden when `data/press.json.items` is empty.** Same conditional pattern applies to any data-driven section with no entries.
 - **Logo is `/images/logo-trans-512.png`** (set as `logo_png` in `hugo.toml`).
 - **Repo is `arts-link/whatisverdezul.com`** — not `benstraw/`.
+- **Band editors are outside collaborators with Write on this repo only.** Never add them to the `arts-link` org or to a team: org membership gives read access to every arts-link repo, including other clients' private ones. Decap only needs Write on this repo.
 
 ---
 

@@ -21,7 +21,7 @@ is the part people skip and regret later, so here it is up front.
 |---|---|---|---|
 | **Domain** (whatisverdezul.com) | **Yours** | The address itself | Site goes dark. See §11 |
 | **Vercel** | Arts-Link | Publishes the site | Site goes dark |
-| **GitHub org** (`arts-link`) | Arts-Link | Stores the site's files and your editor accounts | Nobody can edit |
+| **GitHub org** (`arts-link`) | Arts-Link | Stores the site's files and controls who can edit | Nobody can edit |
 | **GitHub OAuth app** | Arts-Link | What makes the `/admin` login work | Nobody can log in to edit |
 | **Formspree** (paid) | Arts-Link | Runs your contact form **and** newsletter signup | Both forms stop working |
 | **Google Sheet** | Arts-Link | Holds your mailing list | You lose the list |
