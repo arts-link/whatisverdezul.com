@@ -103,7 +103,7 @@ You know the task but aren't sure which docs apply. Use this as a routing table 
 Written for the band, not for agents. Plain English, no jargon. Keep them accurate when
 the thing they describe changes — they are what the band actually relies on.
 - `site-handoff.md` — the master reference: account ownership, editing every section, SEO/GEO, costs, support
-- `inviting-bandmates.md` — adding and removing editors via the GitHub `Band` team
+- `inviting-bandmates.md` — adding and removing editors (the band emails Ben; editors are repo collaborators)
 - `email-list-and-newsletter.md` — the Google Sheet list and how to send to it
 
 ### Internal (`docs/internal/`)
